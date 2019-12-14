@@ -1,0 +1,8 @@
+include LICENSE
+include CHANGES.rst
+include README.rst
+include Makefile
+graft torch_inspect
+graft tests
+global-exclude *.pyc
+prune docs/_build
