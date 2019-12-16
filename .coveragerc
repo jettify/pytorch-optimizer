@@ -1,0 +1,4 @@
+[run]
+branch = True
+source = torch_optimizer
+omit = site-packages, .tox

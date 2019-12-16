@@ -1,0 +1,20 @@
+dist: xenial
+language: python
+sudo: required
+
+
+python:
+  - '3.7'
+  - '3.6'
+
+
+install:
+    - pip install --upgrade setuptools
+    - pip install codecov
+    - pip install -r requirements-dev.txt
+
+script:
+    make cov
+
+after_success:
+    codecov
