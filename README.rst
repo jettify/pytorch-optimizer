@@ -1,5 +1,5 @@
 torch-optimizer
-=============
+===============
 .. image:: https://travis-ci.com/jettify/pytorch-optimizer.svg?branch=master
     :target: https://travis-ci.com/jettify/pytorch-optimizer
 .. image:: https://codecov.io/gh/jettify/pytorch-optimizer/branch/master/graph/badge.svg
