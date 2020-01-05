@@ -6,6 +6,9 @@ import torch
 import torch.optim as optim
 from torch.autograd import Variable
 from torch.optim.lr_scheduler import ExponentialLR, ReduceLROnPlateau, StepLR
+from torch_optimizer import PowerSign, Lookahead
+
+from tests.utils import assert_dict_equal
 
 
 def _build_params_dict(weight, bias, **kwargs):
@@ -55,6 +58,50 @@ sgd_cases = [
 ]
 
 
+powsersign_cases = [
+    (lambda weight, bias: PowerSign([weight, bias], lr=1e-3),),
+    (
+        lambda weight, bias: PowerSign(
+            _build_params_dict(weight, bias, lr=1e-2), lr=1e-3
+        ),
+    ),
+    (
+        lambda weight, bias: PowerSign(
+            _build_params_dict_single(weight, bias, lr=1e-2), lr=1e-3
+        ),
+    ),
+    (
+        lambda weight, bias: PowerSign(
+            _build_params_dict_single(weight, bias, lr=1e-2)
+        ),
+    ),
+    (
+        lambda weight, bias: optim.SGD([weight, bias], lr=1e-3),
+        [lambda opt: StepLR(opt, gamma=0.9, step_size=10)],
+    ),
+    (
+        lambda weight, bias: optim.SGD([weight, bias], lr=1e-3),
+        [
+            lambda opt: StepLR(opt, gamma=0.9, step_size=10),
+            lambda opt: ReduceLROnPlateau(opt),
+        ],
+    ),
+    (
+        lambda weight, bias: optim.SGD([weight, bias], lr=1e-3),
+        [
+            lambda opt: StepLR(opt, gamma=0.99, step_size=10),
+            lambda opt: ExponentialLR(opt, gamma=0.99),
+            lambda opt: ReduceLROnPlateau(opt),
+        ],
+    ),
+]
+
+
+lookahead_cases = [
+    (lambda weight, bias: Lookahead(optim.SGD([weight, bias], lr=1e-3)),),
+]
+
+
 class TestOptim:
     def _test_basic_cases_template(
         self, weight, bias, input, constructor, scheduler_constructors
@@ -84,6 +131,9 @@ class TestOptim:
             return loss
 
         initial_value = fn().item()
+
+        optimizer.step(fn)
+
         for _i in range(200):
             for scheduler in schedulers:
                 if isinstance(scheduler, ReduceLROnPlateau):
@@ -91,7 +141,6 @@ class TestOptim:
                     scheduler.step(val_loss)
                 else:
                     scheduler.step()
-            optimizer.step(fn)
         assert fn().item() < initial_value
 
     def _test_state_dict(self, weight, bias, input, constructor):
@@ -129,7 +178,7 @@ class TestOptim:
             assert torch.allclose(bias, bias_c)
 
         # Make sure state dict wasn't modified
-        assert state_dict == state_dict_c
+        assert assert_dict_equal(state_dict, state_dict_c)
 
         # Check that state dict can be loaded even when we cast parameters
         # to a different type and move to a different device.
@@ -149,7 +198,7 @@ class TestOptim:
         optimizer_cuda.load_state_dict(state_dict_c)
 
         # Make sure state dict wasn't modified
-        assert state_dict == state_dict_c
+        assert assert_dict_equal(state_dict, state_dict_c)
 
         for _i in range(20):
             optimizer.step(fn)
@@ -217,5 +266,13 @@ class TestOptim:
         assert msg in str(ctx.value)
 
     @pytest.mark.parametrize('params', sgd_cases)
-    def test_sgd2(self, params):
+    def test_sgd(self, params):
+        self._test_basic_cases(*params)
+
+    @pytest.mark.parametrize('params', powsersign_cases)
+    def test_powersign(self, params):
+        self._test_basic_cases(*params)
+
+    @pytest.mark.parametrize('params', lookahead_cases)
+    def test_lookahead(self, params):
         self._test_basic_cases(*params)
