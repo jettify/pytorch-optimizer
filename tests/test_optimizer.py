@@ -98,7 +98,7 @@ powsersign_cases = [
 
 
 lookahead_cases = [
-    (lambda weight, bias: Lookahead(optim.SGD([weight, bias], lr=1e-3)),),
+    (lambda weight, bias: Lookahead(optim.SGD([weight, bias], lr=1e-3)),)
 ]
 
 
