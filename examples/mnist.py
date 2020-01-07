@@ -103,7 +103,7 @@ def prepare_loaders(conf, use_cuda=False):
         ),
         batch_size=conf.batch_size,
         shuffle=True,
-        **kwargs
+        **kwargs,
     )
 
     test_loader = torch.utils.data.DataLoader(
@@ -119,7 +119,7 @@ def prepare_loaders(conf, use_cuda=False):
         ),
         batch_size=conf.test_batch_size,
         shuffle=True,
-        **kwargs
+        **kwargs,
     )
     return train_loader, test_loader
 
@@ -158,7 +158,7 @@ def main():
         writer.add_graph(model, images)
 
         # custom optimizer from torch_optimizer package
-        optimizer = optim.PowerSign(model.parameters(), lr=conf.lr)
+        optimizer = optim.DiffGrad(model.parameters(), lr=conf.lr)
 
         scheduler = StepLR(optimizer, step_size=1, gamma=conf.gamma)
         for epoch in range(1, conf.epochs + 1):
