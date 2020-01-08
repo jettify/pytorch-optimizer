@@ -6,7 +6,7 @@ import torch
 import torch.optim as optim
 from torch.autograd import Variable
 from torch.optim.lr_scheduler import ExponentialLR, ReduceLROnPlateau, StepLR
-from torch_optimizer import PowerSign, Lookahead
+from torch_optimizer import PowerSign, Lookahead, DiffGrad
 
 from tests.utils import assert_dict_equal
 
@@ -75,26 +75,28 @@ powsersign_cases = [
             _build_params_dict_single(weight, bias, lr=1e-2)
         ),
     ),
+]
+
+
+diffgrad_cases = [
+    (lambda weight, bias: DiffGrad([weight, bias], lr=1e-3),),
     (
-        lambda weight, bias: optim.SGD([weight, bias], lr=1e-3),
-        [lambda opt: StepLR(opt, gamma=0.9, step_size=10)],
+        lambda weight, bias: DiffGrad(
+            _build_params_dict(weight, bias, lr=1e-2), lr=1e-3
+        ),
     ),
     (
-        lambda weight, bias: optim.SGD([weight, bias], lr=1e-3),
-        [
-            lambda opt: StepLR(opt, gamma=0.9, step_size=10),
-            lambda opt: ReduceLROnPlateau(opt),
-        ],
+        lambda weight, bias: DiffGrad(
+            _build_params_dict_single(weight, bias, lr=1e-2), lr=1e-3
+        ),
     ),
     (
-        lambda weight, bias: optim.SGD([weight, bias], lr=1e-3),
-        [
-            lambda opt: StepLR(opt, gamma=0.99, step_size=10),
-            lambda opt: ExponentialLR(opt, gamma=0.99),
-            lambda opt: ReduceLROnPlateau(opt),
-        ],
+        lambda weight, bias: DiffGrad(
+            _build_params_dict_single(weight, bias, lr=1e-2)
+        ),
     ),
 ]
+
 
 
 lookahead_cases = [
@@ -170,12 +172,14 @@ class TestOptim:
         state_dict = deepcopy(optimizer.state_dict())
         state_dict_c = deepcopy(optimizer.state_dict())
         optimizer_c.load_state_dict(state_dict_c)
+
+        precision = 0.0001
         # Run both optimizations in parallel
         for _i in range(20):
             optimizer.step(fn)
             optimizer_c.step(fn_c)
-            assert torch.allclose(weight, weight_c)
-            assert torch.allclose(bias, bias_c)
+            assert torch.allclose(weight, weight_c, atol=precision)
+            assert torch.allclose(bias, bias_c, atol=precision)
 
         # Make sure state dict wasn't modified
         assert assert_dict_equal(state_dict, state_dict_c)
@@ -275,4 +279,8 @@ class TestOptim:
 
     @pytest.mark.parametrize('params', lookahead_cases)
     def test_lookahead(self, params):
+        self._test_basic_cases(*params)
+
+    @pytest.mark.parametrize('params', diffgrad_cases)
+    def test_diffgrad(self, params):
         self._test_basic_cases(*params)
