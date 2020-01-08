@@ -95,8 +95,12 @@ diffgrad_cases = [
             _build_params_dict_single(weight, bias, lr=1e-2)
         ),
     ),
+    (
+        lambda weight, bias: DiffGrad(
+            _build_params_dict_single(weight, bias, lr=1e-2, weight_decay=1e-3)
+        ),
+    ),
 ]
-
 
 
 lookahead_cases = [

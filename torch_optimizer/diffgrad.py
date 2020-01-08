@@ -6,9 +6,11 @@ __all__ = ('DiffGrad',)
 
 
 class DiffGrad(Optimizer):
-    r"""Implements DiffGrad algorithm. It is modified from the pytorch implementation of Adam.
+    r"""Implements DiffGrad algorithm. It is modified from the pytorch
+    implementation of Adam.
 
-    It has been proposed in `DiffGrad: An Optimization Method for Convolutional Neural Networks`_.
+    It has been proposed in `DiffGrad: An Optimization Method for
+    Convolutional Neural Networks`_.
 
     Arguments:
         params (iterable): iterable of parameters to optimize or dicts defining
@@ -58,8 +60,6 @@ class DiffGrad(Optimizer):
             loss = closure()
 
         for group in self.param_groups:
-            import ipdb
-            ipdb.set_trace()
             for p in group['params']:
                 if p.grad is None:
                     continue
