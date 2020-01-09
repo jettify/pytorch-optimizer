@@ -9,8 +9,19 @@ torch-optimizer
 .. image:: https://img.shields.io/pypi/v/torch-optimizer.svg
     :target: https://pypi.python.org/pypi/torch-optimizer
 
-**torch-optimizer** -- collection of optimizers.
+**torch-optimizer** -- collection of optimizers for PyTorch_.
 
+
+Simple example
+--------------
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.DiffGrad(model.parameters(), lr=0.001)
+    optimizer.step()
 
 
 .. _Python: https://www.python.org

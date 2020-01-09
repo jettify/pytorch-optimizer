@@ -134,7 +134,6 @@ class Config:
     no_cuda: bool = True
     seed: int = 42
     log_interval: int = 10
-    optimizer: str = 'powersign'
 
 
 def main():

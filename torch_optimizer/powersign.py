@@ -3,6 +3,9 @@ import torch
 from torch.optim import Optimizer
 
 
+__all__ = ('PowerSign',)
+
+
 class PowerSign(Optimizer):
     """Implements PowerSign algorithm.
 
