@@ -6,7 +6,7 @@ import torch
 import torch.optim as optim
 from torch.autograd import Variable
 from torch.optim.lr_scheduler import ExponentialLR, ReduceLROnPlateau, StepLR
-from torch_optimizer import PowerSign, Lookahead, DiffGrad
+from torch_optimizer import PowerSign, Lookahead, DiffGrad, AdaMod
 
 from tests.utils import assert_dict_equal
 
@@ -97,6 +97,30 @@ diffgrad_cases = [
     ),
     (
         lambda weight, bias: DiffGrad(
+            _build_params_dict_single(weight, bias, lr=1e-2, weight_decay=1e-3)
+        ),
+    ),
+]
+
+adamod_cases = [
+    (lambda weight, bias: AdaMod([weight, bias], lr=1e-3),),
+    (
+        lambda weight, bias: AdaMod(
+            _build_params_dict(weight, bias, lr=1e-2), lr=1e-3
+        ),
+    ),
+    (
+        lambda weight, bias: AdaMod(
+            _build_params_dict_single(weight, bias, lr=1e-2), lr=1e-3
+        ),
+    ),
+    (
+        lambda weight, bias: AdaMod(
+            _build_params_dict_single(weight, bias, lr=1e-2)
+        ),
+    ),
+    (
+        lambda weight, bias: AdaMod(
             _build_params_dict_single(weight, bias, lr=1e-2, weight_decay=1e-3)
         ),
     ),
@@ -287,4 +311,8 @@ class TestOptim:
 
     @pytest.mark.parametrize('params', diffgrad_cases)
     def test_diffgrad(self, params):
+        self._test_basic_cases(*params)
+
+    @pytest.mark.parametrize('params', adamod_cases)
+    def test_adamod(self, params):
         self._test_basic_cases(*params)
