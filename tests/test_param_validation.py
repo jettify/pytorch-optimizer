@@ -19,3 +19,4 @@ def assert_sparse_not_supported(optimizer_class, err_msg=None):
 def test_sparse_not_supported():
     assert_sparse_not_supported(optim.DiffGrad)
     assert_sparse_not_supported(optim.AdaMod)
+    assert_sparse_not_supported(optim.RAdam)
