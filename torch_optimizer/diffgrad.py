@@ -21,16 +21,11 @@ class DiffGrad(Optimizer):
         eps (float, optional): term added to the denominator to improve
             numerical stability (default: 1e-8)
         weight_decay (float, optional): weight decay (L2 penalty) (default: 0)
-        amsgrad (boolean, optional): whether to use the AMSGrad variant of this
-            algorithm from the paper `On the Convergence of Adam and Beyond`_
-            (default: False)
 
     .. _diffGrad: An Optimization Method for Convolutional Neural Networks:
         https://arxiv.org/abs/1909.11015
     .. _Adam\: A Method for Stochastic Optimization:
         https://arxiv.org/abs/1412.6980
-    .. _On the Convergence of Adam and Beyond:
-        https://openreview.net/forum?id=ryQu7f-RZ
     """
 
     def __init__(
@@ -60,6 +55,8 @@ class DiffGrad(Optimizer):
             loss = closure()
 
         for group in self.param_groups:
+            beta1, beta2 = group['betas']
+
             for p in group['params']:
                 if p.grad is None:
                     continue
@@ -88,7 +85,6 @@ class DiffGrad(Optimizer):
                     state['exp_avg_sq'],
                     state['previous_grad'],
                 )
-                beta1, beta2 = group['betas']
 
                 state['step'] += 1
 
