@@ -6,7 +6,7 @@ import torch
 import torch.optim as optim
 from torch.autograd import Variable
 from torch.optim.lr_scheduler import ExponentialLR, ReduceLROnPlateau, StepLR
-from torch_optimizer import PowerSign, Lookahead, DiffGrad, AdaMod, RAdam
+from torch_optimizer import PowerSign, Lookahead, DiffGrad, AdaMod, RAdam, Yogi
 
 from tests.utils import assert_dict_equal
 
@@ -145,6 +145,30 @@ radam_cases = [
     ),
     (
         lambda weight, bias: RAdam(
+            _build_params_dict_single(weight, bias, lr=1e-2, weight_decay=1e-3)
+        ),
+    ),
+]
+
+yogi_cases = [
+    (lambda weight, bias: Yogi([weight, bias], lr=1e-3),),
+    (
+        lambda weight, bias: Yogi(
+            _build_params_dict(weight, bias, lr=1e-2), lr=1e-3
+        ),
+    ),
+    (
+        lambda weight, bias: Yogi(
+            _build_params_dict_single(weight, bias, lr=1e-2), lr=1e-3
+        ),
+    ),
+    (
+        lambda weight, bias: Yogi(
+            _build_params_dict_single(weight, bias, lr=1e-2)
+        ),
+    ),
+    (
+        lambda weight, bias: Yogi(
             _build_params_dict_single(weight, bias, lr=1e-2, weight_decay=1e-3)
         ),
     ),
@@ -343,4 +367,8 @@ class TestOptim:
 
     @pytest.mark.parametrize('params', radam_cases)
     def test_radam(self, params):
+        self._test_basic_cases(*params)
+
+    @pytest.mark.parametrize('params', yogi_cases)
+    def test_yogi(self, params):
         self._test_basic_cases(*params)
