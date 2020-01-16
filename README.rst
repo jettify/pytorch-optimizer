@@ -29,18 +29,28 @@ Supported Optimizers
 
 DiffGrad
 --------
-Optimizer based on the difference between the present and the immediate past gradient (i.e., diffGrad), the step size is adjusted for each parameter in such a way that it should have a larger step size for faster gradient changing parameters and a lower step size for lower gradient changing parameters.
+Optimizer based on the difference between the present and the immediate past
+gradient (i.e., diffGrad), the step size is adjusted for each parameter in such
+a way that it should have a larger step size for faster gradient changing
+parameters and a lower step size for lower gradient changing parameters.
 
-**Paper**: *diffGrad: An Optimization Method for Convolutional Neural Networks.* (2019) [https://arxiv.org/abs/1909.11015]
+**Paper**: *diffGrad: An Optimization Method for Convolutional Neural Networks.* (2019) [`arXiv <https://arxiv.org/abs/1909.11015>`_]
 
 AdaMod
 ------
-AdaMod method restricts the adaptive learning rates with adaptive and momental upper bounds. The dynamic learning rate bounds are based on the exponential moving averages of the adaptive learning rates themselves, which smooth out unexpected large learning rates and stabilize the training of deep neural networks
+AdaMod method restricts the adaptive learning rates with adaptive and momental
+upper bounds. The dynamic learning rate bounds are based on the exponential
+moving averages of the adaptive learning rates themselves, which smooth out
+unexpected large learning rates and stabilize the training of deep neural networks.
 
-**Paper**: *An Adaptive and Momental Bound Method for Stochastic Learning.* (2019) [https://arxiv.org/abs/1910.12249v1]
+**Paper**: *An Adaptive and Momental Bound Method for Stochastic Learning.* (2019) [`arXiv <https://arxiv.org/abs/1910.12249v1>`_]
 
+Yogi
+----
+Yogi is optimization algorithm based on ADAM with more fine grained effective
+learning rate control, and has similar theoretical guarantees on convergence as ADAM.
 
-
+**Paper**: *Adaptive Methods for Nonconvex Optimization* (2018) [`NIPS <https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization>`_]
 
 
 .. _Python: https://www.python.org
