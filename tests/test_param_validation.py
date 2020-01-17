@@ -16,8 +16,15 @@ def assert_sparse_not_supported(optimizer_class, err_msg=None):
     assert msg in str(ctx.value)
 
 
-def test_sparse_not_supported():
-    assert_sparse_not_supported(optim.DiffGrad)
-    assert_sparse_not_supported(optim.AdaMod)
-    assert_sparse_not_supported(optim.RAdam)
-    assert_sparse_not_supported(optim.Yogi)
+optimizers = [
+    optim.DiffGrad,
+    optim.AdaMod,
+    optim.RAdam,
+    optim.Yogi,
+    optim.SGDW,
+]
+
+
+@pytest.mark.parametrize('optimizer_class', optimizers)
+def test_sparse_not_supported(optimizer_class):
+    assert_sparse_not_supported(optimizer_class)
