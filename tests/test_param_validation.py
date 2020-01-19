@@ -16,6 +16,14 @@ def assert_sparse_not_supported(optimizer_class, err_msg=None):
     assert msg in str(ctx.value)
 
 
+def assert_lr_validation(optimizer_class):
+    lr = -0.01
+    with pytest.raises(ValueError) as ctx:
+        optimizer_class(None, lr=-0.01)
+    msg = f'Invalid learning rate: {lr}'
+    assert msg in str(ctx.value)
+
+
 optimizers = [
     optim.DiffGrad,
     optim.AdaMod,
@@ -28,3 +36,8 @@ optimizers = [
 @pytest.mark.parametrize('optimizer_class', optimizers)
 def test_sparse_not_supported(optimizer_class):
     assert_sparse_not_supported(optimizer_class)
+
+
+@pytest.mark.parametrize('optimizer_class', optimizers)
+def test_learning_rate(optimizer_class):
+    assert_lr_validation(optimizer_class)
