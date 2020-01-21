@@ -2,6 +2,9 @@ import torch
 from torch.optim.optimizer import Optimizer
 
 
+__all__ = ('SGDW',)
+
+
 class SGDW(Optimizer):
     r"""Implements SGDW algorithm.
 
