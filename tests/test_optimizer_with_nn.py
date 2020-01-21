@@ -18,13 +18,14 @@ def make_dataset(seed=42):
     X = rng.randn(N, D) * 2
 
     # center the first N/2 points at (-2,-2)
-    X[: N // 2, :] = X[: N // 2, :] - 2 * np.ones((N // 2, D))
+    mid = N // 2
+    X[: mid, :] = X[: mid, :] - 2 * np.ones((mid, D))
 
     # center the last N/2 points at (2, 2)
-    X[N // 2:, :] = X[N // 2 :, :] + 2 * np.ones((N // 2, D))
+    X[mid:, :] = X[mid:, :] + 2 * np.ones((mid, D))
 
     # labels: first N/2 are 0, last N/2 are 1
-    Y = np.array([0] * (N // 2) + [1] * (N // 2)).reshape(100, 1)
+    Y = np.array([0] * mid + [1] * mid).reshape(100, 1)
 
     x = torch.Tensor(X)
     y = torch.Tensor(Y)
@@ -45,8 +46,7 @@ class LogisticRegression(nn.Module):
 
 
 def ids(v):
-    n = f'{v[0].__name__} {v[1:]}'
-    return n
+    return f'{v[0].__name__} {v[1:]}'
 
 
 optimizers = [
