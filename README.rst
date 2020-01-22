@@ -23,6 +23,14 @@ Simple example
     optimizer = optim.DiffGrad(model.parameters(), lr=0.001)
     optimizer.step()
 
+
+Installation
+------------
+Installation process is simple, just::
+
+    $ pip install torch_optimizer
+
+
 Supported Optimizers
 ====================
 
