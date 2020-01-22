@@ -1,8 +1,7 @@
 import torch
 import pytest
 
-from torch_optimizer import DiffGrad, AdaMod
-from torch.autograd import Variable
+import torch_optimizer as optim
 
 
 def rosenbrock(tensor):
@@ -39,20 +38,27 @@ def ids(v):
     return n
 
 
-optimizers = [(DiffGrad, 0.5), (AdaMod, 1.9)]
+optimizers = [
+    (optim.RAdam, {'lr': 0.01, 'betas': (0.9, 0.95), 'eps': 1e-3}, 800),
+    (optim.SGDW, {'lr': 0.001, 'momentum': 0.99}, 9000),
+    (optim.DiffGrad, {'lr': 0.5}, 500),
+    (optim.AdaMod, {'lr': 1.0}, 800),
+    (optim.Yogi, {'lr': 1.0}, 500),
+]
 
 
 @pytest.mark.parametrize('case', cases, ids=ids)
 @pytest.mark.parametrize('optimizer_config', optimizers, ids=ids)
-def test_rosenbrock(case, optimizer_config):
+def test_benchmark_function(case, optimizer_config):
     func, initial_state, min_loc = case
-    x = Variable(torch.Tensor(initial_state), requires_grad=True)
+    optimizer_class, config, iterations = optimizer_config
+
+    x = torch.Tensor(initial_state).requires_grad_(True)
     x_min = torch.Tensor(min_loc)
-    optimizer_class, lr = optimizer_config
-    optimizer = optimizer_class([x], lr=lr)
-    for _ in range(800):
+    optimizer = optimizer_class([x], **config)
+    for _ in range(iterations):
         optimizer.zero_grad()
         f = func(x)
         f.backward(retain_graph=True)
         optimizer.step()
-    assert torch.allclose(x, x_min, atol=0.00001)
+    assert torch.allclose(x, x_min, atol=0.001)
