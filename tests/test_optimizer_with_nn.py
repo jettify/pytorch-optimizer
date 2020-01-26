@@ -50,6 +50,7 @@ def ids(v):
 
 
 optimizers = [
+    (optim.Lamb, {'lr': 0.05}, 200),
     (optim.SGDW, {'lr': 1.0}, 200),
     (optim.DiffGrad, {'lr': 0.5}, 200),
     (optim.AdaMod, {'lr': 2.0}, 200),
