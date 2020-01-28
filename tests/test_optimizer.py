@@ -7,8 +7,6 @@ import torch.optim as optim
 from torch.autograd import Variable
 from torch.optim.lr_scheduler import ExponentialLR, ReduceLROnPlateau, StepLR
 from torch_optimizer import (
-    PowerSign,
-    Lookahead,
     DiffGrad,
     AdaMod,
     RAdam,
@@ -62,26 +60,6 @@ sgd_cases = [
             lambda opt: ExponentialLR(opt, gamma=0.99),
             lambda opt: ReduceLROnPlateau(opt),
         ],
-    ),
-]
-
-
-powsersign_cases = [
-    (lambda weight, bias: PowerSign([weight, bias], lr=1e-3),),
-    (
-        lambda weight, bias: PowerSign(
-            _build_params_dict(weight, bias, lr=1e-2), lr=1e-3
-        ),
-    ),
-    (
-        lambda weight, bias: PowerSign(
-            _build_params_dict_single(weight, bias, lr=1e-2), lr=1e-3
-        ),
-    ),
-    (
-        lambda weight, bias: PowerSign(
-            _build_params_dict_single(weight, bias, lr=1e-2)
-        ),
     ),
 ]
 
@@ -204,11 +182,6 @@ sgdw_cases = [
             _build_params_dict_single(weight, bias, lr=1e-2, weight_decay=1e-3)
         ),
     ),
-]
-
-
-lookahead_cases = [
-    (lambda weight, bias: Lookahead(optim.SGD([weight, bias], lr=1e-3)),)
 ]
 
 
@@ -371,22 +344,8 @@ class TestOptim:
             scheduler_constructors,
         )
 
-    def test_sgd_validation(self):
-        with pytest.raises(ValueError) as ctx:
-            optim.SGD(None, lr=1e-2, momentum=-0.5)
-        msg = 'Invalid momentum value: -0.5'
-        assert msg in str(ctx.value)
-
     @pytest.mark.parametrize('params', sgd_cases)
     def test_sgd(self, params):
-        self._test_basic_cases(*params)
-
-    @pytest.mark.parametrize('params', powsersign_cases)
-    def test_powersign(self, params):
-        self._test_basic_cases(*params)
-
-    @pytest.mark.parametrize('params', lookahead_cases)
-    def test_lookahead(self, params):
         self._test_basic_cases(*params)
 
     @pytest.mark.parametrize('params', diffgrad_cases)
