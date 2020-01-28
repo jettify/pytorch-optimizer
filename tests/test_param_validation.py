@@ -25,11 +25,12 @@ def assert_lr_validation(optimizer_class):
 
 
 optimizers = [
-    optim.DiffGrad,
     optim.AdaMod,
+    optim.DiffGrad,
+    optim.Lamb,
     optim.RAdam,
-    optim.Yogi,
     optim.SGDW,
+    optim.Yogi,
 ]
 
 

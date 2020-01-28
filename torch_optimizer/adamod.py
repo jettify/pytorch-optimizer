@@ -7,7 +7,7 @@ __all__ = ('AdaMod',)
 
 
 class AdaMod(Optimizer):
-    """Implements AdaMod algorithm with Decoupled Weight Decay
+    r"""Implements AdaMod algorithm with Decoupled Weight Decay
     arxiv.org/abs/1711.05101)
     It has been proposed in
     `Adaptive and Momental Bounds for Adaptive Learning Rate Methods`_.
