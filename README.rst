@@ -68,5 +68,21 @@ learning rate control, and has similar theoretical guarantees on convergence as 
 **Reference Code**: https://github.com/4rtemi5/Yogi-Optimizer_Keras
 
 
+RAdam
+-----
+
+**Paper**: *On the Variance of the Adaptive Learning Rate and Beyond* (2019) [`arXiv <https://arxiv.org/abs/1908.03265>`_]
+
+**Reference Code**: https://github.com/LiyuanLucasLiu/RAdam
+
+
+Lamb
+----
+
+**Paper**: *Large Batch Optimization for Deep Learning: Training BERT in 76 minutes* (2019) [`arXiv <https://arxiv.org/abs/1904.00962>`_]
+
+**Reference Code**: https://github.com/cybertronai/pytorch-lamb
+
+
 .. _Python: https://www.python.org
 .. _PyTorch: https://github.com/pytorch/pytorch
