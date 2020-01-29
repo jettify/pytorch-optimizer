@@ -6,8 +6,6 @@ import torch_optimizer as optim
 from torch import nn
 
 
-seed = 42
-torch.manual_seed(seed)
 
 
 def make_dataset(seed=42):
@@ -50,12 +48,12 @@ def ids(v):
 
 
 optimizers = [
-    (optim.Lamb, {'lr': 0.05}, 200),
+    (optim.Lamb, {'lr': 0.01}, 200),
     (optim.SGDW, {'lr': 1.0}, 200),
     (optim.DiffGrad, {'lr': 0.5}, 200),
     (optim.AdaMod, {'lr': 2.0}, 200),
     (optim.Yogi, {'lr': 0.1}, 200),
-    (optim.RAdam, {'lr': 1.0}, 300),
+    (optim.RAdam, {'lr': 1.0}, 200),
 ]
 
 
@@ -67,12 +65,13 @@ def test_basic_nn_modeloptimizer_config(optimizer_config):
     loss_fn = nn.BCELoss()
     optimizer_class, config, iterations = optimizer_config
     optimizer = optimizer_class(model.parameters(), **config)
-
+    init_loss = None
     for _ in range(iterations):
         y_pred = model(x_data)
         loss = loss_fn(y_pred, y_data)
-
+        if init_loss is None:
+            init_loss = loss
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-    assert loss.item() < 0.1
+    assert init_loss.item() > 2.0 * loss.item()
