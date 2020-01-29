@@ -6,8 +6,6 @@ import torch_optimizer as optim
 from torch import nn
 
 
-
-
 def make_dataset(seed=42):
     rng = np.random.RandomState(seed)
     N = 100
