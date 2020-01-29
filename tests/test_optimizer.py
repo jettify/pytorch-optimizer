@@ -1,18 +1,10 @@
 import functools
 from copy import deepcopy
-import pytest
 
 import torch
-import torch.optim as optim
+import torch_optimizer as optim
 from torch.autograd import Variable
 from torch.optim.lr_scheduler import ExponentialLR, ReduceLROnPlateau, StepLR
-from torch_optimizer import (
-    DiffGrad,
-    AdaMod,
-    RAdam,
-    Yogi,
-    SGDW,
-)
 
 from tests.utils import assert_dict_equal
 
@@ -25,164 +17,67 @@ def _build_params_dict_single(weight, bias, **kwargs):
     return [dict(params=bias, **kwargs)]
 
 
-sgd_cases = [
-    (lambda weight, bias: optim.SGD([weight, bias], lr=1e-3),),
-    (
-        lambda weight, bias: optim.SGD(
-            _build_params_dict(weight, bias, lr=1e-2), lr=1e-3
+def make_test_params(optimizer_class):
+    cases = [
+        (lambda weight, bias: optimizer_class([weight, bias], lr=1e-3),),
+        (
+            lambda weight, bias: optimizer_class(
+                _build_params_dict(weight, bias, lr=1e-2), lr=1e-3
+            ),
         ),
-    ),
-    (
-        lambda weight, bias: optim.SGD(
-            _build_params_dict_single(weight, bias, lr=1e-2), lr=1e-3
+        (
+            lambda weight, bias: optimizer_class(
+                _build_params_dict_single(weight, bias, lr=1e-2), lr=1e-3
+            ),
         ),
-    ),
-    (
-        lambda weight, bias: optim.SGD(
-            _build_params_dict_single(weight, bias, lr=1e-2)
+        (
+            lambda weight, bias: optimizer_class(
+                _build_params_dict_single(weight, bias, lr=1e-2)
+            ),
         ),
-    ),
-    (
-        lambda weight, bias: optim.SGD([weight, bias], lr=1e-3),
-        [lambda opt: StepLR(opt, gamma=0.9, step_size=10)],
-    ),
-    (
-        lambda weight, bias: optim.SGD([weight, bias], lr=1e-3),
-        [
-            lambda opt: StepLR(opt, gamma=0.9, step_size=10),
-            lambda opt: ReduceLROnPlateau(opt),
-        ],
-    ),
-    (
-        lambda weight, bias: optim.SGD([weight, bias], lr=1e-3),
-        [
-            lambda opt: StepLR(opt, gamma=0.99, step_size=10),
-            lambda opt: ExponentialLR(opt, gamma=0.99),
-            lambda opt: ReduceLROnPlateau(opt),
-        ],
-    ),
+        (
+            lambda weight, bias: optimizer_class([weight, bias], lr=1e-3),
+            [lambda opt: StepLR(opt, gamma=0.9, step_size=10)],
+        ),
+        (
+            lambda weight, bias: optimizer_class([weight, bias], lr=1e-3),
+            [
+                lambda opt: StepLR(opt, gamma=0.9, step_size=10),
+                lambda opt: ReduceLROnPlateau(opt),
+            ],
+        ),
+        (
+            lambda weight, bias: optimizer_class([weight, bias], lr=1e-3),
+            [
+                lambda opt: StepLR(opt, gamma=0.99, step_size=10),
+                lambda opt: ExponentialLR(opt, gamma=0.99),
+                lambda opt: ReduceLROnPlateau(opt),
+            ],
+        ),
+    ]
+    ids = [f'{optimizer_class.__name__}_{i}' for i in range(len(cases))]
+    return cases, ids
+
+
+optimizers = [
+    optim.AdaMod,
+    optim.DiffGrad,
+    optim.Lamb,
+    optim.RAdam,
+    optim.SGDW,
+    optim.Yogi,
 ]
 
 
-diffgrad_cases = [
-    (lambda weight, bias: DiffGrad([weight, bias], lr=1e-3),),
-    (
-        lambda weight, bias: DiffGrad(
-            _build_params_dict(weight, bias, lr=1e-2), lr=1e-3
-        ),
-    ),
-    (
-        lambda weight, bias: DiffGrad(
-            _build_params_dict_single(weight, bias, lr=1e-2), lr=1e-3
-        ),
-    ),
-    (
-        lambda weight, bias: DiffGrad(
-            _build_params_dict_single(weight, bias, lr=1e-2)
-        ),
-    ),
-    (
-        lambda weight, bias: DiffGrad(
-            _build_params_dict_single(weight, bias, lr=1e-2, weight_decay=1e-3)
-        ),
-    ),
-]
-
-adamod_cases = [
-    (lambda weight, bias: AdaMod([weight, bias], lr=1e-3),),
-    (
-        lambda weight, bias: AdaMod(
-            _build_params_dict(weight, bias, lr=1e-2), lr=1e-3
-        ),
-    ),
-    (
-        lambda weight, bias: AdaMod(
-            _build_params_dict_single(weight, bias, lr=1e-2), lr=1e-3
-        ),
-    ),
-    (
-        lambda weight, bias: AdaMod(
-            _build_params_dict_single(weight, bias, lr=1e-2)
-        ),
-    ),
-    (
-        lambda weight, bias: AdaMod(
-            _build_params_dict_single(weight, bias, lr=1e-2, weight_decay=1e-3)
-        ),
-    ),
-]
-
-radam_cases = [
-    (lambda weight, bias: RAdam([weight, bias], lr=1e-3),),
-    (
-        lambda weight, bias: RAdam(
-            _build_params_dict(weight, bias, lr=1e-2), lr=1e-3
-        ),
-    ),
-    (
-        lambda weight, bias: RAdam(
-            _build_params_dict_single(weight, bias, lr=1e-2), lr=1e-3
-        ),
-    ),
-    (
-        lambda weight, bias: RAdam(
-            _build_params_dict_single(weight, bias, lr=1e-2)
-        ),
-    ),
-    (
-        lambda weight, bias: RAdam(
-            _build_params_dict_single(weight, bias, lr=1e-2, weight_decay=1e-3)
-        ),
-    ),
-]
-
-yogi_cases = [
-    (lambda weight, bias: Yogi([weight, bias], lr=1e-3),),
-    (
-        lambda weight, bias: Yogi(
-            _build_params_dict(weight, bias, lr=1e-2), lr=1e-3
-        ),
-    ),
-    (
-        lambda weight, bias: Yogi(
-            _build_params_dict_single(weight, bias, lr=1e-2), lr=1e-3
-        ),
-    ),
-    (
-        lambda weight, bias: Yogi(
-            _build_params_dict_single(weight, bias, lr=1e-2)
-        ),
-    ),
-    (
-        lambda weight, bias: Yogi(
-            _build_params_dict_single(weight, bias, lr=1e-2, weight_decay=1e-3)
-        ),
-    ),
-]
-
-sgdw_cases = [
-    (lambda weight, bias: SGDW([weight, bias], lr=1e-3),),
-    (
-        lambda weight, bias: SGDW(
-            _build_params_dict(weight, bias, lr=1e-2), lr=1e-3
-        ),
-    ),
-    (
-        lambda weight, bias: SGDW(
-            _build_params_dict_single(weight, bias, lr=1e-2), lr=1e-3
-        ),
-    ),
-    (
-        lambda weight, bias: SGDW(
-            _build_params_dict_single(weight, bias, lr=1e-2)
-        ),
-    ),
-    (
-        lambda weight, bias: SGDW(
-            _build_params_dict_single(weight, bias, lr=1e-2, weight_decay=1e-3)
-        ),
-    ),
-]
+def pytest_generate_tests(metafunc):
+    if 'optimizer_constructor' in metafunc.fixturenames:
+        cases = []
+        ids = []
+        for o in optimizers:
+            c, i = make_test_params(o)
+            cases = cases + c
+            ids = ids + i
+        metafunc.parametrize('optimizer_constructor', cases, ids=ids)
 
 
 class TestOptim:
@@ -344,26 +239,5 @@ class TestOptim:
             scheduler_constructors,
         )
 
-    @pytest.mark.parametrize('params', sgd_cases)
-    def test_sgd(self, params):
-        self._test_basic_cases(*params)
-
-    @pytest.mark.parametrize('params', diffgrad_cases)
-    def test_diffgrad(self, params):
-        self._test_basic_cases(*params)
-
-    @pytest.mark.parametrize('params', adamod_cases)
-    def test_adamod(self, params):
-        self._test_basic_cases(*params)
-
-    @pytest.mark.parametrize('params', radam_cases)
-    def test_radam(self, params):
-        self._test_basic_cases(*params)
-
-    @pytest.mark.parametrize('params', yogi_cases)
-    def test_yogi(self, params):
-        self._test_basic_cases(*params)
-
-    @pytest.mark.parametrize('params', sgdw_cases)
-    def test_sgdw(self, params):
-        self._test_basic_cases(*params)
+    def test_optimizer(self, optimizer_constructor):
+        self._test_basic_cases(*optimizer_constructor)
