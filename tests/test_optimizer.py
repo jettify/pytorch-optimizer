@@ -60,6 +60,7 @@ def make_test_params(optimizer_class):
 
 
 optimizers = [
+    optim.AccSGD,
     optim.AdaMod,
     optim.DiffGrad,
     optim.Lamb,
