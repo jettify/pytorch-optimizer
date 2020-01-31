@@ -1,10 +1,17 @@
 import math
 import torch
-from torch.optim.optimizer import Optimizer
+from torch.optim import Optimizer
 
 
 class Yogi(Optimizer):
     r"""Implements Yogi algorithm.
+
+    Example:
+        >>> import torch_optimizer as optim
+        >>> optimizer = optim.Yogi(model.parameters(), lr=0.1)
+        >>> optimizer.zero_grad()
+        >>> loss_fn(model(input), target).backward()
+        >>> optimizer.step()
     """
 
     def __init__(

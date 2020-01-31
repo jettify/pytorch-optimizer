@@ -1,12 +1,22 @@
 import math
 import torch
-from torch.optim.optimizer import Optimizer
+from torch.optim import Optimizer
 
 
 __all__ = ('RAdam',)
 
 
 class RAdam(Optimizer):
+    r"""Implements RAdam optimization algorithm.
+
+    Example:
+        >>> import torch_optimizer as optim
+        >>> optimizer = optim.RAdam(model.parameters(), lr=0.1)
+        >>> optimizer.zero_grad()
+        >>> loss_fn(model(input), target).backward()
+        >>> optimizer.step()
+    """
+
     def __init__(
         self, params, lr=1e-3, betas=(0.9, 0.999), eps=1e-8, weight_decay=0
     ):

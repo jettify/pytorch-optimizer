@@ -1,5 +1,5 @@
 import torch
-from torch.optim.optimizer import Optimizer
+from torch.optim import Optimizer
 
 
 __all__ = ('SGDW',)
@@ -24,7 +24,8 @@ class SGDW(Optimizer):
         nesterov (bool, optional): enables Nesterov momentum (default: False)
 
     Example:
-        >>> optimizer = SGDW(model.parameters(), lr=0.1, momentum=0.9)
+        >>> import torch_optimizer as optim
+        >>> optimizer = optim.SGDW(model.parameters(), lr=0.1, momentum=0.9)
         >>> optimizer.zero_grad()
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
