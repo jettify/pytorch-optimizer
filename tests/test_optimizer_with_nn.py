@@ -52,6 +52,7 @@ optimizers = [
     (optim.AdaMod, {'lr': 2.0}, 200),
     (optim.Yogi, {'lr': 0.1}, 200),
     (optim.RAdam, {'lr': 1.0}, 200),
+    (optim.AccSGD, {'lr': 1.0}, 200),
 ]
 
 
