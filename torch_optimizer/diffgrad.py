@@ -22,6 +22,13 @@ class DiffGrad(Optimizer):
             numerical stability (default: 1e-8)
         weight_decay (float, optional): weight decay (L2 penalty) (default: 0)
 
+    Example:
+        >>> import torch_optimizer as optim
+        >>> optimizer = optim.DiffGrad(model.parameters(), lr=0.1)
+        >>> optimizer.zero_grad()
+        >>> loss_fn(model(input), target).backward()
+        >>> optimizer.step()
+
     .. _diffGrad: An Optimization Method for Convolutional Neural Networks:
         https://arxiv.org/abs/1909.11015
     .. _Adam\: A Method for Stochastic Optimization:

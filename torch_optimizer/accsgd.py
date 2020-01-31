@@ -21,13 +21,14 @@ class AccSGD(Optimizer):
         kappa (float, optional): ratio of long to short step (default: 1000)
         xi (float, optional): statistical advantage parameter (default: 10)
         small_const (float, optional): any value <=1 (default: 0.7)
+
     Example:
-        >>> from AccSGD import *
-        >>> optimizer = AccSGD(model.parameters(), lr=0.1)
+        >>> import torch_optimizer as optim
+        >>> optimizer = optim.AccSGD(model.parameters(), lr=0.1)
         >>> optimizer.zero_grad()
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
-    """
+   """
 
     def __init__(
         self,

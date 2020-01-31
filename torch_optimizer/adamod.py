@@ -23,6 +23,13 @@ class AdaMod(Optimizer):
             numerical stability (default: 1e-8)
         weight_decay (float, optional): weight decay (L2 penalty) (default: 0)
 
+    Example:
+        >>> import torch_optimizer as optim
+        >>> optimizer = optim.AdaMod(model.parameters(), lr=0.1)
+        >>> optimizer.zero_grad()
+        >>> loss_fn(model(input), target).backward()
+        >>> optimizer.step()
+
     https://github.com/lancopku/AdaMod
     """
 
