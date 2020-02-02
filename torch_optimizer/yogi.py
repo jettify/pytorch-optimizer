@@ -1,6 +1,6 @@
 import math
 import torch
-from torch.optim import Optimizer
+from torch.optim.optimizer import Optimizer
 
 
 class Yogi(Optimizer):

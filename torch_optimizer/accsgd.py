@@ -1,5 +1,5 @@
 import copy
-from torch.optim import Optimizer
+from torch.optim.optimizer import Optimizer
 
 
 __all__ = ('AccSGD',)
