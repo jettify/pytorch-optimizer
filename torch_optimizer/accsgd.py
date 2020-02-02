@@ -1,5 +1,6 @@
 import copy
 from torch.optim.optimizer import Optimizer
+from .types import OptLossClosure, Params, OptFloat
 
 
 __all__ = ('AccSGD',)
@@ -32,13 +33,13 @@ class AccSGD(Optimizer):
 
     def __init__(
         self,
-        params,
-        lr=1e-3,
-        kappa=1000.0,
-        xi=10.0,
-        small_const=0.7,
-        weight_decay=0,
-    ):
+        params: Params,
+        lr: float = 1e-3,
+        kappa: float = 1000.0,
+        xi: float = 10.0,
+        small_const: float = 0.7,
+        weight_decay: float = 0,
+    ) -> None:
         if not 0.0 <= lr:
             raise ValueError(f'Invalid learning rate: {lr}')
         defaults = dict(
@@ -50,8 +51,9 @@ class AccSGD(Optimizer):
         )
         super(AccSGD, self).__init__(params, defaults)
 
-    def step(self, closure=None):
-        """ Performs a single optimization step.
+    def step(self, closure: OptLossClosure = None) -> OptFloat:
+        r"""Performs a single optimization step.
+
         Arguments:
             closure (callable, optional): A closure that reevaluates the model
                 and returns the loss.

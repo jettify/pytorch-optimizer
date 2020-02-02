@@ -2,6 +2,8 @@ import math
 import torch
 from torch.optim.optimizer import Optimizer
 
+from .types import Betas2, OptFloat, OptLossClosure, Params
+
 
 __all__ = ('RAdam',)
 
@@ -18,8 +20,13 @@ class RAdam(Optimizer):
     """
 
     def __init__(
-        self, params, lr=1e-3, betas=(0.9, 0.999), eps=1e-8, weight_decay=0
-    ):
+        self,
+        params: Params,
+        lr: float = 1e-3,
+        betas: Betas2 = (0.9, 0.999),
+        eps: float = 1e-8,
+        weight_decay: float = 0,
+    ) -> None:
         if not 0.0 <= lr:
             raise ValueError(f'Invalid learning rate: {lr}')
         if not 0.0 <= eps:
@@ -33,8 +40,9 @@ class RAdam(Optimizer):
         self._buffer = [[None, None, None] for ind in range(10)]
         super(RAdam, self).__init__(params, defaults)
 
-    def step(self, closure=None):
-        """Performs a single optimization step.
+    def step(self, closure: OptLossClosure = None) -> OptFloat:
+        r"""Performs a single optimization step.
+
         Arguments:
             closure (callable, optional): A closure that reevaluates the model
                 and returns the loss.

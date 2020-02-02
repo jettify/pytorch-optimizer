@@ -1,6 +1,8 @@
 import torch
 from torch.optim.optimizer import Optimizer
 
+from .types import OptFloat, OptLossClosure, Params, State
+
 
 __all__ = ('SGDW',)
 
@@ -60,13 +62,13 @@ class SGDW(Optimizer):
 
     def __init__(
         self,
-        params,
-        lr=1e-3,
-        momentum=0,
-        dampening=0,
-        weight_decay=1e-2,
-        nesterov=False,
-    ):
+        params: Params,
+        lr: float = 1e-3,
+        momentum: float = 0,
+        dampening: float = 0,
+        weight_decay: float = 1e-2,
+        nesterov: bool = False,
+    ) -> None:
         if not 0.0 <= lr:
             raise ValueError(f'Invalid learning rate: {lr}')
         if momentum < 0.0:
@@ -87,12 +89,12 @@ class SGDW(Optimizer):
             )
         super(SGDW, self).__init__(params, defaults)
 
-    def __setstate__(self, state):
+    def __setstate__(self, state: State) -> None:
         super(SGDW, self).__setstate__(state)
         for group in self.param_groups:
             group.setdefault('nesterov', False)
 
-    def step(self, closure=None):
+    def step(self, closure: OptLossClosure = None) -> OptFloat:
         """Performs a single optimization step.
 
         Arguments:
