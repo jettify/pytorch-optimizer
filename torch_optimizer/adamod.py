@@ -2,6 +2,8 @@ import math
 import torch
 from torch.optim.optimizer import Optimizer
 
+from .types import Betas2, OptFloat, OptLossClosure, Params
+
 
 __all__ = ('AdaMod',)
 
@@ -35,13 +37,13 @@ class AdaMod(Optimizer):
 
     def __init__(
         self,
-        params,
-        lr=1e-3,
-        betas=(0.9, 0.999),
-        beta3=0.999,
-        eps=1e-8,
-        weight_decay=0,
-    ):
+        params: Params,
+        lr: float = 1e-3,
+        betas: Betas2 = (0.9, 0.999),
+        beta3: float = 0.999,
+        eps: float = 1e-8,
+        weight_decay: float = 0,
+    ) -> None:
         if not 0.0 <= lr:
             raise ValueError(f'Invalid learning rate: {lr}')
         if not 0.0 <= eps:
@@ -57,7 +59,7 @@ class AdaMod(Optimizer):
         )
         super(AdaMod, self).__init__(params, defaults)
 
-    def step(self, closure=None):
+    def step(self, closure: OptLossClosure = None) -> OptFloat:
         """Performs a single optimization step.
 
         Arguments:

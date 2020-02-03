@@ -2,6 +2,11 @@ import math
 import torch
 from torch.optim.optimizer import Optimizer
 
+from .types import Betas2, OptFloat, OptLossClosure, Params
+
+
+__all__ = ('Yogi',)
+
 
 class Yogi(Optimizer):
     r"""Implements Yogi algorithm.
@@ -15,8 +20,13 @@ class Yogi(Optimizer):
     """
 
     def __init__(
-        self, params, lr=1e-3, betas=(0.9, 0.999), eps=1e-3, weight_decay=0
-    ):
+        self,
+        params: Params,
+        lr: float = 1e-3,
+        betas: Betas2 = (0.9, 0.999),
+        eps: float = 1e-3,
+        weight_decay: float = 0,
+    ) -> None:
         if not 0.0 <= lr:
             raise ValueError(f'Invalid learning rate: {lr}')
         if not 0.0 <= eps:
@@ -29,8 +39,8 @@ class Yogi(Optimizer):
         defaults = dict(lr=lr, betas=betas, eps=eps, weight_decay=weight_decay)
         super(Yogi, self).__init__(params, defaults)
 
-    def step(self, closure=None):
-        """Performs a single optimization step.
+    def step(self, closure: OptLossClosure = None) -> OptFloat:
+        r"""Performs a single optimization step.
 
         Arguments:
             closure (callable, optional): A closure that reevaluates the model
