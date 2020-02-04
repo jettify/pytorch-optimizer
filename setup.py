@@ -43,6 +43,18 @@ classifiers = [
     'Development Status :: 3 - Alpha',
 ]
 
+keywords = [
+    'torch-optimizer',
+    'pytorch',
+    'accsgd',
+    'adamod',
+    'diffgrad',
+    'lamb',
+    'radam',
+    'sgdw',
+    'yogi',
+]
+
 
 setup(
     name='torch-optimizer',
@@ -58,7 +70,7 @@ setup(
     license='Apache 2',
     packages=find_packages(),
     install_requires=install_requires,
-    keywords=['torch-optimizer', 'pytorch'],
+    keywords=keywords,
     zip_safe=True,
     include_package_data=True,
 )
