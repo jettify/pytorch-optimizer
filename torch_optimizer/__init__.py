@@ -1,4 +1,5 @@
 from .accsgd import AccSGD
+from .adabound import AdaBound
 from .adamod import AdaMod
 from .diffgrad import DiffGrad
 from .lamb import Lamb
@@ -9,6 +10,7 @@ from .yogi import Yogi
 
 __all__ = (
     'AccSGD',
+    'AdaBound',
     'AdaMod',
     'DiffGrad',
     'Lamb',
