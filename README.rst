@@ -49,6 +49,9 @@ upper bounds. The dynamic learning rate bounds are based on the exponential
 moving averages of the adaptive learning rates themselves, which smooth out
 unexpected large learning rates and stabilize the training of deep neural networks.
 
+.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AccSGD.png
+    :alt: accsgd
+
 **Paper**: *An Adaptive and Momental Bound Method for Stochastic Learning.* (2019) [https://arxiv.org/abs/1910.12249v1]
 
 **Reference Code**: https://github.com/lancopku/AdaMod
@@ -60,12 +63,18 @@ gradient, the step size is adjusted for each parameter in such
 a way that it should have a larger step size for faster gradient changing
 parameters and a lower step size for lower gradient changing parameters.
 
+.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_DiffGrad.png
+    :alt: accsgd
+
 **Paper**: *diffGrad: An Optimization Method for Convolutional Neural Networks.* (2019) [https://arxiv.org/abs/1909.11015]
 
 **Reference Code**: https://github.com/shivram1987/diffGrad
 
 Lamb
 ----
+
+.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Lamb.png
+    :alt: accsgd
 
 **Paper**: *Large Batch Optimization for Deep Learning: Training BERT in 76 minutes* (2019) [https://arxiv.org/abs/1904.00962]
 
@@ -74,6 +83,9 @@ Lamb
 RAdam
 -----
 
+.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_RAdam.png
+    :alt: accsgd
+
 **Paper**: *On the Variance of the Adaptive Learning Rate and Beyond* (2019) [https://arxiv.org/abs/1908.03265]
 
 **Reference Code**: https://github.com/LiyuanLucasLiu/RAdam
@@ -81,12 +93,19 @@ RAdam
 SGDW
 ----
 
+.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_SGDW.png
+    :alt: accsgd
+
 **Paper**: *SGDR: Stochastic Gradient Descent with Warm Restarts* (2017) [https://arxiv.org/abs/1904.00962]
 
 **Reference Code**: https://arxiv.org/abs/1608.03983
 
 Yogi
 ----
+
+.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Yogi.png
+    :alt: accsgd
+
 Yogi is optimization algorithm based on ADAM with more fine grained effective
 learning rate control, and has similar theoretical guarantees on convergence as ADAM.
 
