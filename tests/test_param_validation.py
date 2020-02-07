@@ -16,15 +16,8 @@ def assert_sparse_not_supported(optimizer_class, err_msg=None):
     assert msg in str(ctx.value)
 
 
-def assert_lr_validation(optimizer_class):
-    lr = -0.01
-    with pytest.raises(ValueError) as ctx:
-        optimizer_class(None, lr=-0.01)
-    msg = f'Invalid learning rate: {lr}'
-    assert msg in str(ctx.value)
-
-
 optimizers = [
+    optim.AdaBound,
     optim.AdaMod,
     optim.DiffGrad,
     optim.Lamb,
@@ -41,4 +34,49 @@ def test_sparse_not_supported(optimizer_class):
 
 @pytest.mark.parametrize('optimizer_class', optimizers)
 def test_learning_rate(optimizer_class):
-    assert_lr_validation(optimizer_class)
+    lr = -0.01
+    with pytest.raises(ValueError) as ctx:
+        optimizer_class(None, lr=-0.01)
+    msg = f'Invalid learning rate: {lr}'
+    assert msg in str(ctx.value)
+
+
+eps_optimizers = [
+    optim.AdaBound,
+    optim.AdaMod,
+    optim.DiffGrad,
+    optim.Lamb,
+    optim.RAdam,
+    # optim.SGDW,
+    optim.Yogi,
+]
+
+
+@pytest.mark.parametrize('optimizer_class', eps_optimizers)
+def test_eps_validation(optimizer_class):
+    eps = -0.1
+    with pytest.raises(ValueError) as ctx:
+        optimizer_class(None, lr=0.1, eps=eps)
+    msg = f'Invalid epsilon value: {eps}'
+    assert msg in str(ctx.value)
+
+
+weight_decay_optimizers = [
+    optim.AccSGD,
+    optim.AdaBound,
+    optim.AdaMod,
+    optim.DiffGrad,
+    optim.Lamb,
+    optim.RAdam,
+    optim.SGDW,
+    optim.Yogi,
+]
+
+
+@pytest.mark.parametrize('optimizer_class', optimizers)
+def test_weight_decay_validation(optimizer_class):
+    weight_decay = -0.1
+    with pytest.raises(ValueError) as ctx:
+        optimizer_class(None, lr=0.1, weight_decay=weight_decay)
+    msg = f'Invalid weight_decay value: {weight_decay}'
+    assert msg in str(ctx.value)

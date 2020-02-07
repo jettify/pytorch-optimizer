@@ -43,6 +43,7 @@ optimizers = [
     (optim.SGDW, {'lr': 0.001, 'momentum': 0.99}, 9000),
     (optim.DiffGrad, {'lr': 0.5}, 500),
     (optim.AdaMod, {'lr': 1.0}, 800),
+    (optim.AdaBound, {'lr': 1.0}, 800),
     (optim.Yogi, {'lr': 1.0}, 500),
     (optim.AccSGD, {'lr': 0.015}, 800),
 ]

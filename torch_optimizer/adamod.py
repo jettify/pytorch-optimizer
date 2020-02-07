@@ -54,6 +54,8 @@ class AdaMod(Optimizer):
             raise ValueError(f'Invalid beta parameter at index 1: {betas[1]}')
         if not 0.0 <= beta3 < 1.0:
             raise ValueError(f'Invalid beta3 parameter: {beta3}')
+        if not 0.0 <= weight_decay:
+            raise ValueError(f'Invalid weight_decay value: {weight_decay}')
         defaults = dict(
             lr=lr, betas=betas, beta3=beta3, eps=eps, weight_decay=weight_decay
         )

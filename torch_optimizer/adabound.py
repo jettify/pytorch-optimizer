@@ -61,6 +61,8 @@ class AdaBound(Optimizer):
             raise ValueError(f'Invalid final learning rate: {final_lr}')
         if not 0.0 <= gamma < 1.0:
             raise ValueError(f'Invalid gamma parameter: {gamma}')
+        if not 0.0 <= weight_decay:
+            raise ValueError(f'Invalid weight_decay value: {weight_decay}')
         defaults = dict(
             lr=lr,
             betas=betas,
