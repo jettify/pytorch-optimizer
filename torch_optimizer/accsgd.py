@@ -42,6 +42,8 @@ class AccSGD(Optimizer):
     ) -> None:
         if not 0.0 <= lr:
             raise ValueError(f'Invalid learning rate: {lr}')
+        if not 0.0 <= weight_decay:
+            raise ValueError(f'Invalid weight_decay value: {weight_decay}')
         defaults = dict(
             lr=lr,
             kappa=kappa,

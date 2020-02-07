@@ -35,6 +35,8 @@ class RAdam(Optimizer):
             raise ValueError(f'Invalid beta parameter at index 0: {betas[0]}')
         if not 0.0 <= betas[1] < 1.0:
             raise ValueError(f'Invalid beta parameter at index 1: {betas[1]}')
+        if not 0.0 <= weight_decay:
+            raise ValueError(f'Invalid weight_decay value: {weight_decay}')
 
         defaults = dict(lr=lr, betas=betas, eps=eps, weight_decay=weight_decay)
         self._buffer = [[None, None, None] for ind in range(10)]
