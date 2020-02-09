@@ -66,6 +66,23 @@ AccSGD
 .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AccSGD.png
     :alt: accsgd
 
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.AccSGD(
+        model.parameters(),
+        lr=1e-3,
+        kappa=1000.0,
+        xi=10.0,
+        small_const=0.7,
+        weight_decay=0
+    )
+    optimizer.step()
+
+
 **Paper**: *On the insufficiency of existing momentum schemes for Stochastic Optimization* (2019) [https://arxiv.org/abs/1803.05591]
 
 **Reference Code**: https://github.com/rahulkidambi/AccSGD
@@ -74,6 +91,24 @@ AdaBound
 --------
 .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdaBound.png
     :alt: accsgd
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.AdaBound(
+        m.parameters(),
+        lr= 1e-3,
+        betas= (0.9, 0.999),
+        final_lr = 0.1,
+        gamma=1e-3,
+        eps= 1e-8,
+        weight_decay=0,
+        amsbound=False,
+    )
+    optimizer.step()
+
 
 **Paper**: *Adaptive Gradient Methods with Dynamic Bound of Learning Rate* (2019) [https://arxiv.org/abs/1902.09843]
 
@@ -89,6 +124,21 @@ unexpected large learning rates and stabilize the training of deep neural networ
 .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdaMod.png
     :alt: accsgd
 
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.AdaMod(
+        m.parameters(),
+        lr= 1e-3,
+        betas=(0.9, 0.999),
+        beta3=0.999,
+        eps=1e-8,
+        weight_decay=0,
+    )
+    optimizer.step()
+
 **Paper**: *An Adaptive and Momental Bound Method for Stochastic Learning.* (2019) [https://arxiv.org/abs/1910.12249v1]
 
 **Reference Code**: https://github.com/lancopku/AdaMod
@@ -103,6 +153,21 @@ parameters and a lower step size for lower gradient changing parameters.
 .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_DiffGrad.png
     :alt: accsgd
 
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.DiffGrad(
+        m.parameters(),
+        lr= 1e-3,
+        betas=(0.9, 0.999),
+        eps=1e-8,
+        weight_decay=0,
+    )
+    optimizer.step()
+
+
 **Paper**: *diffGrad: An Optimization Method for Convolutional Neural Networks.* (2019) [https://arxiv.org/abs/1909.11015]
 
 **Reference Code**: https://github.com/shivram1987/diffGrad
@@ -112,6 +177,21 @@ Lamb
 
 .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Lamb.png
     :alt: accsgd
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.Lamb(
+        m.parameters(),
+        lr= 1e-3,
+        betas=(0.9, 0.999),
+        eps=1e-8,
+        weight_decay=0,
+    )
+    optimizer.step()
+
 
 **Paper**: *Large Batch Optimization for Deep Learning: Training BERT in 76 minutes* (2019) [https://arxiv.org/abs/1904.00962]
 
@@ -123,6 +203,21 @@ RAdam
 .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_RAdam.png
     :alt: accsgd
 
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.RAdam(
+        m.parameters(),
+        lr= 1e-3,
+        betas=(0.9, 0.999),
+        eps=1e-8,
+        weight_decay=0,
+    )
+    optimizer.step()
+
+
 **Paper**: *On the Variance of the Adaptive Learning Rate and Beyond* (2019) [https://arxiv.org/abs/1908.03265]
 
 **Reference Code**: https://github.com/LiyuanLucasLiu/RAdam
@@ -132,6 +227,22 @@ SGDW
 
 .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_SGDW.png
     :alt: accsgd
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.SGDW(
+        m.parameters(),
+        lr= 1e-3,
+        momentum=0,
+        dampening=0,
+        weight_decay=1e-2,
+        nesterov=False,
+    )
+    optimizer.step()
+
 
 **Paper**: *SGDR: Stochastic Gradient Descent with Warm Restarts* (2017) [https://arxiv.org/abs/1904.00962]
 
@@ -145,6 +256,21 @@ learning rate control, and has similar theoretical guarantees on convergence as 
 
 .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Yogi.png
     :alt: accsgd
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.Yogi(
+        m.parameters(),
+        lr= 1e-3,
+        betas=(0.9, 0.999),
+        eps=1e-8,
+        weight_decay=0,
+    )
+    optimizer.step()
+
 
 **Paper**: *Adaptive Methods for Nonconvex Optimization* (2018) [https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization]
 
