@@ -39,6 +39,9 @@ Supported Optimizers
 | `AccSGD`_   | https://arxiv.org/abs/1909.11015                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `AdaBound`_ | https://arxiv.org/abs/1902.09843                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `AdaMod`_   | https://arxiv.org/abs/1904.00962                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
@@ -67,6 +70,14 @@ AccSGD
 
 **Reference Code**: https://github.com/rahulkidambi/AccSGD
 
+AdaBound
+--------
+.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdaBound.png
+    :alt: accsgd
+
+**Paper**: *Adaptive Gradient Methods with Dynamic Bound of Learning Rate* (2019) [https://arxiv.org/abs/1902.09843]
+
+**Reference Code**: https://github.com/Luolc/AdaBound
 
 AdaMod
 ------
