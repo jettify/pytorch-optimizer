@@ -18,4 +18,4 @@ __all__ = (
     'SGDW',
     'Yogi',
 )
-__version__ = '0.0.1a2'
+__version__ = '0.0.1a3'

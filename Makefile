@@ -20,7 +20,7 @@ bandit:
 	bandit -r ./torch_optimizer
 
 mypy:
-	mypy torch_optimizer --ignore-missing-imports --strict
+	mypy torch_optimizer --ignore-missing-imports
 
 cov cover coverage: flake checkrst pyroma bandit
 	pytest -sv -vv --cov=torch_optimizer --cov-report=term --cov-report=html ./tests
