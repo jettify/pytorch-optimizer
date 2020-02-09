@@ -36,6 +36,8 @@ Supported Optimizers
 
 AccSGD
 ------
+.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AccSGD.png
+    :alt: accsgd
 
 **Paper**: *On the insufficiency of existing momentum schemes for Stochastic Optimization* (2019) [https://arxiv.org/abs/1803.05591]
 
@@ -49,7 +51,7 @@ upper bounds. The dynamic learning rate bounds are based on the exponential
 moving averages of the adaptive learning rates themselves, which smooth out
 unexpected large learning rates and stabilize the training of deep neural networks.
 
-.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AccSGD.png
+.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdaMod.png
     :alt: accsgd
 
 **Paper**: *An Adaptive and Momental Bound Method for Stochastic Learning.* (2019) [https://arxiv.org/abs/1910.12249v1]
@@ -103,11 +105,11 @@ SGDW
 Yogi
 ----
 
-.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Yogi.png
-    :alt: accsgd
-
 Yogi is optimization algorithm based on ADAM with more fine grained effective
 learning rate control, and has similar theoretical guarantees on convergence as ADAM.
+
+.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Yogi.png
+    :alt: accsgd
 
 **Paper**: *Adaptive Methods for Nonconvex Optimization* (2018) [https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization]
 
