@@ -9,6 +9,7 @@ torch-optimizer
 .. image:: https://img.shields.io/pypi/v/torch-optimizer.svg
     :target: https://pypi.python.org/pypi/torch-optimizer
 
+
 **torch-optimizer** -- collection of optimizers for PyTorch_.
 
 
@@ -36,13 +37,13 @@ Supported Optimizers
 
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
-| `AccSGD`_   | https://arxiv.org/abs/1909.11015                                              |
+| `AccSGD`_   | https://arxiv.org/abs/1803.05591                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
 | `AdaBound`_ | https://arxiv.org/abs/1902.09843                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
-| `AdaMod`_   | https://arxiv.org/abs/1904.00962                                              |
+| `AdaMod`_   | https://arxiv.org/abs/1910.12249                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
 | `DiffGrad`_ | https://arxiv.org/abs/1909.11015                                              |
@@ -54,7 +55,7 @@ Supported Optimizers
 | `RAdam`_    | https://arxiv.org/abs/1908.03265                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
-| `SGDW`_     | https://arxiv.org/abs/1904.00962                                              |
+| `SGDW`_     | https://arxiv.org/abs/1608.03983                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
 | `Yogi`_     | https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization |
@@ -63,8 +64,12 @@ Supported Optimizers
 
 AccSGD
 ------
-.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AccSGD.png
-    :alt: accsgd
+.. raw:: html
+
+    <div class="row">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AccSGD.png" alt="AccSGD" height="420" width="420">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_AccSGD.png" alt="AccSGD" height="420" width="420">
+    </div>
 
 
 .. code:: python
@@ -89,8 +94,12 @@ AccSGD
 
 AdaBound
 --------
-.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdaBound.png
-    :alt: accsgd
+.. raw:: html
+
+    <div class="row">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdaBound.png" alt="AdaBound" height="420" width="420">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_AdaBound.png" alt="AdaBound" height="420" width="420">
+    </div>
 
 .. code:: python
 
@@ -121,8 +130,12 @@ upper bounds. The dynamic learning rate bounds are based on the exponential
 moving averages of the adaptive learning rates themselves, which smooth out
 unexpected large learning rates and stabilize the training of deep neural networks.
 
-.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdaMod.png
-    :alt: accsgd
+.. raw:: html
+
+    <div class="row">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdaMod.png" alt="AdaMod" height="420" width="420">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_AdaMod.png" alt="AdaMod" height="420" width="420">
+    </div>
 
 .. code:: python
 
@@ -139,7 +152,7 @@ unexpected large learning rates and stabilize the training of deep neural networ
     )
     optimizer.step()
 
-**Paper**: *An Adaptive and Momental Bound Method for Stochastic Learning.* (2019) [https://arxiv.org/abs/1910.12249v1]
+**Paper**: *An Adaptive and Momental Bound Method for Stochastic Learning.* (2019) [https://arxiv.org/abs/1910.12249]
 
 **Reference Code**: https://github.com/lancopku/AdaMod
 
@@ -150,8 +163,12 @@ gradient, the step size is adjusted for each parameter in such
 a way that it should have a larger step size for faster gradient changing
 parameters and a lower step size for lower gradient changing parameters.
 
-.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_DiffGrad.png
-    :alt: accsgd
+.. raw:: html
+
+    <div class="row">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_DiffGrad.png" alt="DiffGrad" height="420" width="420">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_DiffGrad.png" alt="DiffGrad" height="420" width="420">
+    </div>
 
 .. code:: python
 
@@ -175,8 +192,12 @@ parameters and a lower step size for lower gradient changing parameters.
 Lamb
 ----
 
-.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Lamb.png
-    :alt: accsgd
+.. raw:: html
+
+    <div class="row">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Lamb.png" alt="Lamb" height="420" width="420">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_Lamb.png" alt="Lamb" height="420" width="420">
+    </div>
 
 .. code:: python
 
@@ -200,8 +221,12 @@ Lamb
 RAdam
 -----
 
-.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_RAdam.png
-    :alt: accsgd
+.. raw:: html
+
+    <div class="row">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_RAdam.png" alt="RAdam" height="420" width="420">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_RAdam.png" alt="RAdam" height="420" width="420">
+    </div>
 
 .. code:: python
 
@@ -225,8 +250,12 @@ RAdam
 SGDW
 ----
 
-.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_SGDW.png
-    :alt: accsgd
+.. raw:: html
+
+    <div class="row">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_SGDW.png" alt="SGDW" height="420" width="420">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_SGDW.png" alt="SGDW" height="420" width="420">
+    </div>
 
 .. code:: python
 
@@ -244,7 +273,7 @@ SGDW
     optimizer.step()
 
 
-**Paper**: *SGDR: Stochastic Gradient Descent with Warm Restarts* (2017) [https://arxiv.org/abs/1904.00962]
+**Paper**: *SGDR: Stochastic Gradient Descent with Warm Restarts* (2017) [https://arxiv.org/abs/1608.03983]
 
 **Reference Code**: https://arxiv.org/abs/1608.03983
 
@@ -254,8 +283,12 @@ Yogi
 Yogi is optimization algorithm based on ADAM with more fine grained effective
 learning rate control, and has similar theoretical guarantees on convergence as ADAM.
 
-.. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Yogi.png
-    :alt: accsgd
+.. raw:: html
+
+    <div class="row">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Yogi.png" alt="Yogi" height="420" width="420">
+        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_Yogi.png" alt="Yogi" height="420" width="420">
+    </div>
 
 .. code:: python
 
