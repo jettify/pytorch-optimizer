@@ -46,14 +46,14 @@ def ids(v):
 
 
 optimizers = [
-    (optim.Lamb, {'lr': 0.01}, 200),
-    (optim.SGDW, {'lr': 1.0}, 200),
-    (optim.DiffGrad, {'lr': 0.5}, 200),
-    (optim.AdaMod, {'lr': 2.0}, 200),
-    (optim.AdaBound, {'lr': 1.1}, 200),
-    (optim.Yogi, {'lr': 0.1}, 200),
-    (optim.RAdam, {'lr': 1.0}, 200),
-    (optim.AccSGD, {'lr': 1.0}, 200),
+    (optim.Lamb, {'lr': 0.01, 'weight_decay': 1e-3}, 200),
+    (optim.SGDW, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
+    (optim.DiffGrad, {'lr': 0.5, 'weight_decay': 1e-3}, 200),
+    (optim.AdaMod, {'lr': 2.0, 'weight_decay': 1e-3}, 200),
+    (optim.AdaBound, {'lr': 1.1, 'weight_decay': 1e-3}, 200),
+    (optim.Yogi, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
+    (optim.RAdam, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
+    (optim.AccSGD, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
 ]
 
 
