@@ -80,3 +80,28 @@ def test_weight_decay_validation(optimizer_class):
         optimizer_class(None, lr=0.1, weight_decay=weight_decay)
     msg = f'Invalid weight_decay value: {weight_decay}'
     assert msg in str(ctx.value)
+
+
+betas_optimizers = [
+    optim.AdaBound,
+    optim.AdaMod,
+    optim.DiffGrad,
+    optim.Lamb,
+    optim.RAdam,
+    optim.Yogi,
+]
+
+
+@pytest.mark.parametrize('optimizer_class', eps_optimizers)
+def test_betas_validation(optimizer_class):
+    betas = (-1, 0.999)
+    with pytest.raises(ValueError) as ctx:
+        optimizer_class(None, lr=0.1, betas=(-1, 0.999))
+    msg = f'Invalid beta parameter at index 0: {betas[0]}'
+    assert msg in str(ctx.value)
+
+    betas = (0.9, -0.999)
+    with pytest.raises(ValueError) as ctx:
+        optimizer_class(None, lr=0.1, betas=betas)
+    msg = f'Invalid beta parameter at index 1: {betas[1]}'
+    assert msg in str(ctx.value)
