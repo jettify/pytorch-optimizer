@@ -7,21 +7,20 @@ __all__ = ('AccSGD',)
 
 
 class AccSGD(Optimizer):
-    r"""Implements the algorithm proposed in
-    https://arxiv.org/pdf/1704.08227.pdf, which is a provably accelerated
-    method for stochastic optimization. This has been employed in
-    https://openreview.net/forum?id=rJTutzbA- for training several deep
-    learning models of practical interest. This code has been implemented by
-    building on the construction of the SGD optimization module found in
-    pytorch codebase.
+    r"""Implements AccSGD algorithm.
 
-    Args:
-        params (iterable): iterable of parameters to optimize or dicts defining
+    It has been proposed in `On the insufficiency of existing momentum
+    schemes for Stochastic Optimization`__ and  `Accelerating Stochastic
+    Gradient Descent For Least Squares Regression`__
+
+    Arguments:
+        params: iterable of parameters to optimize or dicts defining
             parameter groups
-        lr (float): learning rate (required)
-        kappa (float, optional): ratio of long to short step (default: 1000)
-        xi (float, optional): statistical advantage parameter (default: 10)
-        small_const (float, optional): any value <=1 (default: 0.7)
+        lr: learning rate (default: 1e-3)
+        kappa: ratio of long to short step (default: 1000)
+        xi: statistical advantage parameter (default: 10)
+        small_const: any value <=1 (default: 0.7)
+        weight_decay: weight decay (L2 penalty) (default: 0)
 
     Example:
         >>> import torch_optimizer as optim
@@ -29,6 +28,9 @@ class AccSGD(Optimizer):
         >>> optimizer.zero_grad()
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
+
+     __ https://arxiv.org/abs/1704.08227
+     __ https://arxiv.org/abs/1803.05591
    """
 
     def __init__(
@@ -57,7 +59,7 @@ class AccSGD(Optimizer):
         r"""Performs a single optimization step.
 
         Arguments:
-            closure (callable, optional): A closure that reevaluates the model
+            closure: A closure that reevaluates the model
                 and returns the loss.
         """
         loss = None
