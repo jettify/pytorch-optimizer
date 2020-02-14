@@ -9,7 +9,19 @@ __all__ = ('Yogi',)
 
 
 class Yogi(Optimizer):
-    r"""Implements Yogi algorithm.
+    r"""Implements Yogi optimization algorithm.
+
+    It has been proposed in `Adaptive Methods for Nonconvex Optimization`__.
+
+    Arguments:
+        params: iterable of parameters to optimize or dicts defining
+            parameter groups
+        lr: learning rate (default: 1e-3)
+        betas: coefficients used for computing
+            running averages of gradient and its square (default: (0.9, 0.999))
+        eps: term added to the denominator to improve
+            numerical stability (default: 1e-8)
+        weight_decay: weight decay (L2 penalty) (default: 0)
 
     Example:
         >>> import torch_optimizer as optim
@@ -17,6 +29,8 @@ class Yogi(Optimizer):
         >>> optimizer.zero_grad()
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
+
+    __ https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization
     """
 
     def __init__(

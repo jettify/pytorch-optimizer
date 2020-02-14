@@ -10,20 +10,16 @@ __all__ = ('SGDW',)
 class SGDW(Optimizer):
     r"""Implements SGDW algorithm.
 
-    The SGDW variant was proposed in `Decoupled Weight Decay Regularization`_.
+    It has been proposed in `Decoupled Weight Decay Regularization`__.
 
-    Nesterov momentum is based on the formula from
-    `On the importance of initialization and momentum in deep learning`__.
-
-    Args:
-        params (iterable): iterable of parameters to optimize or dicts defining
+    Arguments:
+        params: iterable of parameters to optimize or dicts defining
             parameter groups
-        lr (float): learning rate
-        momentum (float, optional): momentum factor (default: 0)
-        weight_decay (float, optional): weight decay coefficient
-            (default: 1e-2)
-        dampening (float, optional): dampening for momentum (default: 0)
-        nesterov (bool, optional): enables Nesterov momentum (default: False)
+        lr: learning rate (default: 1e-3)
+        momentum: momentum factor (default: 0)
+        weight_decay: weight decay (L2 penalty) (default: 0)
+        dampening: dampening for momentum (default: 0)
+        nesterov: enables Nesterov momentum (default: False)
 
     Example:
         >>> import torch_optimizer as optim
@@ -32,32 +28,7 @@ class SGDW(Optimizer):
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
 
-    __ http://www.cs.toronto.edu/%7Ehinton/absps/momentum.pdf
-
-    .. note::
-        The implementation of SGD with Momentum/Nesterov subtly differs from
-        Sutskever et. al. and implementations in some other frameworks.
-
-        Considering the specific case of Momentum, the update can be written as
-
-        .. math::
-                  v = \rho * v + g \\
-                  p = p - lr * v
-
-        where p, g, v and :math:`\rho` denote the parameters, gradient,
-        velocity, and momentum respectively.
-
-        This is in contrast to Sutskever et. al. and
-        other frameworks which employ an update of the form
-
-        .. math::
-             v = \rho * v + lr * g \\
-             p = p - v
-
-        The Nesterov version is analogously modified.
-
-    .. _Decoupled Weight Decay Regularization:
-        https://arxiv.org/abs/1711.05101
+    __ https://arxiv.org/abs/1711.05101
     """
 
     def __init__(

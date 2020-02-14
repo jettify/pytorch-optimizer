@@ -40,6 +40,7 @@ clean:
 	rm -rf build
 	rm -rf cover
 	rm -rf dist
+	rm -rf docs/_build
 
 doc:
 	make -C docs html

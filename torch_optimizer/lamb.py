@@ -11,18 +11,18 @@ class Lamb(Optimizer):
     r"""Implements Lamb algorithm.
 
     It has been proposed in `Large Batch Optimization for Deep Learning:
-    Training BERT in 76 minutes`_.
+    Training BERT in 76 minutes`__.
 
     Arguments:
-        params (iterable): iterable of parameters to optimize or dicts defining
+        params: iterable of parameters to optimize or dicts defining
             parameter groups
-        lr (float, optional): learning rate (default: 1e-3)
-        betas (Tuple[float, float], optional): coefficients used for computing
+        lr: learning rate (default: 1e-3)
+        betas: coefficients used for computing
             running averages of gradient and its square (default: (0.9, 0.999))
-        eps (float, optional): term added to the denominator to improve
+        eps: term added to the denominator to improve
             numerical stability (default: 1e-8)
-        weight_decay (float, optional): weight decay (L2 penalty) (default: 0)
-        adam (bool, optional): always use trust ratio = 1, which turns this
+        weight_decay: weight decay (L2 penalty) (default: 0)
+        adam: always use trust ratio = 1, which turns this
             into Adam. Useful for comparison purposes.
 
     Example:
@@ -32,8 +32,7 @@ class Lamb(Optimizer):
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
 
-    .. _Large Batch Optimization for Deep Learning: Training BERT in 76
-    minutes: https://arxiv.org/abs/1904.00962
+    __ https://arxiv.org/abs/1904.00962
     """
 
     def __init__(
