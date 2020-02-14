@@ -9,23 +9,24 @@ __all__ = ('AdaBound',)
 
 
 class AdaBound(Optimizer):
-    """Implements AdaBound algorithm.
+    r"""Implements AdaBound algorithm.
+
     It has been proposed in `Adaptive Gradient Methods with Dynamic Bound of
-    Learning Rate`_.
+    Learning Rate`__.
+
     Arguments:
-        params (iterable): iterable of parameters to optimize or dicts defining
+        params: iterable of parameters to optimize or dicts defining
             parameter groups
-        lr (float, optional): Adam learning rate (default: 1e-3)
-        betas (Tuple[float, float], optional): coefficients used for computing
-            running averages of gradient and its square (default: (0.9, 0.999))
-        final_lr (float, optional): final (SGD) learning rate (default: 0.1)
-        gamma (float, optional): convergence speed of the bound functions
-        (default: 1e-3)
-        eps (float, optional): term added to the denominator to improve
-            numerical stability (default: 1e-8)
-        weight_decay (float, optional): weight decay (L2 penalty) (default: 0)
-        amsbound (boolean, optional): whether to use the AMSBound
-        variant of this algorithm
+        lr: learning rate (default: 1e-3)
+        betas: coefficients used for computing running averages of gradient
+            and its square (default: (0.9, 0.999))
+        final_lr: final (SGD) learning rate (default: 0.1)
+        gamma: convergence speed of the bound functions
+            (default: 1e-3)
+        eps: term added to the denominator to improve numerical stability
+            (default: 1e-8)
+        weight_decay: weight decay (L2 penalty) (default: 0)
+        amsbound: whether to use the AMSBound variant of this algorithm
 
     Example:
         >>> import torch_optimizer as optim
@@ -34,8 +35,7 @@ class AdaBound(Optimizer):
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
 
-    .. Adaptive Gradient Methods with Dynamic Bound of Learning Rate:
-        https://openreview.net/forum?id=Bkg3g2R9FX
+    __ https://arxiv.org/abs/1902.09843
     """
 
     def __init__(

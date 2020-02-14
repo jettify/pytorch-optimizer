@@ -9,21 +9,22 @@ __all__ = ('AdaMod',)
 
 
 class AdaMod(Optimizer):
-    r"""Implements AdaMod algorithm with Decoupled Weight Decay
-    arxiv.org/abs/1711.05101)
-    It has been proposed in
-    `Adaptive and Momental Bounds for Adaptive Learning Rate Methods`_.
+    r"""Implements AccSGD algorithm.
+
+    It has been proposed in `Adaptive and Momental Bounds for Adaptive
+    Learning Rate Methods`__.
+
     Arguments:
-        params (iterable): iterable of parameters to optimize or dicts defining
+        params: iterable of parameters to optimize or dicts defining
             parameter groups
-        lr (float, optional): learning rate (default: 1e-3)
-        betas (Tuple[float, float], optional): coefficients used for computing
-            running averages of gradient and its square (default: (0.9, 0.999))
-        beta3 (float, optional): smoothing coefficient for adaptive learning
-            rates (default: 0.9999)
-        eps (float, optional): term added to the denominator to improve
-            numerical stability (default: 1e-8)
-        weight_decay (float, optional): weight decay (L2 penalty) (default: 0)
+        lr: learning rate (default: 1e-3)
+        betas: coefficients used for computing running averages of gradient
+            and its square (default: (0.9, 0.999))
+        beta3: smoothing coefficient for adaptive learning rates
+            (default: 0.9999)
+        eps: term added to the denominator to improve numerical stability
+            (default: 1e-8)
+        weight_decay: weight decay (L2 penalty) (default: 0)
 
     Example:
         >>> import torch_optimizer as optim
@@ -32,7 +33,7 @@ class AdaMod(Optimizer):
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
 
-    https://github.com/lancopku/AdaMod
+    __ https://arxiv.org/abs/1910.12249
     """
 
     def __init__(
