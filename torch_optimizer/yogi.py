@@ -30,7 +30,7 @@ class Yogi(Optimizer):
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
 
-    __ https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization
+    __ https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization  # noqa
     """
 
     def __init__(
