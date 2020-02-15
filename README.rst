@@ -64,13 +64,10 @@ Supported Optimizers
 
 AccSGD
 ------
-.. raw:: html
 
-    <div class="row">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AccSGD.png" alt="AccSGD" height="420" width="420">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_AccSGD.png" alt="AccSGD" height="420" width="420">
-    </div>
-
++----------------------------------------+-----------------------------------------+
+| .. image:: docs/rastrigin_AccSGD.png   |  .. image:: docs/rosenbrock_AccSGD.png  |
++----------------------------------------+-----------------------------------------+
 
 .. code:: python
 
@@ -94,12 +91,10 @@ AccSGD
 
 AdaBound
 --------
-.. raw:: html
 
-    <div class="row">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdaBound.png" alt="AdaBound" height="420" width="420">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_AdaBound.png" alt="AdaBound" height="420" width="420">
-    </div>
++-----------------------------------------+------------------------------------------+
+| .. image:: docs/rastrigin_AdaBound.png  |  .. image:: docs/rosenbrock_AdaBound.png |
++-----------------------------------------+------------------------------------------+
 
 .. code:: python
 
@@ -130,12 +125,9 @@ upper bounds. The dynamic learning rate bounds are based on the exponential
 moving averages of the adaptive learning rates themselves, which smooth out
 unexpected large learning rates and stabilize the training of deep neural networks.
 
-.. raw:: html
-
-    <div class="row">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdaMod.png" alt="AdaMod" height="420" width="420">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_AdaMod.png" alt="AdaMod" height="420" width="420">
-    </div>
++-----------------------------------------+------------------------------------------+
+| .. image:: docs/rastrigin_AdaMod.png    |  .. image:: docs/rosenbrock_AdaMod.png   |
++-----------------------------------------+------------------------------------------+
 
 .. code:: python
 
@@ -163,12 +155,9 @@ gradient, the step size is adjusted for each parameter in such
 a way that it should have a larger step size for faster gradient changing
 parameters and a lower step size for lower gradient changing parameters.
 
-.. raw:: html
-
-    <div class="row">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_DiffGrad.png" alt="DiffGrad" height="420" width="420">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_DiffGrad.png" alt="DiffGrad" height="420" width="420">
-    </div>
++-----------------------------------------+-------------------------------------------+
+| .. image:: docs/rastrigin_DiffGrad.png  |  .. image:: docs/rosenbrock_DiffGrad.png  |
++-----------------------------------------+-------------------------------------------+
 
 .. code:: python
 
@@ -192,12 +181,9 @@ parameters and a lower step size for lower gradient changing parameters.
 Lamb
 ----
 
-.. raw:: html
-
-    <div class="row">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Lamb.png" alt="Lamb" height="420" width="420">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_Lamb.png" alt="Lamb" height="420" width="420">
-    </div>
++-------------------------------------+---------------------------------------+
+| .. image:: docs/rastrigin_Lamb.png  |  .. image:: docs/rosenbrock_Lamb.png  |
++-------------------------------------+---------------------------------------+
 
 .. code:: python
 
@@ -221,12 +207,9 @@ Lamb
 RAdam
 -----
 
-.. raw:: html
-
-    <div class="row">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_RAdam.png" alt="RAdam" height="420" width="420">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_RAdam.png" alt="RAdam" height="420" width="420">
-    </div>
++--------------------------------------+----------------------------------------+
+| .. image:: docs/rastrigin_RAdam.png  |  .. image:: docs/rosenbrock_RAdam.png  |
++--------------------------------------+----------------------------------------+
 
 .. code:: python
 
@@ -250,12 +233,9 @@ RAdam
 SGDW
 ----
 
-.. raw:: html
-
-    <div class="row">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_SGDW.png" alt="SGDW" height="420" width="420">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_SGDW.png" alt="SGDW" height="420" width="420">
-    </div>
++-------------------------------------+---------------------------------------+
+| .. image:: docs/rastrigin_SGDW.png  |  .. image:: docs/rosenbrock_SGDW.png  |
++-------------------------------------+---------------------------------------+
 
 .. code:: python
 
@@ -283,12 +263,9 @@ Yogi
 Yogi is optimization algorithm based on ADAM with more fine grained effective
 learning rate control, and has similar theoretical guarantees on convergence as ADAM.
 
-.. raw:: html
-
-    <div class="row">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Yogi.png" alt="Yogi" height="420" width="420">
-        <img src="https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_Yogi.png" alt="Yogi" height="420" width="420">
-    </div>
++-------------------------------------+---------------------------------------+
+| .. image:: docs/rastrigin_Yogi.png  |  .. image:: docs/rosenbrock_Yogi.png  |
++-------------------------------------+---------------------------------------+
 
 .. code:: python
 

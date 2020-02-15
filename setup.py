@@ -61,6 +61,7 @@ setup(
     version=read_version(),
     description=('pytorch-optimizer'),
     long_description='\n\n'.join((read('README.rst'), read('CHANGES.rst'))),
+    long_description_content_type='text/x-rst',
     classifiers=classifiers,
     platforms=['POSIX'],
     author='Nikolay Novik',
