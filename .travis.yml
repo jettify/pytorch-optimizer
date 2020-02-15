@@ -18,3 +18,14 @@ script:
 
 after_success:
     codecov
+
+deploy:
+  provider: pypi
+  user: jettify
+  password:
+    secure: "cJ+99s4b45QvXzS8V9uByLp9hwErD68mXu0lZlkmiEjbs1rG3LdfxswAptVUs/vnBpEnFh9TTfQtBkaQwG8bQR4dhvHQGMLhHzn2tReF1lIQNMW/OkyzCNsuwW7XrjNIgkoLqYeIBxULH47K1hnQlMCOqAe63iJGeAtG6WVizn9pnyGKxAGNwPIH7wTuWreL0FloVvrs/8qcu0TI18NvjR2WbXwDso2GdCxOJfL7oItYxwf+wbF4gGZa6OBWQwTzXFW2pYZDyu/y0hPrqJZE9kLiJ+Tk0C1DRJ913eNyXjq3255nT9ugNVNNNV3mUf/lDTqSsiftjaWdB/tfHsAIUQr9U5SZtvixCPVTHS8TZ9kTjpftbrFXsa+1dteWI2cqj5dOEo0X27ljU7SXxrJxe+lcdrI3D01s2kl3Scq88WRSuZSE08ptVPo5wMopBqxgKGUntWEB7ws+t8uDXdi1NLTGQI/Q2bUvqeueIhFKqd5VNUL5T5pocj6bcxu5zJob3dW/f4EwAvQJf+eqlO8f7oUaElWYsTYvdlvXUAFW0VkVpqNs/oR9nnX0ngDvll3q8vIH/cJJ2oweuJ7zYrU7joyA3NkxZhyWQrfQ4NK6bXY8i7+n/i01nXrKi3uoh44cxkZaouK4hUP6+NAcBJZs9VY7YKfR1gPHQXJ2OocCZII="
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+    all_branches: true
+    python: 3.7
