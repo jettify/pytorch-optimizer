@@ -60,3 +60,7 @@ target/
 .coverage.*
 coverage
 .mypy_cache/
+.DS_Store
+tags
+cscope.*
+TODO
