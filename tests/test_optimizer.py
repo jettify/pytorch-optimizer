@@ -65,6 +65,7 @@ optimizers = [
     optim.AdaMod,
     optim.DiffGrad,
     optim.Lamb,
+    optim.NovoGrad,
     optim.RAdam,
     optim.SGDW,
     optim.Yogi,
