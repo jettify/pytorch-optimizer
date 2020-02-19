@@ -91,7 +91,11 @@ class NovoGrad(Optimizer):
                     continue
                 grad = p.grad.data
                 if grad.is_sparse:
-                    raise RuntimeError('Sparse gradients are not supported.')
+                    msg = (
+                        'NovoGrad does not support sparse gradients, '
+                        'please consider SparseAdam instead'
+                    )
+                    raise RuntimeError(msg)
                 amsgrad = group['amsgrad']
 
                 state = self.state[p]
