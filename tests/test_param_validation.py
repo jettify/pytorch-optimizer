@@ -21,6 +21,7 @@ optimizers = [
     optim.AdaMod,
     optim.DiffGrad,
     optim.Lamb,
+    optim.NovoGrad,
     optim.RAdam,
     optim.SGDW,
     optim.Yogi,
@@ -46,6 +47,7 @@ eps_optimizers = [
     optim.AdaMod,
     optim.DiffGrad,
     optim.Lamb,
+    optim.NovoGrad,
     optim.RAdam,
     # optim.SGDW,
     optim.Yogi,
@@ -87,6 +89,7 @@ betas_optimizers = [
     optim.AdaMod,
     optim.DiffGrad,
     optim.Lamb,
+    optim.NovoGrad,
     optim.RAdam,
     optim.Yogi,
 ]

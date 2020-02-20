@@ -39,6 +39,11 @@ def ids(v):
 
 
 optimizers = [
+    (
+        optim.NovoGrad,
+        {'lr': 2.9, 'betas': (0.9, 0.999), 'grad_averaging': True},
+        900,
+    ),
     (optim.RAdam, {'lr': 0.01, 'betas': (0.9, 0.95), 'eps': 1e-3}, 800),
     (optim.SGDW, {'lr': 0.001, 'momentum': 0.99}, 9000),
     (optim.DiffGrad, {'lr': 0.5}, 500),
