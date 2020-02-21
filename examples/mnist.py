@@ -157,7 +157,9 @@ def main():
         writer.add_graph(model, images)
 
         # custom optimizer from torch_optimizer package
-        optimizer = optim.DiffGrad(model.parameters(), lr=conf.lr)
+        # main_optimizer = optim.DiffGrad(model.parameters(), lr=conf.lr)
+        # optimizer = optim.lookahead.Lookahead(main_optimizer)
+        optimizer = optim.Novograd(model.parameters(), lr=conf.lr)
 
         scheduler = StepLR(optimizer, step_size=1, gamma=conf.gamma)
         for epoch in range(1, conf.epochs + 1):

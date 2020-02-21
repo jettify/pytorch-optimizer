@@ -52,6 +52,9 @@ Supported Optimizers
 | `Lamb`_     | https://arxiv.org/abs/1904.00962                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `NovoGrad`_ | https://arxiv.org/abs/1905.11286                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `RAdam`_    | https://arxiv.org/abs/1908.03265                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
@@ -203,6 +206,36 @@ Lamb
 **Paper**: *Large Batch Optimization for Deep Learning: Training BERT in 76 minutes* (2019) [https://arxiv.org/abs/1904.00962]
 
 **Reference Code**: https://github.com/cybertronai/pytorch-lamb
+
+
+NovoGrad
+--------
+
++-----------------------------------------+-------------------------------------------+
+| .. image:: docs/rastrigin_NovoGrad.png  |  .. image:: docs/rosenbrock_NovoGrad.png  |
++-----------------------------------------+-------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.NovoGrad(
+        m.parameters(),
+        lr= 1e-3,
+        betas=(0.9, 0.999),
+        eps=1e-8,
+        weight_decay=0,
+        grad_averaging=False,
+        amsgrad=False,
+    )
+    optimizer.step()
+
+
+**Paper**: *Stochastic Gradient Methods with Layer-wise Adaptive Moments for Training of Deep Networks* (2019) [https://arxiv.org/abs/1905.11286]
+
+**Reference Code**: https://github.com/NVIDIA/DeepLearningExamples/
+
 
 RAdam
 -----
