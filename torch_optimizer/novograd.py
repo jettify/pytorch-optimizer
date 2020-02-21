@@ -32,8 +32,9 @@ class NovoGrad(Optimizer):
         >>> optimizer = optim.Yogi(model.parameters(), lr=0.1)
         >>> optimizer.zero_grad()
         >>> loss_fn(model(input), target).backward()
+        >>> scheduler = StepLR(optimizer, step_size=1, gamma=0.7)
         >>> optimizer.step()
-            (default: False)
+        >>> scheduler.step()
 
     __ https://arxiv.org/abs/1905.11286
     """
