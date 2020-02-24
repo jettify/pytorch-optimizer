@@ -59,6 +59,11 @@ def make_test_params(optimizer_class):
     return cases, ids
 
 
+def build_lookahead(*a, **kw):
+    base = optim.Yogi(*a, **kw)
+    return optim.Lookahead(base)
+
+
 optimizers = [
     optim.AccSGD,
     optim.AdaBound,
@@ -69,6 +74,7 @@ optimizers = [
     optim.RAdam,
     optim.SGDW,
     optim.Yogi,
+    build_lookahead,
 ]
 
 

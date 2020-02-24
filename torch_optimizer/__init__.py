@@ -3,6 +3,7 @@ from .adabound import AdaBound
 from .adamod import AdaMod
 from .diffgrad import DiffGrad
 from .lamb import Lamb
+from .lookahead import Lookahead
 from .novograd import NovoGrad
 from .radam import RAdam
 from .sgdw import SGDW
@@ -15,6 +16,7 @@ __all__ = (
     'AdaMod',
     'DiffGrad',
     'Lamb',
+    'Lookahead',
     'NovoGrad',
     'RAdam',
     'SGDW',
