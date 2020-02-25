@@ -45,6 +45,11 @@ def ids(v):
     return f'{v[0].__name__} {v[1:]}'
 
 
+def build_lookahead(*a, **kw):
+    base = optim.Yogi(*a, **kw)
+    return optim.Lookahead(base)
+
+
 optimizers = [
     (optim.NovoGrad, {'lr': 0.01, 'weight_decay': 1e-3}, 200),
     (optim.Lamb, {'lr': 0.01, 'weight_decay': 1e-3}, 200),
@@ -55,6 +60,7 @@ optimizers = [
     (optim.Yogi, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.RAdam, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.AccSGD, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
+    (build_lookahead, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
 ]
 
 

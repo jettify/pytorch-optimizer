@@ -24,7 +24,7 @@ class Lookahead(Optimizer):
     Example:
         >>> import torch_optimizer as optim
         >>> yogi = optim.Yogi(model.parameters(), lr=0.1)
-        >>> optimizer = optim.Lookahead(yogi, k=5)
+        >>> optimizer = optim.Lookahead(yogi, k=5, alpha=0.5)
         >>> optimizer.zero_grad()
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
@@ -116,3 +116,14 @@ class Lookahead(Optimizer):
     def zero_grad(self) -> None:
         r"""Clears the gradients of all optimized :class:`torch.Tensor` s."""
         self.optimizer.zero_grad()
+
+    def __repr__(self) -> str:
+        base_str = self.optimizer.__repr__()
+        format_string = self.__class__.__name__ + ' ('
+        format_string += '\n'
+        format_string += f'k: {self.k}\n'
+        format_string += f'alpha: {self.alpha}\n'
+        format_string += base_str
+        format_string += '\n'
+        format_string += ')'
+        return format_string

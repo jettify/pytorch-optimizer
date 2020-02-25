@@ -35,9 +35,9 @@ class SGDW(Optimizer):
         self,
         params: Params,
         lr: float = 1e-3,
-        momentum: float = 0,
-        dampening: float = 0,
-        weight_decay: float = 1e-2,
+        momentum: float = 0.0,
+        dampening: float = 0.0,
+        weight_decay: float = 0.0,
         nesterov: bool = False,
     ) -> None:
         if not 0.0 <= lr:

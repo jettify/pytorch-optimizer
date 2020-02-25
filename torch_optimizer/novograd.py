@@ -1,5 +1,5 @@
 import torch
-from torch.optim import Optimizer
+from torch.optim.optimizer import Optimizer
 
 from .types import Betas2, OptFloat, OptLossClosure, Params
 
