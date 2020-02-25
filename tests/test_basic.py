@@ -38,6 +38,11 @@ def ids(v):
     return n
 
 
+def build_lookahead(*a, **kw):
+    base = optim.Yogi(*a, **kw)
+    return optim.Lookahead(base)
+
+
 optimizers = [
     (
         optim.NovoGrad,
@@ -51,6 +56,7 @@ optimizers = [
     (optim.AdaBound, {'lr': 1.0}, 800),
     (optim.Yogi, {'lr': 1.0}, 500),
     (optim.AccSGD, {'lr': 0.015}, 800),
+    (build_lookahead, {'lr': 1.0}, 500),
 ]
 
 
@@ -69,3 +75,6 @@ def test_benchmark_function(case, optimizer_config):
         f.backward(retain_graph=True)
         optimizer.step()
     assert torch.allclose(x, x_min, atol=0.001)
+
+    name = optimizer.__class__.__name__
+    assert name in optimizer.__repr__()
