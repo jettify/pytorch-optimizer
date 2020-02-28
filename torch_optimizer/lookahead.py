@@ -63,8 +63,7 @@ class Lookahead(Optimizer):
         r"""Performs a single optimization step.
 
         Arguments:
-            closure (callable, optional): A closure that reevaluates the model
-                and returns the loss.
+            closure: A closure that reevaluates the model and returns the loss.
         """
         loss = self.optimizer.step(closure=closure)
         for group in self.param_groups:

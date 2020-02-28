@@ -59,8 +59,7 @@ class AccSGD(Optimizer):
         r"""Performs a single optimization step.
 
         Arguments:
-            closure: A closure that reevaluates the model
-                and returns the loss.
+            closure: A closure that reevaluates the model and returns the loss.
         """
         loss = None
         if closure is not None:
