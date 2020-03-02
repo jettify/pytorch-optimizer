@@ -114,7 +114,7 @@ class DiffGrad(Optimizer):
                 # compute diffgrad coefficient (dfc)
                 diff = torch.abs(previous_grad - grad)
                 dfc = torch.div(1.0, (1.0 + torch.exp(-diff)))
-                state['previous_grad'] = grad
+                state['previous_grad'] = grad.clone()
 
                 # update momentum with dfc
                 exp_avg1 = exp_avg * dfc
