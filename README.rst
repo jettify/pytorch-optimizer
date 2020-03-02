@@ -13,6 +13,7 @@ torch-optimizer
 **torch-optimizer** -- collection of optimizers for PyTorch_.
 
 
+
 Simple example
 --------------
 
@@ -63,6 +64,38 @@ Supported Optimizers
 |             |                                                                               |
 | `Yogi`_     | https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization |
 +-------------+-------------------------------------------------------------------------------+
+
+
+Visualisations
+--------------
+Visualisations help us to see how different algorithms deals with simple
+situations like: saddle points, local minima, valleys etc, and may provide
+interesting insights into inner workings of algorithm. Rosenbrock_ and Rastrigin_
+benchmark_ functions was selected, because:
+
+* Rosenbrock_ (also known as banana function), is non-convex function that has
+  one global minima  `(1.0. 1.0)`. The global minimum is inside a long,
+  narrow, parabolic shaped flat valley. To find the valley is trivial. To
+  converge to the global minima, however, is difficult. Optimization
+  algorithms might pay a lot of attention to one coordinate, and have
+  problems to follow valley which is relatively flat.
+
+ .. image::  https://upload.wikimedia.org/wikipedia/commons/3/32/Rosenbrock_function.svg
+
+* Rastrigin_ function is a non-convex and has one global minima in `(0.0, 0.0)`.
+  Finding the minimum of this function is a fairly difficult problem due to
+  its large search space and its large number of local minima.
+
+  .. image::  https://upload.wikimedia.org/wikipedia/commons/8/8b/Rastrigin_function.png
+
+Each optimizer performs `501` optimization steps. Learning rate is best one found
+by hyper parameter search algorithm, rest of tuning parameters are default. It
+is very easy to extend script and tune other optimizer parameters.
+
+
+.. code::
+
+    python examples/viz_optimizers.py
 
 
 AccSGD
@@ -322,3 +355,6 @@ learning rate control, and has similar theoretical guarantees on convergence as 
 
 .. _Python: https://www.python.org
 .. _PyTorch: https://github.com/pytorch/pytorch
+.. _Rastrigin: https://en.wikipedia.org/wiki/Rastrigin_function
+.. _Rosenbrock: https://en.wikipedia.org/wiki/Rosenbrock_function
+.. _benchmark: https://en.wikipedia.org/wiki/Test_functions_for_optimization
