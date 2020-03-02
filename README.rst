@@ -340,9 +340,10 @@ learning rate control, and has similar theoretical guarantees on convergence as 
     # model = ...
     optimizer = optim.Yogi(
         m.parameters(),
-        lr= 1e-3,
+        lr= 1e-2,
         betas=(0.9, 0.999),
-        eps=1e-8,
+        eps=1e-3,
+        initial_accumulator=1e-6,
         weight_decay=0,
     )
     optimizer.step()
