@@ -71,6 +71,7 @@ optimizers = [
     optim.DiffGrad,
     optim.Lamb,
     optim.NovoGrad,
+    optim.PID,
     optim.RAdam,
     optim.SGDW,
     optim.Yogi,

@@ -5,6 +5,7 @@ from .diffgrad import DiffGrad
 from .lamb import Lamb
 from .lookahead import Lookahead
 from .novograd import NovoGrad
+from .pid import PID
 from .radam import RAdam
 from .sgdw import SGDW
 from .yogi import Yogi
@@ -18,6 +19,7 @@ __all__ = (
     'Lamb',
     'Lookahead',
     'NovoGrad',
+    'PID',
     'RAdam',
     'SGDW',
     'Yogi',
