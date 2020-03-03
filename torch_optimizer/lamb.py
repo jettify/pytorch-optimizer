@@ -1,6 +1,6 @@
 import torch
 from torch.optim.optimizer import Optimizer
-
+import math
 from .types import Betas2, OptFloat, OptLossClosure, Params
 
 
@@ -22,8 +22,11 @@ class Lamb(Optimizer):
         eps: term added to the denominator to improve
             numerical stability (default: 1e-8)
         weight_decay: weight decay (L2 penalty) (default: 0)
+        clamp_value: clamp weight_norm in (0,clamp_value) (default: 10)
+            set to a high value to avoid it (e.g 10e3)
         adam: always use trust ratio = 1, which turns this
-            into Adam. Useful for comparison purposes.
+            into Adam. Useful for comparison purposes. (default: False)
+        debias: debias adam by (1 - beta**step) (default: False)
 
     Example:
         >>> import torch_optimizer as optim
@@ -42,7 +45,9 @@ class Lamb(Optimizer):
         betas: Betas2 = (0.9, 0.999),
         eps: float = 1e-6,
         weight_decay: float = 0,
+        clamp_value: float = 10,
         adam: bool = False,
+        debias: bool = False
     ) -> None:
         if not 0.0 <= lr:
             raise ValueError(f'Invalid learning rate: {lr}')
@@ -54,9 +59,14 @@ class Lamb(Optimizer):
             raise ValueError(f'Invalid beta parameter at index 1: {betas[1]}')
         if not 0.0 <= weight_decay:
             raise ValueError(f'Invalid weight_decay value: {weight_decay}')
+        if not 0.0 < clamp_value:
+            raise ValueError(f'Invalid clamp value: {clamp_value}')
 
         defaults = dict(lr=lr, betas=betas, eps=eps, weight_decay=weight_decay)
+        self.clamp_value = clamp_value
         self.adam = adam
+        self.debias = debias
+        
         super(Lamb, self).__init__(params, defaults)
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
@@ -103,20 +113,22 @@ class Lamb(Optimizer):
                 exp_avg_sq.mul_(beta2).addcmul_(1 - beta2, grad, grad)
 
                 # Paper v3 does not use debiasing.
-                # bias_correction1 = 1 - beta1 ** state['step']
-                # bias_correction2 = 1 - beta2 ** state['step']
-                # Apply bias to lr to avoid broadcast.
-                step_size = group[
-                    'lr'
-                ]  # * math.sqrt(bias_correction2) / bias_correction1
+                if self.debias:
+                    bias_correction = math.sqrt(1 - beta2 ** state['step'])
+                    bias_correction /= (1 - beta1 ** state['step'])
+                else:
+                    bias_correction = 1
 
-                weight_norm = p.data.pow(2).sum().sqrt().clamp(0, 10)
+                # Apply bias to lr to avoid broadcast.
+                step_size = group['lr'] * bias_correction 
+
+                weight_norm = torch.norm(p.data).clamp(0, self.clamp_value)
 
                 adam_step = exp_avg / exp_avg_sq.sqrt().add(group['eps'])
                 if group['weight_decay'] != 0:
                     adam_step.add_(group['weight_decay'], p.data)
 
-                adam_norm = adam_step.pow(2).sum().sqrt()
+                adam_norm = torch.norm(adam_step)
                 if weight_norm == 0 or adam_norm == 0:
                     trust_ratio = 1
                 else:
