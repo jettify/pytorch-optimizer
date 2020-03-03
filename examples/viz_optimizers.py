@@ -39,6 +39,7 @@ def execute_steps(
         optimizer.zero_grad()
         f = func(x)
         f.backward(retain_graph=True)
+        torch.nn.utils.clip_grad_norm_(x, 1.0)
         optimizer.step()
         steps[:, i] = x.detach().numpy()
     return steps
@@ -154,31 +155,24 @@ if __name__ == '__main__':
     # Each optimizer has tweaked search space to produce better plots and
     # help to converge on better lr faster.
     optimizers = [
-        (optim.AccSGD, -8, -0.1),
-        (optim.AdaBound, -8, 0.7),
-        (optim.AdaMod, -8, 1.2),
-        (optim.DiffGrad, -8, 0.7),
-        (optim.Lamb, -8, 0.7),
-        (optim.NovoGrad, -6, -2.0),
-        (optim.RAdam, -8, 0.7),
-        (optim.SGDW, -8, -0.9),
-        (optim.Yogi, -8, 0.1),
+        (optim.AccSGD, -8, -0.4),
+        # (optim.AdaBound, -8, 0.3),
+        # (optim.AdaMod, -8, 0.2),
+        # (optim.DiffGrad, -8, 0.4),
+        # (optim.Lamb, -8, -2.9),
+        # (optim.NovoGrad, -8, -1.7),
+        # (optim.RAdam, -8, 0.5),
+        # (optim.SGDW, -8, -0.5),
+        # (optim.Yogi, -8, 0.1),
     ]
     execute_experiments(
-        optimizers, objective_rastrigin, rastrigin, plot_rastrigin, (-2.0, 3.5)
+        optimizers, 
+        objective_rastrigin, 
+        rastrigin, 
+        plot_rastrigin, 
+        (-2.0, 3.5),
     )
 
-    optimizers = [
-        (optim.AccSGD, -8, -0.1),
-        (optim.AdaBound, -8, 0.7),
-        (optim.AdaMod, -4, 1.0),
-        (optim.DiffGrad, -8, 0.2),
-        (optim.Lamb, -8, -0.5),
-        (optim.NovoGrad, -8, -1.0),
-        (optim.RAdam, -8, 0.7),
-        (optim.SGDW, -8, 0.7),
-        (optim.Yogi, -8, 0.1),
-    ]
     execute_experiments(
         optimizers,
         objective_rosenbrok,
