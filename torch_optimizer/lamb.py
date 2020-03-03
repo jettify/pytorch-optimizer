@@ -66,7 +66,7 @@ class Lamb(Optimizer):
         self.clamp_value = clamp_value
         self.adam = adam
         self.debias = debias
-        
+
         super(Lamb, self).__init__(params, defaults)
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
@@ -120,7 +120,7 @@ class Lamb(Optimizer):
                     bias_correction = 1
 
                 # Apply bias to lr to avoid broadcast.
-                step_size = group['lr'] * bias_correction 
+                step_size = group['lr'] * bias_correction
 
                 weight_norm = torch.norm(p.data).clamp(0, self.clamp_value)
 
