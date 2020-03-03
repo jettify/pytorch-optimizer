@@ -156,20 +156,20 @@ if __name__ == '__main__':
     # help to converge on better lr faster.
     optimizers = [
         (optim.AccSGD, -8, -0.4),
-        # (optim.AdaBound, -8, 0.3),
-        # (optim.AdaMod, -8, 0.2),
-        # (optim.DiffGrad, -8, 0.4),
-        # (optim.Lamb, -8, -2.9),
-        # (optim.NovoGrad, -8, -1.7),
-        # (optim.RAdam, -8, 0.5),
-        # (optim.SGDW, -8, -0.5),
-        # (optim.Yogi, -8, 0.1),
+        (optim.AdaBound, -8, 0.3),
+        (optim.AdaMod, -8, 0.2),
+        (optim.DiffGrad, -8, 0.4),
+        (optim.Lamb, -8, -2.9),
+        (optim.NovoGrad, -8, -1.7),
+        (optim.RAdam, -8, 0.5),
+        (optim.SGDW, -8, -0.5),
+        (optim.Yogi, -8, 0.1),
     ]
     execute_experiments(
-        optimizers, 
-        objective_rastrigin, 
-        rastrigin, 
-        plot_rastrigin, 
+        optimizers,
+        objective_rastrigin,
+        rastrigin,
+        plot_rastrigin,
         (-2.0, 3.5),
     )
 
