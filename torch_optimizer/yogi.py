@@ -13,16 +13,16 @@ class Yogi(Optimizer):
     r"""Implements Yogi Optimizer Algorithm.
     It has been proposed in `Adaptive methods for Nonconvex Optimization`_.
     Arguments:
-        params (iterable): iterable of parameters to optimize or dicts defining
+        params: iterable of parameters to optimize or dicts defining
             parameter groups
-        lr (float, optional): learning rate (default: 1e-2)
-        betas (Tuple[float, float], optional): coefficients used for computing
+        lr: learning rate (default: 1e-2)
+        betas: coefficients used for computing
             running averages of gradient and its square (default: (0.9, 0.999))
-        eps (float, optional): term added to the denominator to improve
+        eps: term added to the denominator to improve
             numerical stability (default: 1e-8)
-        initial_accumulator (float, optional): initial values for first and
+        initial_accumulator: initial values for first and
             second moments (default: 1e-6)
-        weight_decay (float, optional): weight decay (L2 penalty) (default: 0)
+        weight_decay: weight decay (L2 penalty) (default: 0)
 
     Example:
         >>> import torch_optimizer as optim
@@ -95,7 +95,7 @@ class Yogi(Optimizer):
                                 p.data,
                                 memory_format=torch.preserve_format
                                 ),
-                            group["initial_accumulator"]
+                            group['initial_accumulator']
                         )
                     # Exponential moving average of squared gradient values
                     state['exp_avg_sq'] = nn.init.constant_(
@@ -103,7 +103,7 @@ class Yogi(Optimizer):
                                 p.data,
                                 memory_format=torch.preserve_format
                                 ),
-                            group["initial_accumulator"]
+                            group['initial_accumulator']
                         )
 
                 exp_avg, exp_avg_sq = state['exp_avg'], state['exp_avg_sq']
