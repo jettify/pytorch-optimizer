@@ -16,21 +16,34 @@ def assert_sparse_not_supported(optimizer_class, err_msg=None):
     assert msg in str(ctx.value)
 
 
-optimizers = [
+no_sparse_optimizers = [
     optim.AdaBound,
     optim.AdaMod,
     optim.DiffGrad,
     optim.Lamb,
     optim.NovoGrad,
     optim.RAdam,
-    optim.SGDW,
     optim.Yogi,
 ]
 
 
-@pytest.mark.parametrize('optimizer_class', optimizers)
+@pytest.mark.parametrize('optimizer_class', no_sparse_optimizers)
 def test_sparse_not_supported(optimizer_class):
     assert_sparse_not_supported(optimizer_class)
+
+
+optimizers = [
+    optim.AccSGD,
+    optim.AdaBound,
+    optim.AdaMod,
+    optim.DiffGrad,
+    optim.Lamb,
+    optim.NovoGrad,
+    optim.PID,
+    optim.RAdam,
+    optim.SGDW,
+    optim.Yogi,
+]
 
 
 @pytest.mark.parametrize('optimizer_class', optimizers)
@@ -49,7 +62,6 @@ eps_optimizers = [
     optim.Lamb,
     optim.NovoGrad,
     optim.RAdam,
-    # optim.SGDW,
     optim.Yogi,
 ]
 
@@ -69,6 +81,7 @@ weight_decay_optimizers = [
     optim.AdaMod,
     optim.DiffGrad,
     optim.Lamb,
+    optim.PID,
     optim.RAdam,
     optim.SGDW,
     optim.Yogi,
