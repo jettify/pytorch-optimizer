@@ -37,7 +37,7 @@ class PID(Optimizer):
         momentum: float = 0,
         dampening: float = 0,
         weight_decay: float = 1e-2,
-        integral: float = 0.5,
+        integral: float = 5.0,
         derivative: float = 10.0,
     ) -> None:
         defaults = dict(
@@ -82,16 +82,14 @@ class PID(Optimizer):
                 if momentum != 0:
                     param_state = self.state[p]
                     if 'i_buffer' not in param_state:
-                        i_buf = param_state['i_buffer'] = torch.zeros_like(
-                            p.data
-                        )
+                        i_buf = param_state['i_buffer'] = torch.zeros_like(p)
                         i_buf.mul_(momentum).add_(d_p)
                     else:
                         i_buf = param_state['i_buffer']
                         i_buf.mul_(momentum).add_(1 - dampening, d_p)
                     if 'grad_buffer' not in param_state:
                         g_buf = param_state['grad_buffer'] = torch.zeros_like(
-                            p.data
+                            p
                         )
                         g_buf = d_p
 
