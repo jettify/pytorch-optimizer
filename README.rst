@@ -56,6 +56,9 @@ Supported Optimizers
 | `NovoGrad`_ | https://arxiv.org/abs/1905.11286                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `PID`_      | http://www4.comp.polyu.edu.hk/~cslzhang/paper/CVPR18_PID.pdf                  |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `RAdam`_    | https://arxiv.org/abs/1908.03265                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
@@ -268,6 +271,35 @@ NovoGrad
 **Paper**: *Stochastic Gradient Methods with Layer-wise Adaptive Moments for Training of Deep Networks* (2019) [https://arxiv.org/abs/1905.11286]
 
 **Reference Code**: https://github.com/NVIDIA/DeepLearningExamples/
+
+
+PID
+---
+
++-------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_PID.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_PID.png  |
++-------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.PID(
+        m.parameters(),
+        lr=1e-3,
+        momentum=0,
+        dampening=0,
+        weight_decay=1e-2,
+        integral=5.0,
+        derivative=10.0,
+    )
+    optimizer.step()
+
+
+**Paper**: *A PID Controller Approach for Stochastic Optimization of Deep Networks* (2018) [http://www4.comp.polyu.edu.hk/~cslzhang/paper/CVPR18_PID.pdf]
+
+**Reference Code**: https://github.com/tensorboy/PIDOptimizer
 
 
 RAdam
