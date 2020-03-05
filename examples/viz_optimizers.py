@@ -39,7 +39,7 @@ def execute_steps(
         optimizer.zero_grad()
         f = func(x)
         f.backward(retain_graph=True)
-        torch.nn.utils.clip_grad_norm_(x, 1.0)
+        torch.nn.utils.clip_grad_norm_(x, 2.0)
         optimizer.step()
         steps[:, i] = x.detach().numpy()
     return steps
@@ -92,7 +92,7 @@ def plot_rastrigin(grad_iter, optimizer_name, lr):
     )
     plt.plot(*minimum, 'gD')
     plt.plot(iter_x[-1], iter_y[-1], 'rD')
-    plt.savefig(f'rastrigin_{optimizer_name}.png')
+    plt.savefig(f'docs/rastrigin_{optimizer_name}.png')
 
 
 def plot_rosenbrok(grad_iter, optimizer_name, lr):
@@ -117,7 +117,7 @@ def plot_rosenbrok(grad_iter, optimizer_name, lr):
     )
     plt.plot(*minimum, 'gD')
     plt.plot(iter_x[-1], iter_y[-1], 'rD')
-    plt.savefig(f'rosenbrock_{optimizer_name}.png')
+    plt.savefig(f'docs/rosenbrock_{optimizer_name}.png')
 
 
 def execute_experiments(
@@ -155,15 +155,18 @@ if __name__ == '__main__':
     # Each optimizer has tweaked search space to produce better plots and
     # help to converge on better lr faster.
     optimizers = [
-        (optim.AccSGD, -8, -0.4),
+        # Adam based
         (optim.AdaBound, -8, 0.3),
         (optim.AdaMod, -8, 0.2),
         (optim.DiffGrad, -8, 0.4),
         (optim.Lamb, -8, -2.9),
         (optim.NovoGrad, -8, -1.7),
         (optim.RAdam, -8, 0.5),
-        (optim.SGDW, -8, -0.5),
         (optim.Yogi, -8, 0.1),
+        # SGD/Momentum based
+        (optim.AccSGD, -8, -1.4),
+        (optim.SGDW, -8, -1.5),
+        (optim.PID, -8, -1.0),
     ]
     execute_experiments(
         optimizers,

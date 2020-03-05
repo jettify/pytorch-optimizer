@@ -14,11 +14,11 @@ class PID(Optimizer):
         params: iterable of parameters to optimize or dicts defining
             parameter groups
         lr: learning rate (default: 1e-3)
-        momentum: momentum factor (default: 0)
-        weight_decay: weight decay (L2 penalty) (default: 0)
-        dampening: dampening for momentum (default: 0)
-        derivative: D part of the PID (default: 10)
-        integral: I part of the PID (default: 0.5)
+        momentum: momentum factor (default: 0.0)
+        weight_decay: weight decay (L2 penalty) (default: 0.0)
+        dampening: dampening for momentum (default: 0.0)
+        derivative: D part of the PID (default: 10.0)
+        integral: I part of the PID (default: 5.0)
 
     Example:
         >>> import torch_optimizer as optim
@@ -34,9 +34,9 @@ class PID(Optimizer):
         self,
         params: Params,
         lr: float = 1e-3,
-        momentum: float = 0,
+        momentum: float = 0.0,
         dampening: float = 0,
-        weight_decay: float = 1e-2,
+        weight_decay: float = 0.0,
         integral: float = 5.0,
         derivative: float = 10.0,
     ) -> None:
