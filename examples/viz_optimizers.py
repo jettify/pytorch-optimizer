@@ -12,6 +12,9 @@ plt.style.use('seaborn-white')
 def execute_steps(
         func, initial_state, optimizer_class, optimizer_config, num_iter=500
 ):
+    """
+    Execute one steps of the optimizer
+    """
     x = torch.Tensor(initial_state).requires_grad_(True)
     optimizer = optimizer_class([x], **optimizer_config)
     steps = []
@@ -28,6 +31,9 @@ def execute_steps(
 
 
 def objective(params, func):
+    """
+    Execute objective
+    """
     lr = params['lr']
     optimizer_class = params['optimizer_class']
     minimum = func.minimum
@@ -41,6 +47,9 @@ def objective(params, func):
 
 
 def plot(func, grad_iter, optimizer_name, lr):
+    """
+    Plot result of a simulation
+    """
     x = torch.linspace(func.x_domain[0], func.x_domain[1], func.num_pt)
     y = torch.linspace(func.y_domain[0], func.y_domain[1], func.num_pt)
     minimum = func.minimum
@@ -69,6 +78,9 @@ def plot(func, grad_iter, optimizer_name, lr):
 def execute_experiments(
         optimizers, func, seed=1
 ):
+    """
+    Execute simulation on a list of optimizers using a test function
+    """
     seed = seed
     for item in optimizers:
         optimizer_class, lr_low, lr_hi = item
