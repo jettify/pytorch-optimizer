@@ -100,7 +100,7 @@ if __name__ == '__main__':
 
     # Each optimizer has tweaked search space to produce better plots and
     # help to converge on better lr faster.
-    optimizers = [
+    list_optimizers = [
         # Adam based
         (optim.AdaBound, -8, 0.3),
         (optim.AdaMod, -8, 0.2),
