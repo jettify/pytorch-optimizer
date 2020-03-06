@@ -9,8 +9,16 @@ class Rosenbrock(TestFunction):
     Example:
     >>> import test_functions
     >>> rosenbrock = test_functions.Rosenbrock()
-    >>> x = torch.linspace(rosenbrock.x_domain[0], rosenbrock.x_domain[1], rosenbrock.num_pt)
-    >>> y = torch.linspace(rosenbrock.y_domain[0], rosenbrock.y_domain[1], rosenbrock.num_pt)
+    >>> x = torch.linspace(
+            rosenbrock.x_domain[0], 
+            rosenbrock.x_domain[1],
+            rosenbrock.num_pt
+        )
+    >>> y = torch.linspace(
+            rosenbrock.y_domain[0],
+            rosenbrock.y_domain[1],
+            rosenbrock.num_pt
+        )
     >>> Y, X = torch.meshgrid(x, y)
     >>> Z = rosenbrock([X, Y])
 

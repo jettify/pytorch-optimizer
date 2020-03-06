@@ -10,8 +10,16 @@ class Rastrigin(TestFunction):
     Example:
     >>> import test_functions
     >>> rastrigin = test_functions.Rastrigin()
-    >>> x = torch.linspace(rastrigin.x_domain[0], rastrigin.x_domain[1], rastrigin.num_pt)
-    >>> y = torch.linspace(rastrigin.y_domain[0], rastrigin.y_domain[1], rastrigin.num_pt)
+    >>> x = torch.linspace(
+            rastrigin.x_domain[0],
+            rastrigin.x_domain[1],
+            rastrigin.num_pt
+        )
+    >>> y = torch.linspace(
+            rastrigin.y_domain[0],
+            rastrigin.y_domain[1],
+            rastrigin.num_pt
+        )
     >>> Y, X = torch.meshgrid(x, y)
     >>> Z = rastrigin([X, Y])
 
