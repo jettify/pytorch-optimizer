@@ -6,6 +6,7 @@ from .lamb import Lamb
 from .lookahead import Lookahead
 from .novograd import NovoGrad
 from .pid import PID
+from .qhm import QHM
 from .radam import RAdam
 from .sgdw import SGDW
 from .yogi import Yogi
@@ -20,6 +21,7 @@ __all__ = (
     'Lookahead',
     'NovoGrad',
     'PID',
+    'QHM',
     'RAdam',
     'SGDW',
     'Yogi',
