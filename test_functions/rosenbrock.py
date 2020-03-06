@@ -10,7 +10,7 @@ class Rosenbrock(TestFunction):
     >>> import test_functions
     >>> rosenbrock = test_functions.Rosenbrock()
     >>> x = torch.linspace(
-            rosenbrock.x_domain[0], 
+            rosenbrock.x_domain[0],
             rosenbrock.x_domain[1],
             rosenbrock.num_pt
         )

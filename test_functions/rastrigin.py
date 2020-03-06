@@ -44,5 +44,3 @@ class Rastrigin(TestFunction):
                 + (y ** 2 - A * lib.cos(y * math.pi * 2))
         )
         return f
-
-
