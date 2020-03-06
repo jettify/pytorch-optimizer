@@ -1,5 +1,14 @@
 version = 1
 
+test_patterns = ["tests/test_*.py"]
+
+exclude_patterns = [
+    "tests/test_optimizer.py",
+    "docs/conf.py",
+    "tests/conftest.py",
+    "examples/*"
+]
+
 [[analyzers]]
 name = "python"
 enabled = true
