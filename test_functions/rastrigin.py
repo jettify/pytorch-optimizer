@@ -26,21 +26,22 @@ class Rastrigin(TestFunction):
     __ https://en.wikipedia.org/wiki/Test_functions_for_optimization
     __ https://en.wikipedia.org/wiki/Rastrigin_function
     """
+
     def __init__(self):
         super(Rastrigin, self).__init__(
             x_domain=(-4.5, 4.5),
             y_domain=(-4.5, 4.5),
             minimum=(0, 0),
             initial_state=(-2.0, 3.5),
-            levels=20
+            levels=20,
         )
 
     def __call__(self, tensor, lib=torch):
         x, y = tensor
         A = 10
         f = (
-                A * 2
-                + (x ** 2 - A * lib.cos(x * math.pi * 2))
-                + (y ** 2 - A * lib.cos(y * math.pi * 2))
+            A * 2
+            + (x ** 2 - A * lib.cos(x * math.pi * 2))
+            + (y ** 2 - A * lib.cos(y * math.pi * 2))
         )
         return f

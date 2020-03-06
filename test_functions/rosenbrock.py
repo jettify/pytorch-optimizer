@@ -25,6 +25,7 @@ class Rosenbrock(TestFunction):
     __ https://en.wikipedia.org/wiki/Test_functions_for_optimization
     __ https://en.wikipedia.org/wiki/Rosenbrock_function
     """
+
     def __init__(self):
         super(Rosenbrock, self).__init__(
             x_domain=(-2.0, 2.0),

@@ -10,8 +10,16 @@ class TestFunction:
         num_pt: number of point in the search domain
         levels: determines the number and positions of the contour lines / regions.
     """
-    def __init__(self, x_domain: iter, y_domain: iter, minimum: iter, initial_state: iter,
-                 num_pt: int = 250, levels: int = 50):
+
+    def __init__(
+        self,
+        x_domain: iter,
+        y_domain: iter,
+        minimum: iter,
+        initial_state: iter,
+        num_pt: int = 250,
+        levels: int = 50,
+    ):
         self._x_domain = x_domain
         self._y_domain = y_domain
         self._minimum = minimum
