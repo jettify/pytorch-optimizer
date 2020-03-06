@@ -115,7 +115,8 @@ if __name__ == '__main__':
         (optim.PID, -8, -1.0),
     ]
 
-    for test_func in [Rastrigin(), Rosenbrock()]:
+    for test_func in [Rosenbrock()]:
+        print(f"Test function {test_func.__name__()}")
         execute_experiments(
             optimizers,
             test_func,
