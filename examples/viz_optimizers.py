@@ -4,7 +4,7 @@ import torch
 from hyperopt import fmin, tpe, hp
 
 import torch_optimizer as optim
-from test_functions import *
+from test_functions import Rastrigin, Rosenbrock
 
 plt.style.use('seaborn-white')
 
@@ -115,7 +115,7 @@ if __name__ == '__main__':
         (optim.PID, -8, -1.0),
     ]
 
-    for test_func in [Rosenbrock()]:
+    for test_func in [Rastrigin(), Rosenbrock()]:
         print(f"Test function {test_func.__name__()}")
         execute_experiments(
             optimizers,
