@@ -87,6 +87,10 @@ class Yogi(Optimizer):
                 state = self.state[p]
 
                 # State initialization
+                # Followed from official implementation in tensorflow addons:
+                # https://github.com/tensorflow/addons/blob/master/tensorflow_addons/optimizers/yogi.py#L118 # noqa
+                # For more details refer to the discussion:
+                # https://github.com/jettify/pytorch-optimizer/issues/77
                 if len(state) == 0:
                     state['step'] = 0
                     # Exponential moving average of gradient values
