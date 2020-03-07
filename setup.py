@@ -13,11 +13,11 @@ if sys.version_info < PY36:
     raise RuntimeError('torch-optimizer requires Python 3.6.0+')
 
 
-def read(f):
+def _read(f):
     return open(os.path.join(os.path.dirname(__file__), f)).read().strip()
 
 
-def read_version():
+def _read_version():
     regexp = re.compile(r"^__version__\W*=\W*'([\d.abrc]+)'")
     init_py = os.path.join(
         os.path.dirname(__file__), 'torch_optimizer', '__init__.py'
@@ -60,9 +60,9 @@ keywords = [
 
 setup(
     name='torch-optimizer',
-    version=read_version(),
+    version=_read_version(),
     description=('pytorch-optimizer'),
-    long_description='\n\n'.join((read('README.rst'), read('CHANGES.rst'))),
+    long_description='\n\n'.join((_read('README.rst'), _read('CHANGES.rst'))),
     long_description_content_type='text/x-rst',
     classifiers=classifiers,
     platforms=['POSIX'],
