@@ -26,14 +26,14 @@ class Yogi(Optimizer):
 
     Example:
         >>> import torch_optimizer as optim
-        >>> optimizer = optim.Yogi(model.parameters(), lr=0.01, betas=(0.9, 0.999), 
-        		eps=1e-3, initial_accumulator=1e-6)
+        >>> optimizer = optim.Yogi(model.parameters(), lr=0.01)
         >>> optimizer.zero_grad()
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
 
     __ https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization  # noqa
     """
+
     def __init__(
         self,
         params: Params,

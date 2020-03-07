@@ -32,7 +32,7 @@ class AccSGD(Optimizer):
 
      __ https://arxiv.org/abs/1704.08227
      __ https://arxiv.org/abs/1803.05591
-   """
+    """
 
     def __init__(
         self,
