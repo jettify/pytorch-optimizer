@@ -35,9 +35,9 @@ class Lookahead(Optimizer):
     def __init__(
         self, optimizer: Optimizer, k: int = 5, alpha: float = 0.5
     ) -> None:
-        if not 0.0 <= k:
+        if k < 0.0:
             raise ValueError(f'Invalid number of lookahead steps: {k}')
-        if not 0.0 <= alpha:
+        if alpha < 0:
             raise ValueError(f'Invalid linear interpolation factor: {alpha}')
 
         self.optimizer = optimizer

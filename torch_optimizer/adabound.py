@@ -49,19 +49,19 @@ class AdaBound(Optimizer):
         weight_decay: float = 0,
         amsbound: bool = False,
     ) -> None:
-        if not 0.0 <= lr:
+        if lr <= 0.0:
             raise ValueError(f'Invalid learning rate: {lr}')
-        if not 0.0 <= eps:
+        if eps < 0.0:
             raise ValueError(f'Invalid epsilon value: {eps}')
         if not 0.0 <= betas[0] < 1.0:
             raise ValueError(f'Invalid beta parameter at index 0: {betas[0]}')
         if not 0.0 <= betas[1] < 1.0:
             raise ValueError(f'Invalid beta parameter at index 1: {betas[1]}')
-        if not 0.0 <= final_lr:
+        if final_lr < 0.0:
             raise ValueError(f'Invalid final learning rate: {final_lr}')
         if not 0.0 <= gamma < 1.0:
             raise ValueError(f'Invalid gamma parameter: {gamma}')
-        if not 0.0 <= weight_decay:
+        if weight_decay < 0:
             raise ValueError(f'Invalid weight_decay value: {weight_decay}')
         defaults = dict(
             lr=lr,
