@@ -40,10 +40,12 @@ class SGDW(Optimizer):
         weight_decay: float = 0.0,
         nesterov: bool = False,
     ) -> None:
-        if not 0.0 <= lr:
+        if lr <= 0.0:
             raise ValueError(f'Invalid learning rate: {lr}')
         if momentum < 0.0:
             raise ValueError(f'Invalid momentum value: {momentum}')
+        if dampening < 0.0:
+            raise ValueError(f'Invalid dampening value: {dampening}')
         if weight_decay < 0.0:
             raise ValueError(f'Invalid weight_decay value: {weight_decay}')
 

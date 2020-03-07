@@ -5,7 +5,7 @@ test_patterns = ["tests/test_*.py"]
 exclude_patterns = [
     "tests/test_optimizer.py",
     "docs/conf.py",
-    "tests/conftest.py",
+    "tests/utils.py",
     "examples/*"
 ]
 

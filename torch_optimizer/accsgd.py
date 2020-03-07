@@ -1,5 +1,6 @@
 import copy
 from torch.optim.optimizer import Optimizer
+
 from .types import OptLossClosure, Params, OptFloat
 
 
@@ -42,9 +43,9 @@ class AccSGD(Optimizer):
         small_const: float = 0.7,
         weight_decay: float = 0,
     ) -> None:
-        if not 0.0 <= lr:
+        if lr <= 0.0:
             raise ValueError(f'Invalid learning rate: {lr}')
-        if not 0.0 <= weight_decay:
+        if weight_decay < 0:
             raise ValueError(f'Invalid weight_decay value: {weight_decay}')
         defaults = dict(
             lr=lr,
