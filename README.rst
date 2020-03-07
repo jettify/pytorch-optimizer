@@ -8,6 +8,8 @@ torch-optimizer
     :target: https://pypi.org/project/torch-optimizer
 .. image:: https://img.shields.io/pypi/v/torch-optimizer.svg
     :target: https://pypi.python.org/pypi/torch-optimizer
+.. image:: https://static.deepsource.io/deepsource-badge-light-mini.svg
+    :target: https://deepsource.io/gh/jettify/pytorch-optimizer/?ref=repository-badge
 
 
 **torch-optimizer** -- collection of optimizers for PyTorch_.
