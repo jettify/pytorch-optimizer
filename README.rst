@@ -388,6 +388,20 @@ learning rate control, and has similar theoretical guarantees on convergence as 
 **Reference Code**: https://github.com/4rtemi5/Yogi-Optimizer_Keras
 
 
+Adam (PyTorch built-in)
+------
+
++-----------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Adam.png   |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_Adam.png  |
++-----------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+
+SGD (PyTorch built-in)
+------
+
++-----------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_SGD.png   |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_SGD.png  |
++-----------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+
 .. _Python: https://www.python.org
 .. _PyTorch: https://github.com/pytorch/pytorch
 .. _Rastrigin: https://en.wikipedia.org/wiki/Rastrigin_function

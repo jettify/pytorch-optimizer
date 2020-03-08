@@ -39,7 +39,7 @@ def execute_steps(
         optimizer.zero_grad()
         f = func(x)
         f.backward(retain_graph=True)
-        torch.nn.utils.clip_grad_norm_(x, 2.0)
+        torch.nn.utils.clip_grad_norm_(x, 1.0)
         optimizer.step()
         steps[:, i] = x.detach().numpy()
     return steps
@@ -155,6 +155,9 @@ if __name__ == '__main__':
     # Each optimizer has tweaked search space to produce better plots and
     # help to converge on better lr faster.
     optimizers = [
+        # baselines
+        (torch.optim.Adam, -8, 0.5),
+        (torch.optim.SGD, -8, -1.0),
         # Adam based
         (optim.AdaBound, -8, 0.3),
         (optim.AdaMod, -8, 0.2),
