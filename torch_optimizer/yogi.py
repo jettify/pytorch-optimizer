@@ -11,7 +11,8 @@ __all__ = ('Yogi',)
 
 class Yogi(Optimizer):
     r"""Implements Yogi Optimizer Algorithm.
-    It has been proposed in `Adaptive methods for Nonconvex Optimization`_.
+    It has been proposed in `Adaptive methods for Nonconvex Optimization`__.
+
     Arguments:
         params: iterable of parameters to optimize or dicts defining
             parameter groups
