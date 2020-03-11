@@ -170,6 +170,7 @@ if __name__ == '__main__':
         (optim.AccSGD, -8, -1.4),
         (optim.SGDW, -8, -1.5),
         (optim.PID, -8, -1.0),
+        (optim.QHM, -6, -0.2),
     ]
     execute_experiments(
         optimizers,

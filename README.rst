@@ -61,6 +61,9 @@ Supported Optimizers
 | `PID`_      | http://www4.comp.polyu.edu.hk/~cslzhang/paper/CVPR18_PID.pdf                  |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `QHM`_      | https://arxiv.org/abs/1810.06801                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `RAdam`_    | https://arxiv.org/abs/1908.03265                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
@@ -302,6 +305,34 @@ PID
 **Paper**: *A PID Controller Approach for Stochastic Optimization of Deep Networks* (2018) [http://www4.comp.polyu.edu.hk/~cslzhang/paper/CVPR18_PID.pdf]
 
 **Reference Code**: https://github.com/tensorboy/PIDOptimizer
+
+
+QHM
+---
+
++-------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_QHM.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_QHM.png  |
++-------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.QHM(
+        m.parameters(),
+        lr=1e-3,
+        momentum=0,
+        nu=0.7,
+        weight_decay=1e-2,
+        weight_decay_type='grad',
+    )
+    optimizer.step()
+
+
+**Paper**: *Quasi-hyperbolic momentum and Adam for deep learning* (2019) [https://arxiv.org/abs/1810.06801]
+
+**Reference Code**: https://github.com/facebookresearch/qhoptim
 
 
 RAdam
