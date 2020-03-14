@@ -39,7 +39,7 @@ class Lookahead(Optimizer):
             raise ValueError('Invalid number of lookahead steps: {}'.format(k))
         if alpha < 0:
             raise ValueError(
-                'Invalid linear interpolation factor: {alpha}'.format(alpha)
+                'Invalid linear interpolation factor: {}'.format(alpha)
             )
 
         self.optimizer = optimizer
