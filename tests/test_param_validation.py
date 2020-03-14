@@ -52,7 +52,7 @@ def test_learning_rate(optimizer_class):
     lr = -0.01
     with pytest.raises(ValueError) as ctx:
         optimizer_class(None, lr=-0.01)
-    msg = f'Invalid learning rate: {lr}'
+    msg = 'Invalid learning rate: {}'.format(lr)
     assert msg in str(ctx.value)
 
 
@@ -72,7 +72,7 @@ def test_eps_validation(optimizer_class):
     eps = -0.1
     with pytest.raises(ValueError) as ctx:
         optimizer_class(None, lr=0.1, eps=eps)
-    msg = f'Invalid epsilon value: {eps}'
+    msg = 'Invalid epsilon value: {}'.format(eps)
     assert msg in str(ctx.value)
 
 
@@ -95,7 +95,7 @@ def test_weight_decay_validation(optimizer_class):
     weight_decay = -0.1
     with pytest.raises(ValueError) as ctx:
         optimizer_class(None, lr=0.1, weight_decay=weight_decay)
-    msg = f'Invalid weight_decay value: {weight_decay}'
+    msg = 'Invalid weight_decay value: {}'.format(weight_decay)
     assert msg in str(ctx.value)
 
 
@@ -115,11 +115,11 @@ def test_betas_validation(optimizer_class):
     betas = (-1, 0.999)
     with pytest.raises(ValueError) as ctx:
         optimizer_class(None, lr=0.1, betas=(-1, 0.999))
-    msg = f'Invalid beta parameter at index 0: {betas[0]}'
+    msg = 'Invalid beta parameter at index 0: {}'.format(betas[0])
     assert msg in str(ctx.value)
 
     betas = (0.9, -0.999)
     with pytest.raises(ValueError) as ctx:
         optimizer_class(None, lr=0.1, betas=betas)
-    msg = f'Invalid beta parameter at index 1: {betas[1]}'
+    msg = 'Invalid beta parameter at index 1: {}'.format(betas[1])
     assert msg in str(ctx.value)

@@ -42,7 +42,7 @@ class LogisticRegression(nn.Module):
 
 
 def ids(v):
-    return f'{v[0].__name__} {v[1:]}'
+    return '{} {}'.format(v[0].__name__, v[1:])
 
 
 def build_lookahead(*a, **kw):

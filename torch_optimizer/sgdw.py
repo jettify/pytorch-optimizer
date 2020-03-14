@@ -41,13 +41,15 @@ class SGDW(Optimizer):
         nesterov: bool = False,
     ) -> None:
         if lr <= 0.0:
-            raise ValueError(f'Invalid learning rate: {lr}')
+            raise ValueError('Invalid learning rate: {}'.format(lr))
         if momentum < 0.0:
-            raise ValueError(f'Invalid momentum value: {momentum}')
+            raise ValueError('Invalid momentum value: {}'.format(momentum))
         if dampening < 0.0:
-            raise ValueError(f'Invalid dampening value: {dampening}')
+            raise ValueError('Invalid dampening value: {}'.format(dampening))
         if weight_decay < 0.0:
-            raise ValueError(f'Invalid weight_decay value: {weight_decay}')
+            raise ValueError(
+                'Invalid weight_decay value: {}'.format(weight_decay)
+            )
 
         defaults = dict(
             lr=lr,

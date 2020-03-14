@@ -44,9 +44,11 @@ class AccSGD(Optimizer):
         weight_decay: float = 0,
     ) -> None:
         if lr <= 0.0:
-            raise ValueError(f'Invalid learning rate: {lr}')
+            raise ValueError('Invalid learning rate: {}'.format(lr))
         if weight_decay < 0:
-            raise ValueError(f'Invalid weight_decay value: {weight_decay}')
+            raise ValueError(
+                'Invalid weight_decay value: {}'.format(weight_decay)
+            )
         defaults = dict(
             lr=lr,
             kappa=kappa,

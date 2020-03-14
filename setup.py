@@ -6,11 +6,11 @@ from setuptools import setup, find_packages
 
 install_requires = ['torch>=1.1.0']
 
-PY36 = (3, 6, 0)
+PY35 = (3, 5, 0)
 
 
-if sys.version_info < PY36:
-    raise RuntimeError('torch-optimizer requires Python 3.6.0+')
+if sys.version_info < PY35:
+    raise RuntimeError('torch-optimizer requires Python 3.5.0+')
 
 
 def _read(f):
@@ -36,6 +36,7 @@ classifiers = [
     'License :: OSI Approved :: Apache Software License',
     'Intended Audience :: Developers',
     'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
     'Operating System :: OS Independent',

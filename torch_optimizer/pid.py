@@ -49,15 +49,19 @@ class PID(Optimizer):
             derivative=derivative,
         )
         if lr <= 0.0:
-            raise ValueError(f'Invalid learning rate: {lr}')
+            raise ValueError('Invalid learning rate: {}'.format(lr))
         if momentum < 0.0:
-            raise ValueError(f'Invalid momentum value: {momentum}')
+            raise ValueError('Invalid momentum value: {}'.format(momentum))
         if weight_decay < 0.0:
-            raise ValueError(f'Invalid weight_decay value: {weight_decay}')
+            raise ValueError(
+                'Invalid weight_decay value: {}'.format(weight_decay)
+            )
         if integral < 0.0:
-            raise ValueError(f'Invalid PID integral value: {integral}')
+            raise ValueError('Invalid PID integral value: {}'.format(integral))
         if derivative < 0.0:
-            raise ValueError(f'Invalid PID derivative value: {derivative}')
+            raise ValueError(
+                'Invalid PID derivative value: {}'.format(derivative)
+            )
 
         super(PID, self).__init__(params, defaults)
 

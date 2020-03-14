@@ -55,7 +55,7 @@ def make_test_params(optimizer_class):
             ],
         ),
     ]
-    ids = [f'{optimizer_class.__name__}_{i}' for i in range(len(cases))]
+    ids = ['%s_%s' % (optimizer_class.__name__, i) for i in range(len(cases))]
     return cases, ids
 
 
