@@ -42,7 +42,7 @@ class Yogi(Optimizer):
         betas: Betas2 = (0.9, 0.999),
         eps: float = 1e-3,
         initial_accumulator: float = 1e-6,
-        weight_decay: float = 0
+        weight_decay: float = 0,
     ) -> None:
         if lr <= 0.0:
             raise ValueError(f'Invalid learning rate: {lr}')
@@ -60,7 +60,7 @@ class Yogi(Optimizer):
             betas=betas,
             eps=eps,
             initial_accumulator=initial_accumulator,
-            weight_decay=weight_decay
+            weight_decay=weight_decay,
         )
         super(Yogi, self).__init__(params, defaults)
 
@@ -96,20 +96,18 @@ class Yogi(Optimizer):
                     state['step'] = 0
                     # Exponential moving average of gradient values
                     state['exp_avg'] = nn.init.constant_(
-                            torch.empty_like(
-                                p.data,
-                                memory_format=torch.preserve_format
-                                ),
-                            group['initial_accumulator']
-                        )
+                        torch.empty_like(
+                            p.data, memory_format=torch.preserve_format
+                        ),
+                        group['initial_accumulator'],
+                    )
                     # Exponential moving average of squared gradient values
                     state['exp_avg_sq'] = nn.init.constant_(
-                            torch.empty_like(
-                                p.data,
-                                memory_format=torch.preserve_format
-                                ),
-                            group['initial_accumulator']
-                        )
+                        torch.empty_like(
+                            p.data, memory_format=torch.preserve_format
+                        ),
+                        group['initial_accumulator'],
+                    )
 
                 exp_avg, exp_avg_sq = state['exp_avg'], state['exp_avg_sq']
                 beta1, beta2 = group['betas']

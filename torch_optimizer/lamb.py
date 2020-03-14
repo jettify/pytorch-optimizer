@@ -47,7 +47,7 @@ class Lamb(Optimizer):
         weight_decay: float = 0,
         clamp_value: float = 10,
         adam: bool = False,
-        debias: bool = False
+        debias: bool = False,
     ) -> None:
         if lr <= 0.0:
             raise ValueError(f'Invalid learning rate: {lr}')
@@ -115,7 +115,7 @@ class Lamb(Optimizer):
                 # Paper v3 does not use debiasing.
                 if self.debias:
                     bias_correction = math.sqrt(1 - beta2 ** state['step'])
-                    bias_correction /= (1 - beta1 ** state['step'])
+                    bias_correction /= 1 - beta1 ** state['step']
                 else:
                     bias_correction = 1
 
