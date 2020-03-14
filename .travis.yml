@@ -12,6 +12,10 @@ python:
 install:
     - pip install --upgrade setuptools
     - pip install codecov
+    - |
+      if [[ "$TRAVIS_PYTHON_VERSION" = "3.5" ]]; then
+        sed -i '/black/d;/bugbear/d;/bandit/d;/ipython/d' requirements-dev.txt
+      fi
     - pip install -r requirements-dev.txt
 
 script:
