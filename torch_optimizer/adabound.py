@@ -50,19 +50,27 @@ class AdaBound(Optimizer):
         amsbound: bool = False,
     ) -> None:
         if lr <= 0.0:
-            raise ValueError(f'Invalid learning rate: {lr}')
+            raise ValueError('Invalid learning rate: {}'.format(lr))
         if eps < 0.0:
-            raise ValueError(f'Invalid epsilon value: {eps}')
+            raise ValueError('Invalid epsilon value: {}'.format(eps))
         if not 0.0 <= betas[0] < 1.0:
-            raise ValueError(f'Invalid beta parameter at index 0: {betas[0]}')
+            raise ValueError(
+                'Invalid beta parameter at index 0: {}'.format(betas[0])
+            )
         if not 0.0 <= betas[1] < 1.0:
-            raise ValueError(f'Invalid beta parameter at index 1: {betas[1]}')
+            raise ValueError(
+                'Invalid beta parameter at index 1: {}'.format(betas[1])
+            )
         if final_lr < 0.0:
-            raise ValueError(f'Invalid final learning rate: {final_lr}')
+            raise ValueError(
+                'Invalid final learning rate: {}'.format(final_lr)
+            )
         if not 0.0 <= gamma < 1.0:
-            raise ValueError(f'Invalid gamma parameter: {gamma}')
+            raise ValueError('Invalid gamma parameter: {}'.format(gamma))
         if weight_decay < 0:
-            raise ValueError(f'Invalid weight_decay value: {weight_decay}')
+            raise ValueError(
+                'Invalid weight_decay value: {}'.format(weight_decay)
+            )
         defaults = dict(
             lr=lr,
             betas=betas,

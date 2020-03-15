@@ -36,9 +36,11 @@ class Lookahead(Optimizer):
         self, optimizer: Optimizer, k: int = 5, alpha: float = 0.5
     ) -> None:
         if k < 0.0:
-            raise ValueError(f'Invalid number of lookahead steps: {k}')
+            raise ValueError('Invalid number of lookahead steps: {}'.format(k))
         if alpha < 0:
-            raise ValueError(f'Invalid linear interpolation factor: {alpha}')
+            raise ValueError(
+                'Invalid linear interpolation factor: {}'.format(alpha)
+            )
 
         self.optimizer = optimizer
         self.k = k
@@ -120,8 +122,8 @@ class Lookahead(Optimizer):
         base_str = self.optimizer.__repr__()
         format_string = self.__class__.__name__ + ' ('
         format_string += '\n'
-        format_string += f'k: {self.k}\n'
-        format_string += f'alpha: {self.alpha}\n'
+        format_string += 'k: {}\n'.format(self.k)
+        format_string += 'alpha: {}\n'.format(self.alpha)
         format_string += base_str
         format_string += '\n'
         format_string += ')'

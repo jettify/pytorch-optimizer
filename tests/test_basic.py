@@ -34,7 +34,7 @@ cases = [
 
 
 def ids(v):
-    n = f'{v[0].__name__} {v[1:]}'
+    n = '{} {}'.format(v[0].__name__, v[1:])
     return n
 
 

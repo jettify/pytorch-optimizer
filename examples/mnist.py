@@ -6,7 +6,6 @@ import torch_optimizer as optim
 from torchvision import datasets, transforms, utils
 from torch.optim.lr_scheduler import StepLR
 from torch.utils.tensorboard import SummaryWriter
-from dataclasses import dataclass
 
 
 class Net(nn.Module):
@@ -124,16 +123,26 @@ def prepare_loaders(conf, use_cuda=False):
     return train_loader, test_loader
 
 
-@dataclass
 class Config:
-    batch_size: int = 64
-    test_batch_size: int = 1000
-    epochs: int = 15
-    lr: float = 0.01
-    gamma: float = 0.7
-    no_cuda: bool = True
-    seed: int = 42
-    log_interval: int = 10
+    def __init__(
+        self,
+        batch_size: int = 64,
+        test_batch_size: int = 1000,
+        epochs: int = 15,
+        lr: float = 0.01,
+        gamma: float = 0.7,
+        no_cuda: bool = True,
+        seed: int = 42,
+        log_interval: int = 10
+    ):
+        self.batch_size = batch_size
+        self.test_batch_size = test_batch_size
+        self.epochs = epochs
+        self.lr = lr
+        self.gamma = gamma
+        self.no_cuda = no_cuda
+        self.seed = seed
+        self.log_interval = log_interval
 
 
 def main():
@@ -166,7 +175,7 @@ def main():
             scheduler.step()
             for name, param in model.named_parameters():
                 writer.add_histogram(name, param, epoch)
-                writer.add_histogram(f'{name}.grad', param.grad, epoch)
+                writer.add_histogram('{}.grad'.format(name), param.grad, epoch)
 
 
 if __name__ == '__main__':

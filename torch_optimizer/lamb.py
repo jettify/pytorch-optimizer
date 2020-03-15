@@ -50,17 +50,23 @@ class Lamb(Optimizer):
         debias: bool = False,
     ) -> None:
         if lr <= 0.0:
-            raise ValueError(f'Invalid learning rate: {lr}')
+            raise ValueError('Invalid learning rate: {}'.format(lr))
         if eps < 0.0:
-            raise ValueError(f'Invalid epsilon value: {eps}')
+            raise ValueError('Invalid epsilon value: {}'.format(eps))
         if not 0.0 <= betas[0] < 1.0:
-            raise ValueError(f'Invalid beta parameter at index 0: {betas[0]}')
+            raise ValueError(
+                'Invalid beta parameter at index 0: {}'.format(betas[0])
+            )
         if not 0.0 <= betas[1] < 1.0:
-            raise ValueError(f'Invalid beta parameter at index 1: {betas[1]}')
+            raise ValueError(
+                'Invalid beta parameter at index 1: {}'.format(betas[1])
+            )
         if weight_decay < 0:
-            raise ValueError(f'Invalid weight_decay value: {weight_decay}')
+            raise ValueError(
+                'Invalid weight_decay value: {}'.format(weight_decay)
+            )
         if clamp_value < 0.0:
-            raise ValueError(f'Invalid clamp value: {clamp_value}')
+            raise ValueError('Invalid clamp value: {}'.format(clamp_value))
 
         defaults = dict(lr=lr, betas=betas, eps=eps, weight_decay=weight_decay)
         self.clamp_value = clamp_value

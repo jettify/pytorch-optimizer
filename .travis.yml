@@ -6,11 +6,16 @@ sudo: required
 python:
   - '3.7'
   - '3.6'
+  - '3.5'
 
 
 install:
     - pip install --upgrade setuptools
     - pip install codecov
+    - |
+      if [[ "$TRAVIS_PYTHON_VERSION" = "3.5" ]]; then
+        sed -i '/black/d;/bugbear/d;/ipython/d' requirements-dev.txt
+      fi
     - pip install -r requirements-dev.txt
 
 script:

@@ -54,13 +54,15 @@ class QHM(Optimizer):
         weight_decay_type: str = 'grad',
     ) -> None:
         if lr <= 0.0:
-            raise ValueError(f'Invalid learning rate: {lr}')
+            raise ValueError('Invalid learning rate: {}'.format(lr))
         if momentum < 0.0:
-            raise ValueError(f'Invalid momentum value: {momentum}')
+            raise ValueError('Invalid momentum value: {}'.format(momentum))
         if weight_decay < 0.0:
-            raise ValueError(f'Invalid weight_decay value: {weight_decay}')
+            raise ValueError(
+                'Invalid weight_decay value: {}'.format(weight_decay)
+            )
         if weight_decay_type not in (self.GRAD, self.DIRECT):
-            msg = f'Invalid weight_decay_type value: {weight_decay_type}'
+            msg = 'Invalid weight_decay_type value: %s' % weight_decay_type
             raise ValueError(msg)
 
         defaults = {

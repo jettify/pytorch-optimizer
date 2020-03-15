@@ -87,12 +87,14 @@ def plot_rastrigin(grad_iter, optimizer_name, lr):
     ax.contour(X, Y, Z, 20, cmap='jet')
     ax.plot(iter_x, iter_y, color='r', marker='x')
     ax.set_title(
-        f'Rastrigin func: {optimizer_name} with '
-        f'{len(iter_x)} iterations, lr={lr:.6}'
+        'Rastrigin func: {} with '
+        '{} iterations, lr={:.6}'.format(
+            optimizer_name, len(iter_x), lr
+        )
     )
     plt.plot(*minimum, 'gD')
     plt.plot(iter_x[-1], iter_y[-1], 'rD')
-    plt.savefig(f'docs/rastrigin_{optimizer_name}.png')
+    plt.savefig('docs/rastrigin_{}.png'.format(optimizer_name))
 
 
 def plot_rosenbrok(grad_iter, optimizer_name, lr):
@@ -112,12 +114,14 @@ def plot_rosenbrok(grad_iter, optimizer_name, lr):
     ax.plot(iter_x, iter_y, color='r', marker='x')
 
     ax.set_title(
-        f'Rosenbrock func: {optimizer_name} with {len(iter_x)} '
-        f'iterations, lr={lr:.6}'
+        'Rosenbrock func: {} with {} '
+        'iterations, lr={:.6}'.format(
+            optimizer_name, len(iter_x), lr
+        )
     )
     plt.plot(*minimum, 'gD')
     plt.plot(iter_x[-1], iter_y[-1], 'rD')
-    plt.savefig(f'docs/rosenbrock_{optimizer_name}.png')
+    plt.savefig('docs/rosenbrock_{}.png'.format(optimizer_name))
 
 
 def execute_experiments(
