@@ -133,7 +133,7 @@ class Config:
         gamma: float = 0.7,
         no_cuda: bool = True,
         seed: int = 42,
-        log_interval: int = 10
+        log_interval: int = 10,
     ):
         self.batch_size = batch_size
         self.test_batch_size = test_batch_size

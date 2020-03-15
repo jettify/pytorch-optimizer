@@ -88,9 +88,7 @@ def plot_rastrigin(grad_iter, optimizer_name, lr):
     ax.plot(iter_x, iter_y, color='r', marker='x')
     ax.set_title(
         'Rastrigin func: {} with '
-        '{} iterations, lr={:.6}'.format(
-            optimizer_name, len(iter_x), lr
-        )
+        '{} iterations, lr={:.6}'.format(optimizer_name, len(iter_x), lr)
     )
     plt.plot(*minimum, 'gD')
     plt.plot(iter_x[-1], iter_y[-1], 'rD')
@@ -115,9 +113,7 @@ def plot_rosenbrok(grad_iter, optimizer_name, lr):
 
     ax.set_title(
         'Rosenbrock func: {} with {} '
-        'iterations, lr={:.6}'.format(
-            optimizer_name, len(iter_x), lr
-        )
+        'iterations, lr={:.6}'.format(optimizer_name, len(iter_x), lr)
     )
     plt.plot(*minimum, 'gD')
     plt.plot(iter_x[-1], iter_y[-1], 'rD')
