@@ -59,6 +59,7 @@ optimizers = [
     (optim.Yogi, {'lr': 1.0}, 500),
     (optim.AccSGD, {'lr': 0.015}, 800),
     (build_lookahead, {'lr': 1.0}, 500),
+    (optim.QHAdam, {'lr': 1.0}, 500),
 ]
 
 

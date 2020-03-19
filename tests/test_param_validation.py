@@ -40,6 +40,7 @@ optimizers = [
     optim.Lamb,
     optim.NovoGrad,
     optim.PID,
+    optim.QHAdam,
     optim.QHM,
     optim.RAdam,
     optim.SGDW,
@@ -62,6 +63,7 @@ eps_optimizers = [
     optim.DiffGrad,
     optim.Lamb,
     optim.NovoGrad,
+    optim.QHAdam,
     optim.RAdam,
     optim.Yogi,
 ]
@@ -83,6 +85,7 @@ weight_decay_optimizers = [
     optim.DiffGrad,
     optim.Lamb,
     optim.PID,
+    optim.QHAdam,
     optim.QHM,
     optim.RAdam,
     optim.SGDW,
@@ -107,6 +110,7 @@ betas_optimizers = [
     optim.NovoGrad,
     optim.RAdam,
     optim.Yogi,
+    optim.QHAdam,
 ]
 
 
