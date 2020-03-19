@@ -63,6 +63,7 @@ optimizers = [
     (optim.AccSGD, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (build_lookahead, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.QHM, {'lr': 0.1, 'weight_decay': 1e-5, 'momentum': 0.2}, 200),
+    (optim.QHAdam, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
 ]
 
 
