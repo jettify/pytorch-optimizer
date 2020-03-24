@@ -24,7 +24,7 @@ class NovoGrad(Optimizer):
         weight_decay: weight decay (L2 penalty) (default: 0)
         grad_averaging: gradient averaging (default: False)
         amsgrad: whether to use the AMSGrad variant of this
-            algorithm from the paper `On the Convergence of Adam and Beyond`_
+            algorithm from the paper `On the Convergence of Adam and Beyond`
             (default: False)
 
     Example:

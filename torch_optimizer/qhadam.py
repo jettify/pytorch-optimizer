@@ -79,9 +79,8 @@ class QHAdam(Optimizer):
     def step(self, closure: OptLossClosure = None) -> OptFloat:
         """Performs a single optimization step.
 
-        Args:
-            closure (callable, optional):
-                A closure that reevaluates the model and returns the loss.
+        Arguments:
+            closure: A closure that reevaluates the model and returns the loss.
         """
         loss = None
         if closure is not None:

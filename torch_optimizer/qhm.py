@@ -9,7 +9,7 @@ __all__ = ('QHM',)
 class QHM(Optimizer):
 
     GRAD = 'grad'
-    DIRECT = 'DIRECT'
+    DIRECT = 'direct'
 
     r"""Implements quasi-hyperbolic momentum (QHM)  optimization algorithm.
 
@@ -62,7 +62,8 @@ class QHM(Optimizer):
                 'Invalid weight_decay value: {}'.format(weight_decay)
             )
         if weight_decay_type not in (self.GRAD, self.DIRECT):
-            msg = 'Invalid weight_decay_type value: %s' % weight_decay_type
+            _type = weight_decay_type
+            msg = 'Invalid weight_decay_type value: {}'.format(_type)
             raise ValueError(msg)
 
         defaults = {
