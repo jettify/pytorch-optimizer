@@ -14,7 +14,7 @@ Fist of all just clone repository::
 
     $ git clone git@github.com:jettify/pytorch-optimizer.git
 
-Create virtualenv with python3.6 (older version are not supported). For example
+Create virtualenv with python3.5 (older version are not supported). For example
 using *virtualenvwrapper* commands could look like::
 
    $ cd pytorch-optimizer

@@ -58,7 +58,7 @@ Supported Optimizers
 | `NovoGrad`_ | https://arxiv.org/abs/1905.11286                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
-| `PID`_      | http://www4.comp.polyu.edu.hk/~cslzhang/paper/CVPR18_PID.pdf                  |
+| `PID`_      | https://www4.comp.polyu.edu.hk/~cslzhang/paper/CVPR18_PID.pdf                 |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
 | `QHAdam`_   | https://arxiv.org/abs/1810.06801                                              |
@@ -77,9 +77,9 @@ Supported Optimizers
 +-------------+-------------------------------------------------------------------------------+
 
 
-Visualisations
+Visualizations
 --------------
-Visualisations help us to see how different algorithms deals with simple
+Visualizations help us to see how different algorithms deals with simple
 situations like: saddle points, local minima, valleys etc, and may provide
 interesting insights into inner workings of algorithm. Rosenbrock_ and Rastrigin_
 benchmark_ functions was selected, because:
