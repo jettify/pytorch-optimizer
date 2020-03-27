@@ -78,6 +78,9 @@ optimizers = [
     optim.SGDW,
     optim.Yogi,
     build_lookahead,
+    optim.Ranger,
+    optim.RangerQH,
+    optim.RangerVA
 ]
 
 

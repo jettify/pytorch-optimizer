@@ -60,6 +60,9 @@ optimizers = [
     (optim.AccSGD, {'lr': 0.015}, 800),
     (build_lookahead, {'lr': 1.0}, 500),
     (optim.QHAdam, {'lr': 1.0}, 500),
+    (optim.Ranger, {'lr': .019, 'k': 3}, 2500),
+    (optim.RangerQH, {'lr': .25, 'k': 1}, 800),
+    (optim.RangerVA, {'lr': .25}, 800),
 ]
 
 
