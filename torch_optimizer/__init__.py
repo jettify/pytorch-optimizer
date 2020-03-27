@@ -11,7 +11,7 @@ from .qhm import QHM
 from .radam import RAdam
 from .sgdw import SGDW
 from .yogi import Yogi
-from asranger import Ranger, RangerQH, RangerVA
+from pytorch_ranger import Ranger, RangerQH, RangerVA
 
 
 __all__ = (
