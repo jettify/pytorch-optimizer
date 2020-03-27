@@ -11,6 +11,7 @@ from .qhm import QHM
 from .radam import RAdam
 from .sgdw import SGDW
 from .yogi import Yogi
+from asranger import Ranger, RangerQH, RangerVA
 
 
 __all__ = (
@@ -27,5 +28,8 @@ __all__ = (
     'RAdam',
     'SGDW',
     'Yogi',
+    'Ranger',
+    'RangerQH',
+    'RangerVA'
 )
 __version__ = '0.0.1a11'
