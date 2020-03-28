@@ -28,6 +28,9 @@ class PID(Optimizer):
         >>> optimizer.step()
 
     __ http://www4.comp.polyu.edu.hk/~cslzhang/paper/CVPR18_PID.pdf
+
+    Note:
+        Reference code: https://github.com/tensorboy/PIDOptimizer
     """
 
     def __init__(

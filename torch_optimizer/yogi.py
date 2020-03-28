@@ -33,6 +33,9 @@ class Yogi(Optimizer):
         >>> optimizer.step()
 
     __ https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization  # noqa
+
+    Note:
+        Reference code: https://github.com/4rtemi5/Yogi-Optimizer_Keras
     """
 
     def __init__(

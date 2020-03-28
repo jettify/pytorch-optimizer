@@ -37,6 +37,9 @@ class NovoGrad(Optimizer):
         >>> scheduler.step()
 
     __ https://arxiv.org/abs/1905.11286
+
+    Note:
+        Reference code: https://github.com/NVIDIA/DeepLearningExamples
     """
 
     def __init__(

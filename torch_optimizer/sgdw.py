@@ -29,6 +29,9 @@ class SGDW(Optimizer):
         >>> optimizer.step()
 
     __ https://arxiv.org/abs/1711.05101
+
+    Note:
+        Reference code: https://github.com/pytorch/pytorch/pull/22466
     """
 
     def __init__(

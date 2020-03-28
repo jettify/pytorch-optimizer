@@ -32,6 +32,9 @@ class RAdam(Optimizer):
         >>> optimizer.step()
 
     __ https://arxiv.org/abs/1908.03265
+
+    Note:
+        Reference code: https://github.com/LiyuanLucasLiu/RAdam
     """
 
     def __init__(

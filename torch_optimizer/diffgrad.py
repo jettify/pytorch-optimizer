@@ -32,6 +32,9 @@ class DiffGrad(Optimizer):
         >>> optimizer.step()
 
     __ https://arxiv.org/abs/1909.11015
+
+    Note:
+        Reference code: https://github.com/shivram1987/diffGrad
     """
 
     def __init__(

@@ -418,7 +418,7 @@ SGDW
 
 **Paper**: *SGDR: Stochastic Gradient Descent with Warm Restarts* (2017) [https://arxiv.org/abs/1608.03983]
 
-**Reference Code**: https://arxiv.org/abs/1608.03983
+**Reference Code**: https://github.com/pytorch/pytorch/pull/22466
 
 Yogi
 ----

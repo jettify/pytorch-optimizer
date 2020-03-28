@@ -36,6 +36,9 @@ class AdaBound(Optimizer):
         >>> optimizer.step()
 
     __ https://arxiv.org/abs/1902.09843
+
+    Note:
+        Reference code: https://github.com/Luolc/AdaBound
     """
 
     def __init__(
