@@ -14,7 +14,8 @@ if sys.version_info < PY35:
 
 
 def _read(f):
-    return open(os.path.join(os.path.dirname(__file__), f)).read().strip()
+    with open(os.path.join(os.path.dirname(__file__), f)) as f_:
+        return f_.read().strip()
 
 
 def _read_version():
@@ -48,11 +49,15 @@ keywords = [
     'pytorch',
     # optimizers
     'accsgd',
+    'adabound',
     'adamod',
     'diffgrad',
     'lamb',
+    'lookahead',
     'novograd',
     'pid',
+    'qhadam',
+    'qhm',
     'radam',
     'sgdw',
     'yogi',
