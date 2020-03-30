@@ -4,7 +4,7 @@ import sys
 from setuptools import setup, find_packages
 
 
-install_requires = ['torch>=1.1.0', 'pytorch_ranger>=0.0.6']
+install_requires = ['torch>=1.1.0', 'pytorch_ranger>=0.1.0']
 
 PY35 = (3, 5, 0)
 
