@@ -70,6 +70,15 @@ Supported Optimizers
 | `RAdam`_    | https://arxiv.org/abs/1908.03265                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `Ranger`_   | https://arxiv.org/abs/1908.00700v2                                            |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
+| `RangerQH`_ | https://arxiv.org/abs/1908.00700v2                                            |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
+| `RangerVA`_ | https://arxiv.org/abs/1908.00700v2                                            |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `SGDW`_     | https://arxiv.org/abs/1608.03983                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
@@ -392,6 +401,102 @@ RAdam
 **Paper**: *On the Variance of the Adaptive Learning Rate and Beyond* (2019) [https://arxiv.org/abs/1908.03265]
 
 **Reference Code**: https://github.com/LiyuanLucasLiu/RAdam
+
+
+Ranger
+------
+
++----------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Ranger.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_Ranger.png  |
++----------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.Ranger(
+        m.parameters(),
+        lr=1e-3,
+        alpha=0.5,
+        k=6,
+        N_sma_threshhold=5,
+        betas=(.95, 0.999),
+        eps=1e-5,
+        weight_decay=0
+    )
+    optimizer.step()
+
+
+**Paper**: *Calibrating the Adaptive Learning Rate to Improve Convergence of ADAM* (2019) [https://arxiv.org/abs/1908.00700v2]
+
+**Reference Code**: https://github.com/lessw2020/Ranger-Deep-Learning-Optimizer
+
+
+RangerQH
+--------
+
++------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_RangerQH.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_RangerQH.png  |
++------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.RangerQH(
+        m.parameters(),
+        lr=1e-3,
+        betas=(0.9, 0.999),
+        nus=(.7, 1.0),
+        weight_decay=0.0,
+        k=6,
+        alpha=.5,
+        decouple_weight_decay=False,
+        eps=1e-8,
+    )
+    optimizer.step()
+
+
+**Paper**: *Calibrating the Adaptive Learning Rate to Improve Convergence of ADAM* (2019) [https://arxiv.org/abs/1908.00700v2]
+
+**Reference Code**: https://github.com/lessw2020/Ranger-Deep-Learning-Optimizer
+
+
+RangerVA
+--------
+
++------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_RangerVA.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_RangerVA.png  |
++------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.RangerVA(
+        m.parameters(),
+        lr=1e-3,
+        alpha=0.5,
+        k=6,
+        n_sma_threshhold=5,
+        betas=(.95, 0.999),
+        eps=1e-5,
+        weight_decay=0,
+        amsgrad=True,
+        transformer='softplus',
+        smooth=50,
+        grad_transformer='square'
+    )
+    optimizer.step()
+
+
+**Paper**: *Calibrating the Adaptive Learning Rate to Improve Convergence of ADAM* (2019) [https://arxiv.org/abs/1908.00700v2]
+
+**Reference Code**: https://github.com/lessw2020/Ranger-Deep-Learning-Optimizer
+
 
 SGDW
 ----

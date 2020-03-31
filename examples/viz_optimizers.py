@@ -172,6 +172,9 @@ if __name__ == '__main__':
         (optim.PID, -8, -1.0),
         (optim.QHM, -6, -0.2),
         (optim.QHAdam, -8, 0.1),
+        (optim.Ranger, -8, 0.1),
+        (optim.RangerQH, -8, 0.1),
+        (optim.RangerVA, -8, 0.1),
     ]
     execute_experiments(
         optimizers,
