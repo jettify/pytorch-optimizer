@@ -64,9 +64,9 @@ optimizers = [
     (build_lookahead, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.QHM, {'lr': 0.1, 'weight_decay': 1e-5, 'momentum': 0.2}, 200),
     (optim.QHAdam, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
-    (optim.Ranger, {'lr': .1, 'weight_decay': 1e-3}, 200),
-    (optim.RangerQH, {'lr': .01, 'weight_decay': 1e-3}, 200),
-    (optim.RangerVA, {'lr': .01, 'weight_decay': 1e-3}, 200),
+    (optim.Ranger, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
+    (optim.RangerQH, {'lr': 0.01, 'weight_decay': 1e-3}, 200),
+    (optim.RangerVA, {'lr': 0.01, 'weight_decay': 1e-3}, 200),
 ]
 
 
