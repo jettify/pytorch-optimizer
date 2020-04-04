@@ -1,4 +1,4 @@
-from typing import Optional, Union, Callable, Type
+from typing import Optional, Type
 from .accsgd import AccSGD
 from .adabound import AdaBound
 from .adamod import AdaMod
