@@ -1,7 +1,7 @@
 from typing import Optional, Type, List, Dict
 
 from pytorch_ranger import Ranger, RangerQH, RangerVA
-from torch.optim import Optimizer
+from torch.optim.optimizer import Optimizer
 
 from .accsgd import AccSGD
 from .adabound import AdaBound
@@ -58,12 +58,12 @@ _package_opts = [
     Ranger,
     RangerQH,
     RangerVA,
-]  # type: List[Optimizer]
+]  # type: List[Type[Optimizer]]
 
 
 _NAME_OPTIM_MAP = {
     opt.__name__.lower(): opt for opt in _package_opts
-}  # type: Dict[str, Optimizer]
+}  # type: Dict[str, Type[Optimizer]]
 
 
 def get(name: str) -> Optional[Type[Optimizer]]:
@@ -72,4 +72,7 @@ def get(name: str) -> Optional[Type[Optimizer]]:
     Args:
         name: the optimizer name.
     """
-    return _NAME_OPTIM_MAP.get(name.lower())
+    optimizer_class = _NAME_OPTIM_MAP.get(name.lower())
+    if optimizer_class is None:
+        raise ValueError('Optimizer {} not found'.format(name))
+    return optimizer_class

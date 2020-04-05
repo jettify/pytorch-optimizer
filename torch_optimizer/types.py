@@ -1,7 +1,7 @@
 from typing import Iterable, Union, Callable, Dict, Optional, Tuple, Any
 from torch import Tensor
 
-Params = Union[Iterable[Tensor], Iterable[dict]]
+Params = Union[Iterable[Tensor], Iterable[Dict[str, Any]]]
 
 LossClosure = Callable[[], float]
 OptLossClosure = Optional[LossClosure]
