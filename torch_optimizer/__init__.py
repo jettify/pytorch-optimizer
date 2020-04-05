@@ -1,4 +1,8 @@
-from typing import Optional, Type
+from typing import Optional, Type, List, Dict
+
+from pytorch_ranger import Ranger, RangerQH, RangerVA
+from torch.optim import Optimizer
+
 from .accsgd import AccSGD
 from .adabound import AdaBound
 from .adamod import AdaMod
@@ -12,8 +16,6 @@ from .qhm import QHM
 from .radam import RAdam
 from .sgdw import SGDW
 from .yogi import Yogi
-from pytorch_ranger import Ranger, RangerQH, RangerVA
-from torch import optim
 
 
 __all__ = (
@@ -32,12 +34,14 @@ __all__ = (
     'Yogi',
     'Ranger',
     'RangerQH',
-    'RangerVA'
+    'RangerVA',
+    # utils
+    'get',
 )
 __version__ = '0.0.1a11'
 
 
-package_opts = [
+_package_opts = [
     AccSGD,
     AdaBound,
     AdaMod,
@@ -54,38 +58,18 @@ package_opts = [
     Ranger,
     RangerQH,
     RangerVA,
-]
-
-builtin_opts = [
-    optim.Adadelta,
-    optim.Adagrad,
-    optim.Adam,
-    optim.AdamW,
-    optim.SparseAdam,
-    optim.Adamax,
-    optim.ASGD,
-    optim.SGD,
-    optim.Rprop,
-    optim.RMSprop,
-    optim.LBFGS
-]
-
-NAME_OPTIM_MAP = {
-    opt.__name__.lower(): opt for opt in package_opts + builtin_opts
-}
+]  # type: List[Optimizer]
 
 
-def get(name: str,) -> Optional[Type[optim.Optimizer]]:
+_NAME_OPTIM_MAP = {
+    opt.__name__.lower(): opt for opt in _package_opts
+}  # type: Dict[str, Optimizer]
+
+
+def get(name: str) -> Optional[Type[Optimizer]]:
     r"""Returns an optimizer class from its name. Case insensitive.
 
     Args:
         name: the optimizer name.
     """
-    if isinstance(name, str):
-        cls = NAME_OPTIM_MAP.get(name.lower())
-        if cls is None:
-            raise ValueError('Could not interpret optimizer name: ' +
-                             str(name))
-        return cls
-    raise ValueError('Could not interpret optimizer name: ' +
-                     str(name))
+    return _NAME_OPTIM_MAP.get(name.lower())

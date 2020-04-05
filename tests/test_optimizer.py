@@ -80,7 +80,7 @@ optimizers = [
     build_lookahead,
     optim.Ranger,
     optim.RangerQH,
-    optim.RangerVA
+    optim.RangerVA,
 ]
 
 
