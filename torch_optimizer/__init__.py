@@ -66,7 +66,7 @@ _NAME_OPTIM_MAP = {
 }  # type: Dict[str, Type[Optimizer]]
 
 
-def get(name: str) -> Optional[Type[Optimizer]]:
+def get(name: str) -> Type[Optimizer]:
     r"""Returns an optimizer class from its name. Case insensitive.
 
     Args:
