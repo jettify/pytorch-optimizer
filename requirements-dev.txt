@@ -13,5 +13,5 @@ pytest-cov==2.8.1
 pytest==5.4.1
 pytorch_ranger==0.1.1
 sphinx-autodoc-typehints==1.10.3
-sphinx==2.4.4
+sphinx==3.0.0
 torch==1.4.0
