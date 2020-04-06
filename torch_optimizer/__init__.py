@@ -1,4 +1,4 @@
-from typing import Optional, Type, List, Dict
+from typing import Type, List, Dict
 
 from pytorch_ranger import Ranger, RangerQH, RangerVA
 from torch.optim.optimizer import Optimizer
