@@ -1,4 +1,4 @@
-from typing import Optional, Type, List, Dict
+from typing import Type, List, Dict
 
 from pytorch_ranger import Ranger, RangerQH, RangerVA
 from torch.optim.optimizer import Optimizer
@@ -66,7 +66,7 @@ _NAME_OPTIM_MAP = {
 }  # type: Dict[str, Type[Optimizer]]
 
 
-def get(name: str) -> Optional[Type[Optimizer]]:
+def get(name: str) -> Type[Optimizer]:
     r"""Returns an optimizer class from its name. Case insensitive.
 
     Args:
