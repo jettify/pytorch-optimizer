@@ -62,9 +62,17 @@ class RAdam(Optimizer):
                 'Invalid weight_decay value: {}'.format(weight_decay)
             )
 
-        defaults = dict(lr=lr, betas=betas, eps=eps, weight_decay=weight_decay)
-        self._buffer = [[None, None, None] for ind in range(10)]
+        if isinstance(params, (list, tuple)) and len(params) > 0 and isinstance(params[0], dict):
+            for param in params:
+                if 'betas' in param and (param['betas'][0] != betas[0] or param['betas'][1] != betas[1]):
+                    param['buffer'] = [[None, None, None] for _ in range(10)]
+
+        defaults = dict(lr=lr, betas=betas, eps=eps, weight_decay=weight_decay,
+                        buffer=[[None, None, None] for _ in range(10)])
         super(RAdam, self).__init__(params, defaults)
+
+    def __setstate__(self, state):
+        super(RAdam, self).__setstate__(state)
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
         r"""Performs a single optimization step.
@@ -114,7 +122,7 @@ class RAdam(Optimizer):
                 exp_avg.mul_(beta1).add_(1 - beta1, grad)
 
                 state['step'] += 1
-                buffered = self._buffer[int(state['step'] % 10)]
+                buffered = group['buffer'][int(state['step'] % 10)]
                 if state['step'] == buffered[0]:
                     N_sma, step_size = buffered[1], buffered[2]
                 else:
