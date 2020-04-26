@@ -16,6 +16,7 @@ from .qhm import QHM
 from .radam import RAdam
 from .sgdw import SGDW
 from .yogi import Yogi
+from .shampoo import Shampoo
 
 
 __all__ = (
@@ -35,6 +36,7 @@ __all__ = (
     'Ranger',
     'RangerQH',
     'RangerVA',
+    'Shampoo',
     # utils
     'get',
 )

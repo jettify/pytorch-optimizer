@@ -67,6 +67,7 @@ optimizers = [
     (optim.Ranger, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.RangerQH, {'lr': 0.01, 'weight_decay': 1e-3}, 200),
     (optim.RangerVA, {'lr': 0.01, 'weight_decay': 1e-3}, 200),
+    (optim.Shampoo, {'lr': 0.1, 'weight_decay': 1e-3, 'momentum': 0.8}, 200),
 ]
 
 
