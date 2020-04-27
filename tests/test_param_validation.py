@@ -44,6 +44,7 @@ optimizers = [
     optim.QHM,
     optim.RAdam,
     optim.SGDW,
+    optim.Shampoo,
     optim.Yogi,
 ]
 
@@ -89,6 +90,7 @@ weight_decay_optimizers = [
     optim.QHM,
     optim.RAdam,
     optim.SGDW,
+    optim.Shampoo,
     optim.Yogi,
 ]
 

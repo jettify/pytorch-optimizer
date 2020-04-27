@@ -81,6 +81,7 @@ optimizers = [
     optim.Ranger,
     optim.RangerQH,
     optim.RangerVA,
+    optim.Shampoo,
 ]
 
 
