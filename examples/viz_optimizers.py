@@ -175,6 +175,7 @@ if __name__ == '__main__':
         (optim.Ranger, -8, 0.1),
         (optim.RangerQH, -8, 0.1),
         (optim.RangerVA, -8, 0.1),
+        (optim.Shampoo, -8, 0.1),
     ]
     execute_experiments(
         optimizers,
