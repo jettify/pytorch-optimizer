@@ -82,6 +82,9 @@ Supported Optimizers
 | `SGDW`_     | https://arxiv.org/abs/1608.03983                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `Shampoo`_  | https://arxiv.org/abs/1802.09568                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `Yogi`_     | https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization |
 +-------------+-------------------------------------------------------------------------------+
 
@@ -524,6 +527,35 @@ SGDW
 **Paper**: *SGDR: Stochastic Gradient Descent with Warm Restarts* (2017) [https://arxiv.org/abs/1608.03983]
 
 **Reference Code**: https://github.com/pytorch/pytorch/pull/22466
+
+
+Shampoo
+-------
+
++-----------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Shampoo.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_Shampoo.png  |
++-----------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.Shampoo(
+        m.parameters(),
+        lr=1e-1,
+        momentum=0.0,
+        weight_decay=0.0,
+        epsilon=1e-4,
+        update_freq=1,
+    )
+    optimizer.step()
+
+
+**Paper**: *Shampoo: Preconditioned Stochastic Tensor Optimization* (2018) [https://arxiv.org/abs/1802.09568]
+
+**Reference Code**: https://github.com/moskomule/shampoo.pytorch
+
 
 Yogi
 ----

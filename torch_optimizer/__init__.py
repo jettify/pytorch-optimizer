@@ -31,12 +31,12 @@ __all__ = (
     'QHAdam',
     'QHM',
     'RAdam',
-    'SGDW',
-    'Yogi',
     'Ranger',
     'RangerQH',
     'RangerVA',
+    'SGDW',
     'Shampoo',
+    'Yogi',
     # utils
     'get',
 )
