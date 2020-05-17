@@ -73,6 +73,7 @@ optimizers = [
 
 @pytest.mark.parametrize('optimizer_config', optimizers, ids=ids)
 def test_basic_nn_modeloptimizer_config(optimizer_config):
+    torch.manual_seed(42)
     x_data, y_data = make_dataset()
     model = LogisticRegression()
 
