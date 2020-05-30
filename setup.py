@@ -68,7 +68,7 @@ keywords = [
 project_urls = {
     'Website': 'https://github.com/jettify/pytorch-optimizer',
     'Documentation': 'https://pytorch-optimizer.readthedocs.io',
-    'Issues': "https://github.com/jettify/pytorch-optimizer/issues",
+    'Issues': 'https://github.com/jettify/pytorch-optimizer/issues',
 }
 
 
