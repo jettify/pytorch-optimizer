@@ -56,6 +56,7 @@ _package_opts = [
     QHM,
     RAdam,
     SGDW,
+    Shampoo,
     Yogi,
     Ranger,
     RangerQH,
