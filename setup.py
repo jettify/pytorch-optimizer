@@ -65,6 +65,12 @@ keywords = [
     'ranger',
 ]
 
+project_urls = {
+    'Website': 'https://github.com/jettify/pytorch-optimizer',
+    'Documentation': 'https://pytorch-optimizer.readthedocs.io',
+    'Issues': "https://github.com/jettify/pytorch-optimizer/issues",
+}
+
 
 setup(
     name='torch-optimizer',
@@ -84,4 +90,5 @@ setup(
     keywords=keywords,
     zip_safe=True,
     include_package_data=True,
+    project_urls=project_urls,
 )
