@@ -1,3 +1,19 @@
+"""torch-optimizer -- collection of of optimization algorithms for PyTorch.
+
+API and usage patterns are the same as `torch.optim`__
+
+Example
+-------
+
+>>> import torch_optimizer as optim
+# model = ...
+>>> optimizer = optim.DiffGrad(model.parameters(), lr=0.001)
+>>> optimizer.step()
+
+See documentation for full list of supported optimizers.
+
+__ https://pytorch.org/docs/stable/optim.html#module-torch.optim
+"""
 from typing import Type, List, Dict
 
 from pytorch_ranger import Ranger, RangerQH, RangerVA
@@ -15,8 +31,8 @@ from .qhadam import QHAdam
 from .qhm import QHM
 from .radam import RAdam
 from .sgdw import SGDW
-from .yogi import Yogi
 from .shampoo import Shampoo
+from .yogi import Yogi
 
 
 __all__ = (
@@ -55,12 +71,12 @@ _package_opts = [
     QHAdam,
     QHM,
     RAdam,
-    SGDW,
-    Shampoo,
-    Yogi,
     Ranger,
     RangerQH,
     RangerVA,
+    SGDW,
+    Shampoo,
+    Yogi,
 ]  # type: List[Type[Optimizer]]
 
 
