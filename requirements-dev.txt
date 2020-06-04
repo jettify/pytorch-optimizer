@@ -6,7 +6,7 @@ flake8-quotes==3.2.0
 flake8==3.8.2
 ipdb==0.13.2
 ipython==7.14.0
-mypy==0.770
+mypy==0.780
 numpy==1.18.5
 pyroma==2.6
 pytest-cov==2.9.0
