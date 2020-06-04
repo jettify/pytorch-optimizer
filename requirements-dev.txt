@@ -5,7 +5,7 @@ flake8-bugbear==20.1.4
 flake8-quotes==3.2.0
 flake8==3.8.2
 ipdb==0.13.2
-ipython==7.14.0
+ipython==7.15.0
 mypy==0.780
 numpy==1.18.5
 pyroma==2.6
