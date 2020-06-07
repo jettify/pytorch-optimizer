@@ -1,4 +1,5 @@
 from collections import defaultdict
+from typing import Dict, Any
 
 import torch
 from torch.optim.optimizer import Optimizer
@@ -16,7 +17,7 @@ class Lookahead(Optimizer):
     step back`__
 
     Arguments:
-        optimizer: base inner optimizer optimize
+        optimizer: base inner optimizer optimize, like Yogi, DiffGrad or Adam.
         k: number of lookahead steps (default: 5)
         alpha: linear interpolation factor. 1.0 recovers the inner optimizer.
             (default: 5)
@@ -30,6 +31,9 @@ class Lookahead(Optimizer):
         >>> optimizer.step()
 
     __ https://arxiv.org/abs/1907.08610
+
+    Note:
+        Reference code: https://github.com/alphadl/lookahead.pytorch
     """
 
     def __init__(
@@ -51,7 +55,7 @@ class Lookahead(Optimizer):
         for group in self.param_groups:
             group['counter'] = 0
 
-    def _update(self, group) -> None:
+    def _update(self, group: Dict[str, Any]) -> None:
         for fast in group['params']:
             param_state = self.state[fast]
             if 'slow_param' not in param_state:
