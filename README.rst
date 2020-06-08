@@ -58,6 +58,9 @@ Supported Optimizers
 | `Lamb`_     | https://arxiv.org/abs/1904.00962                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `Lookahead`_| https://arxiv.org/abs/1907.08610                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `NovoGrad`_ | https://arxiv.org/abs/1905.11286                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
@@ -265,6 +268,36 @@ Lamb
 **Paper**: *Large Batch Optimization for Deep Learning: Training BERT in 76 minutes* (2019) [https://arxiv.org/abs/1904.00962]
 
 **Reference Code**: https://github.com/cybertronai/pytorch-lamb
+
+Lookahead
+---------
+
++-----------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_LookaheadYogi.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_LookaheadYogi.png  |
++-----------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    # base optimizer, any other optimizer can be used like Adam or DiffGrad
+    yogi = optim.Yogi(
+        m.parameters(),
+        lr= 1e-2,
+        betas=(0.9, 0.999),
+        eps=1e-3,
+        initial_accumulator=1e-6,
+        weight_decay=0,
+    )
+
+    optimizer = optim.Lookahead(yogi, k=5, alpha=0.5)
+    optimizer.step()
+
+
+**Paper**: *Lookahead Optimizer: k steps forward, 1 step back* (2019) [https://arxiv.org/abs/1907.08610]
+
+**Reference Code**: https://github.com/alphadl/lookahead.pytorch
 
 
 NovoGrad

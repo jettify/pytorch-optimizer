@@ -149,6 +149,11 @@ def execute_experiments(
         plot_func(steps, optimizer_class.__name__, best['lr'])
 
 
+def LookaheadYogi(*a, **kw):
+    base = optim.Yogi(*a, **kw)
+    return optim.Lookahead(base)
+
+
 if __name__ == '__main__':
     # python examples/viz_optimizers.py
 
@@ -176,6 +181,7 @@ if __name__ == '__main__':
         (optim.RangerQH, -8, 0.1),
         (optim.RangerVA, -8, 0.1),
         (optim.Shampoo, -8, 0.1),
+        (LookaheadYogi, -8, 0.1),
     ]
     execute_experiments(
         optimizers,
