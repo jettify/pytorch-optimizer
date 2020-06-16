@@ -15,8 +15,8 @@ torch-optimizer
     :target: https://deepsource.io/gh/jettify/pytorch-optimizer/?ref=repository-badge
 
 
-**torch-optimizer** -- collection of optimizers for PyTorch_.
-
+**torch-optimizer** -- collection of optimizers for PyTorch_ compatible with optim_
+module.
 
 
 Simple example
@@ -36,6 +36,11 @@ Installation
 Installation process is simple, just::
 
     $ pip install torch_optimizer
+
+
+Documentation
+-------------
+https://pytorch-optimizer.rtfd.io
 
 
 Supported Optimizers
@@ -643,3 +648,4 @@ SGD (PyTorch built-in)
 .. _Rastrigin: https://en.wikipedia.org/wiki/Rastrigin_function
 .. _Rosenbrock: https://en.wikipedia.org/wiki/Rosenbrock_function
 .. _benchmark: https://en.wikipedia.org/wiki/Test_functions_for_optimization
+.. _optim: https://pytorch.org/docs/stable/optim.html
