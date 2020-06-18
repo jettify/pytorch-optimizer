@@ -79,13 +79,16 @@ class AdamP(Optimizer):
         )
         super(AdamP, self).__init__(params, defaults)
 
-    def _channel_view(self, x):
+    @staticmethod
+    def _channel_view(x):
         return x.view(x.size(0), -1)
 
-    def _layer_view(self, x):
+    @staticmethod
+    def _layer_view(x):
         return x.view(1, -1)
 
-    def _cosine_similarity(self, x, y, eps, view_func):
+    @staticmethod
+    def _cosine_similarity(x, y, eps, view_func):
         x = view_func(x)
         y = view_func(y)
 
