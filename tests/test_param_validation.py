@@ -36,6 +36,7 @@ optimizers = [
     optim.AccSGD,
     optim.AdaBound,
     optim.AdaMod,
+    optim.AdamP,
     optim.DiffGrad,
     optim.Lamb,
     optim.NovoGrad,
@@ -61,6 +62,7 @@ def test_learning_rate(optimizer_class):
 eps_optimizers = [
     optim.AdaBound,
     optim.AdaMod,
+    optim.AdamP,
     optim.DiffGrad,
     optim.Lamb,
     optim.NovoGrad,
@@ -83,6 +85,7 @@ weight_decay_optimizers = [
     optim.AccSGD,
     optim.AdaBound,
     optim.AdaMod,
+    optim.AdamP,
     optim.DiffGrad,
     optim.Lamb,
     optim.PID,
@@ -107,6 +110,7 @@ def test_weight_decay_validation(optimizer_class):
 betas_optimizers = [
     optim.AdaBound,
     optim.AdaMod,
+    optim.AdamP,
     optim.DiffGrad,
     optim.Lamb,
     optim.NovoGrad,
