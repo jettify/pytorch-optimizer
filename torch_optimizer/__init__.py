@@ -22,6 +22,7 @@ from torch.optim.optimizer import Optimizer
 from .accsgd import AccSGD
 from .adabound import AdaBound
 from .adamod import AdaMod
+from .adamp import AdamP
 from .diffgrad import DiffGrad
 from .lamb import Lamb
 from .lookahead import Lookahead
@@ -39,6 +40,7 @@ __all__ = (
     'AccSGD',
     'AdaBound',
     'AdaMod',
+    'AdamP',
     'DiffGrad',
     'Lamb',
     'Lookahead',
@@ -63,6 +65,7 @@ _package_opts = [
     AccSGD,
     AdaBound,
     AdaMod,
+    AdamP,
     DiffGrad,
     Lamb,
     Lookahead,
