@@ -57,6 +57,9 @@ Supported Optimizers
 | `AdaMod`_   | https://arxiv.org/abs/1910.12249                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `AdamP`_    | https://arxiv.org/abs/2006.08217                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `DiffGrad`_ | https://arxiv.org/abs/1909.11015                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
@@ -217,6 +220,38 @@ unexpected large learning rates and stabilize the training of deep neural networ
 **Paper**: *An Adaptive and Momental Bound Method for Stochastic Learning.* (2019) [https://arxiv.org/abs/1910.12249]
 
 **Reference Code**: https://github.com/lancopku/AdaMod
+
+AdamP
+------
+AdamP propose a simple and effective solution: at each iteration of Adam optimizer
+applied on scale-invariant weights (e.g., Conv weights preceding a BN layer), AdamP
+remove the radial component (i.e., parallel to the weight vector) from the update vector.
+Intuitively, this operation prevents the unnecessary update along the radial direction
+that only increases the weight norm without contributing to the loss minimization.
+
++------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdamP.png    |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_AdamP.png   |
++------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.AdamP(
+        m.parameters(),
+        lr= 1e-3,
+        betas=(0.9, 0.999),
+        eps=1e-8,
+        weight_decay=0,
+        delta = 0.1,
+        wd_ratio = 0.1
+    )
+    optimizer.step()
+
+**Paper**: *Slowing Down the Weight Norm Increase in Momentum-based Optimizers.* (2020) [https://arxiv.org/abs/2006.08217]
+
+**Reference Code**: https://github.com/clovaai/AdamP
 
 DiffGrad
 --------

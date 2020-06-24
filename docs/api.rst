@@ -27,6 +27,14 @@ AdaMod
 
 .. _DiffGrad:
 
+AdamP
+------
+
+.. autoclass:: torch_optimizer.AdamP
+    :members:
+
+.. _AdamP:
+
 DiffGrad
 --------
 

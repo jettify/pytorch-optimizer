@@ -68,6 +68,7 @@ optimizers = [
     optim.AccSGD,
     optim.AdaBound,
     optim.AdaMod,
+    optim.AdamP,
     optim.DiffGrad,
     optim.Lamb,
     optim.NovoGrad,
