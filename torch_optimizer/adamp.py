@@ -70,6 +70,10 @@ class AdamP(Optimizer):
             raise ValueError(
                 'Invalid weight_decay value: {}'.format(weight_decay)
             )
+        if delta < 0:
+            raise ValueError('Invalid delta value: {}'.format(delta))
+        if wd_ratio < 0:
+            raise ValueError('Invalid wd_ratio value: {}'.format(wd_ratio))
 
         defaults = dict(
             lr=lr,
