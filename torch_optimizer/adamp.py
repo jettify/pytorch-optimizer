@@ -27,6 +27,7 @@ class AdamP(Optimizer):
             invariant or not (default: 0.1)
         wd_ratio: relative weight decay applied on scale-invariant parameters
             compared to that applied on scale-variant parameters (default: 0.1)
+        nesterov: enables Nesterov momentum (default: False)
 
 
     Example:
@@ -50,7 +51,8 @@ class AdamP(Optimizer):
             eps: float = 1e-8,
             weight_decay: float = 0,
             delta: float = 0.1,
-            wd_ratio: float = 0.1
+            wd_ratio: float = 0.1,
+            nesterov: bool = False
     ) -> None:
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -76,6 +78,7 @@ class AdamP(Optimizer):
             weight_decay=weight_decay,
             delta=delta,
             wd_ratio=wd_ratio,
+            nesterov=nesterov
         )
         super(AdamP, self).__init__(params, defaults)
 
@@ -136,6 +139,7 @@ class AdamP(Optimizer):
 
                 grad = p.grad.data
                 beta1, beta2 = group['betas']
+                nesterov = group['nesterov']
 
                 state = self.state[p]
 
@@ -159,7 +163,10 @@ class AdamP(Optimizer):
                          math.sqrt(bias_correction2)).add_(group['eps'])
                 step_size = group['lr'] / bias_correction1
 
-                perturb = exp_avg / denom
+                if nesterov:
+                    perturb = (beta1 * exp_avg + (1 - beta1) * grad) / denom
+                else:
+                    perturb = exp_avg / denom
 
                 # Projection
                 wd_ratio = 1
