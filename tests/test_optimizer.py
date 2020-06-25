@@ -77,6 +77,7 @@ optimizers = [
     optim.QHM,
     optim.RAdam,
     optim.SGDW,
+    optim.SGDP,
     optim.Yogi,
     build_lookahead,
     optim.Ranger,

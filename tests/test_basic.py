@@ -60,7 +60,8 @@ optimizers = [
     (optim.AccSGD, {'lr': 0.015}, 800),
     (build_lookahead, {'lr': 1.0}, 500),
     (optim.QHAdam, {'lr': 1.0}, 500),
-    (optim.AdamP, {'lr': 0.01, 'betas': (0.9, 0.95), 'eps': 1e-3}, 800)
+    (optim.AdamP, {'lr': 0.01, 'betas': (0.9, 0.95), 'eps': 1e-3}, 800),
+    (optim.SGDP, {'lr': 0.002, 'momentum': 0.91}, 900),
 ]
 
 

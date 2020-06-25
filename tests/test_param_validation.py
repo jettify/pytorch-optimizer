@@ -45,6 +45,7 @@ optimizers = [
     optim.QHM,
     optim.RAdam,
     optim.SGDW,
+    optim.SGDP,
     optim.Shampoo,
     optim.Yogi,
 ]
@@ -68,6 +69,7 @@ eps_optimizers = [
     optim.NovoGrad,
     optim.QHAdam,
     optim.RAdam,
+    optim.SGDP,
     optim.Yogi,
 ]
 
@@ -93,12 +95,13 @@ weight_decay_optimizers = [
     optim.QHM,
     optim.RAdam,
     optim.SGDW,
+    optim.SGDP,
     optim.Shampoo,
     optim.Yogi,
 ]
 
 
-@pytest.mark.parametrize('optimizer_class', optimizers)
+@pytest.mark.parametrize('optimizer_class', weight_decay_optimizers)
 def test_weight_decay_validation(optimizer_class):
     weight_decay = -0.1
     with pytest.raises(ValueError) as ctx:
@@ -120,7 +123,7 @@ betas_optimizers = [
 ]
 
 
-@pytest.mark.parametrize('optimizer_class', eps_optimizers)
+@pytest.mark.parametrize('optimizer_class', betas_optimizers)
 def test_betas_validation(optimizer_class):
     betas = (-1, 0.999)
     with pytest.raises(ValueError) as ctx:
