@@ -175,6 +175,7 @@ if __name__ == '__main__':
         # SGD/Momentum based
         (optim.AccSGD, -8, -1.4),
         (optim.SGDW, -8, -1.5),
+        (optim.SGDP, -8, -1.5),
         (optim.PID, -8, -1.0),
         (optim.QHM, -6, -0.2),
         (optim.QHAdam, -8, 0.1),
