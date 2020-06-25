@@ -230,7 +230,7 @@ Intuitively, this operation prevents the unnecessary update along the radial dir
 that only increases the weight norm without contributing to the loss minimization.
 
 +------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdamP.png    |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_AdamP.png   |
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdamP.png     |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_AdamP.png    |
 +------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------+
 
 .. code:: python

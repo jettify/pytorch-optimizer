@@ -166,6 +166,7 @@ if __name__ == '__main__':
         # Adam based
         (optim.AdaBound, -8, 0.3),
         (optim.AdaMod, -8, 0.2),
+        (optim.AdamP, -8, 0.2),
         (optim.DiffGrad, -8, 0.4),
         (optim.Lamb, -8, -2.9),
         (optim.NovoGrad, -8, -1.7),
