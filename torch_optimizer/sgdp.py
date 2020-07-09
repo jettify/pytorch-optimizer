@@ -3,13 +3,13 @@ import math
 import torch
 from torch.optim.optimizer import Optimizer
 
-from .types import OptLossClosure, Params, OptFloat, Betas2
+from .types import OptLossClosure, Params, OptFloat
 
-__all__ = ('AdamP',)
+__all__ = ('SGDP',)
 
 
-class AdamP(Optimizer):
-    r"""Implements AdamP algorithm.
+class SGDP(Optimizer):
+    r"""Implements SGDP algorithm.
 
     It has been proposed in `Slowing Down the Weight Norm Increase in
     Momentum-based Optimizers`__
@@ -18,8 +18,8 @@ class AdamP(Optimizer):
         params: iterable of parameters to optimize or dicts defining
             parameter groups
         lr: learning rate (default: 1e-3)
-        betas: coefficients used for computing
-            running averages of gradient and its square (default: (0.9, 0.999))
+        momentum: momentum factor (default: 0)
+        dampening: dampening for momentum (default: 0)
         eps: term added to the denominator to improve
             numerical stability (default: 1e-8)
         weight_decay: weight decay (L2 penalty) (default: 0)
@@ -32,7 +32,7 @@ class AdamP(Optimizer):
 
     Example:
         >>> import torch_optimizer as optim
-        >>> optimizer = optim.AdamP(model.parameters(), lr=0.1)
+        >>> optimizer = optim.SGDP(model.parameters(), lr=0.1)
         >>> optimizer.zero_grad()
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
@@ -47,7 +47,8 @@ class AdamP(Optimizer):
             self,
             params: Params,
             lr: float = 1e-3,
-            betas: Betas2 = (0.9, 0.999),
+            momentum: float = 0,
+            dampening: float = 0,
             eps: float = 1e-8,
             weight_decay: float = 0,
             delta: float = 0.1,
@@ -58,14 +59,10 @@ class AdamP(Optimizer):
             raise ValueError('Invalid learning rate: {}'.format(lr))
         if eps < 0.0:
             raise ValueError('Invalid epsilon value: {}'.format(eps))
-        if not 0.0 <= betas[0] < 1.0:
-            raise ValueError(
-                'Invalid beta parameter at index 0: {}'.format(betas[0])
-            )
-        if not 0.0 <= betas[1] < 1.0:
-            raise ValueError(
-                'Invalid beta parameter at index 1: {}'.format(betas[1])
-            )
+        if momentum < 0.0:
+            raise ValueError('Invalid momentum value: {}'.format(momentum))
+        if dampening < 0.0:
+            raise ValueError('Invalid dampening value: {}'.format(dampening))
         if weight_decay < 0:
             raise ValueError(
                 'Invalid weight_decay value: {}'.format(weight_decay)
@@ -77,14 +74,15 @@ class AdamP(Optimizer):
 
         defaults = dict(
             lr=lr,
-            betas=betas,
+            momentum=momentum,
+            dampening=dampening,
             eps=eps,
             weight_decay=weight_decay,
             delta=delta,
             wd_ratio=wd_ratio,
             nesterov=nesterov
         )
-        super(AdamP, self).__init__(params, defaults)
+        super(SGDP, self).__init__(params, defaults)
 
     @staticmethod
     def _channel_view(x):
@@ -137,55 +135,49 @@ class AdamP(Optimizer):
             loss = closure()
 
         for group in self.param_groups:
+            weight_decay = group['weight_decay']
+            momentum = group['momentum']
+            dampening = group['dampening']
+            nesterov = group['nesterov']
+
             for p in group['params']:
                 if p.grad is None:
                     continue
 
                 grad = p.grad.data
-                beta1, beta2 = group['betas']
-                nesterov = group['nesterov']
-
                 state = self.state[p]
 
                 # State initialization
                 if len(state) == 0:
-                    state['step'] = 0
-                    state['exp_avg'] = torch.zeros_like(p.data)
-                    state['exp_avg_sq'] = torch.zeros_like(p.data)
+                    state['momentum'] = torch.zeros_like(p.data)
 
-                # Adam
-                exp_avg, exp_avg_sq = state['exp_avg'], state['exp_avg_sq']
-
-                state['step'] += 1
-                bias_correction1 = 1 - beta1 ** state['step']
-                bias_correction2 = 1 - beta2 ** state['step']
-
-                exp_avg.mul_(beta1).add_(1 - beta1, grad)
-                exp_avg_sq.mul_(beta2).addcmul_(1 - beta2, grad, grad)
-
-                denom = (exp_avg_sq.sqrt() /
-                         math.sqrt(bias_correction2)).add_(group['eps'])
-                step_size = group['lr'] / bias_correction1
-
+                # SGD
+                buf = state['momentum']
+                buf.mul_(momentum).add_(1 - dampening, grad)
                 if nesterov:
-                    perturb = (beta1 * exp_avg + (1 - beta1) * grad) / denom
+                    d_p = grad + momentum * buf
                 else:
-                    perturb = exp_avg / denom
+                    d_p = buf
 
                 # Projection
                 wd_ratio = 1
                 if len(p.shape) > 1:
-                    perturb, wd_ratio = self._projection(
-                            p, grad, perturb, group['delta'],
-                            group['wd_ratio'], group['eps']
-                        )
+                    d_p, wd_ratio = self._projection(
+                        p,
+                        grad,
+                        d_p,
+                        group['delta'],
+                        group['wd_ratio'],
+                        group['eps']
+                    )
 
                 # Weight decay
-                if group['weight_decay'] > 0:
-                    p.data.mul_(1 - group['lr'] *
-                                group['weight_decay'] * wd_ratio)
+                if weight_decay != 0:
+                    p.data.mul_(1 - group['lr']
+                                * group['weight_decay']
+                                * wd_ratio / (1 - momentum))
 
                 # Step
-                p.data.add_(-step_size, perturb)
+                p.data.add_(-group['lr'], d_p)
 
         return loss

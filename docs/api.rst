@@ -89,6 +89,14 @@ RAdam
 .. autoclass:: torch_optimizer.RAdam
     :members:
 
+.. _SGDP:
+
+SGDP
+----
+
+.. autoclass:: torch_optimizer.SGDP
+    :members:
+
 .. _SGDW:
 
 SGDW

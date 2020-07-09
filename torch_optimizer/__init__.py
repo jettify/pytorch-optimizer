@@ -32,6 +32,7 @@ from .qhadam import QHAdam
 from .qhm import QHM
 from .radam import RAdam
 from .sgdw import SGDW
+from .sgdp import SGDP
 from .shampoo import Shampoo
 from .yogi import Yogi
 
@@ -53,6 +54,7 @@ __all__ = (
     'RangerQH',
     'RangerVA',
     'SGDW',
+    'SGDP',
     'Shampoo',
     'Yogi',
     # utils
@@ -78,6 +80,7 @@ _package_opts = [
     RangerQH,
     RangerVA,
     SGDW,
+    SGDP,
     Shampoo,
     Yogi,
 ]  # type: List[Type[Optimizer]]

@@ -230,7 +230,7 @@ Intuitively, this operation prevents the unnecessary update along the radial dir
 that only increases the weight norm without contributing to the loss minimization.
 
 +------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdamP.png    |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_AdamP.png   |
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdamP.png     |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_AdamP.png    |
 +------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------+
 
 .. code:: python
@@ -575,6 +575,36 @@ RangerVA
 **Paper**: *Calibrating the Adaptive Learning Rate to Improve Convergence of ADAM* (2019) [https://arxiv.org/abs/1908.00700v2]
 
 **Reference Code**: https://github.com/lessw2020/Ranger-Deep-Learning-Optimizer
+
+
+SGDP
+----
+
++--------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_SGDP.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_SGDP.png  |
++--------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.SGDP(
+        m.parameters(),
+        lr= 1e-3,
+        momentum=0,
+        dampening=0,
+        weight_decay=1e-2,
+        nesterov=False,
+        delta = 0.1,
+        wd_ratio = 0.1
+    )
+    optimizer.step()
+
+
+**Paper**: *Slowing Down the Weight Norm Increase in Momentum-based Optimizers.* (2020) [https://arxiv.org/abs/2006.08217]
+
+**Reference Code**: https://github.com/clovaai/AdamP
 
 
 SGDW
