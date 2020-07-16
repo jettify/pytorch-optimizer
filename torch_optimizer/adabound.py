@@ -177,8 +177,7 @@ class AdaBound(Optimizer):
         return loss
 
 
-
-class AdaBound(Optimizer):
+class AdaBoundW(Optimizer):
     r"""Implements AdaBound algorithm with Decoupled Weight Decay (arxiv.org/abs/1711.05101)
 
     It has been proposed in `Adaptive Gradient Methods with Dynamic Bound of
