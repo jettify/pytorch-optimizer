@@ -65,8 +65,10 @@ def build_lookahead(*a, **kw):
 
 
 optimizers = [
+    build_lookahead,
     optim.AccSGD,
     optim.AdaBound,
+    optim.AggMo,
     optim.AdaMod,
     optim.AdamP,
     optim.DiffGrad,
@@ -76,14 +78,13 @@ optimizers = [
     optim.QHAdam,
     optim.QHM,
     optim.RAdam,
-    optim.SGDW,
-    optim.SGDP,
-    optim.Yogi,
-    build_lookahead,
     optim.Ranger,
     optim.RangerQH,
     optim.RangerVA,
+    optim.SGDP,
+    optim.SGDW,
     optim.Shampoo,
+    optim.Yogi,
 ]
 
 

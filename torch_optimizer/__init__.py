@@ -23,6 +23,7 @@ from .accsgd import AccSGD
 from .adabound import AdaBound
 from .adamod import AdaMod
 from .adamp import AdamP
+from .aggmo import AggMo
 from .diffgrad import DiffGrad
 from .lamb import Lamb
 from .lookahead import Lookahead
@@ -42,6 +43,7 @@ __all__ = (
     'AdaBound',
     'AdaMod',
     'AdamP',
+    'AggMo',
     'DiffGrad',
     'Lamb',
     'Lookahead',
@@ -68,6 +70,7 @@ _package_opts = [
     AdaBound,
     AdaMod,
     AdamP,
+    AggMo,
     DiffGrad,
     Lamb,
     Lookahead,
