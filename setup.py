@@ -1,16 +1,14 @@
 import os
 import re
-import sys
 from setuptools import setup, find_packages
 
 
-install_requires = ['torch>=1.1.0', 'pytorch_ranger>=0.1.1']
-
-PY35 = (3, 5, 0)
-
-
-if sys.version_info < PY35:
-    raise RuntimeError('torch-optimizer requires Python 3.5.0+')
+install_requires = [
+    'numpy<=1.18.5;python_version<"3.6"',
+    'torch<=1.5.1;python_version<"3.6"',
+    'torch>=1.1.0',
+    'pytorch_ranger>=0.1.1',
+]
 
 
 def _read(f):
@@ -91,4 +89,5 @@ setup(
     zip_safe=True,
     include_package_data=True,
     project_urls=project_urls,
+    python_requires='>3.5.0',
 )
