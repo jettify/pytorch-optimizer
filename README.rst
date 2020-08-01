@@ -60,6 +60,9 @@ Supported Optimizers
 | `AdamP`_    | https://arxiv.org/abs/2006.08217                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `AggMo`_    | https://arxiv.org/abs/1804.00325                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `DiffGrad`_ | https://arxiv.org/abs/1909.11015                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
@@ -255,6 +258,32 @@ that only increases the weight norm without contributing to the loss minimizatio
 **Paper**: *Slowing Down the Weight Norm Increase in Momentum-based Optimizers.* (2020) [https://arxiv.org/abs/2006.08217]
 
 **Reference Code**: https://github.com/clovaai/AdamP
+
+
+AggMo
+-----
+
++------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AggMo.png     |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_AggMo.png    |
++------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.AggMo(
+        m.parameters(),
+        lr= 1e-3,
+        betas=(0.0, 0.9, 0.99),
+        weight_decay=0,
+    )
+    optimizer.step()
+
+**Paper**: *Aggregated Momentum: Stability Through Passive Damping.* (2019) [https://arxiv.org/abs/1804.00325]
+
+**Reference Code**: https://github.com/AtheMathmo/AggMo
+
 
 DiffGrad
 --------
