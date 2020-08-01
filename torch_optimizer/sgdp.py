@@ -3,7 +3,7 @@ import math
 import torch
 from torch.optim.optimizer import Optimizer
 
-from .types import OptLossClosure, Params, OptFloat
+from .types import OptFloat, OptLossClosure, Params
 
 __all__ = ('SGDP',)
 
@@ -44,16 +44,16 @@ class SGDP(Optimizer):
     """
 
     def __init__(
-            self,
-            params: Params,
-            lr: float = 1e-3,
-            momentum: float = 0,
-            dampening: float = 0,
-            eps: float = 1e-8,
-            weight_decay: float = 0,
-            delta: float = 0.1,
-            wd_ratio: float = 0.1,
-            nesterov: bool = False
+        self,
+        params: Params,
+        lr: float = 1e-3,
+        momentum: float = 0,
+        dampening: float = 0,
+        eps: float = 1e-8,
+        weight_decay: float = 0,
+        delta: float = 0.1,
+        wd_ratio: float = 0.1,
+        nesterov: bool = False,
     ) -> None:
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -80,7 +80,7 @@ class SGDP(Optimizer):
             weight_decay=weight_decay,
             delta=delta,
             wd_ratio=wd_ratio,
-            nesterov=nesterov
+            nesterov=nesterov,
         )
         super(SGDP, self).__init__(params, defaults)
 
@@ -111,13 +111,12 @@ class SGDP(Optimizer):
             cosine_sim = self._cosine_similarity(grad, p.data, eps, view_func)
 
             if cosine_sim.max() < delta / math.sqrt(view_func(p.data).size(1)):
-                p_n = (p.data / view_func(p.data)
-                       .norm(dim=1)
-                       .view(expand_size)
-                       .add_(eps))
-                perturb -= (p_n * view_func(p_n * perturb)
-                            .sum(dim=1)
-                            .view(expand_size))
+                p_n = p.data / view_func(p.data).norm(dim=1).view(
+                    expand_size
+                ).add_(eps)
+                perturb -= p_n * view_func(p_n * perturb).sum(dim=1).view(
+                    expand_size
+                )
                 wd = wd_ratio
 
                 return perturb, wd
@@ -168,14 +167,18 @@ class SGDP(Optimizer):
                         d_p,
                         group['delta'],
                         group['wd_ratio'],
-                        group['eps']
+                        group['eps'],
                     )
 
                 # Weight decay
                 if weight_decay != 0:
-                    p.data.mul_(1 - group['lr']
-                                * group['weight_decay']
-                                * wd_ratio / (1 - momentum))
+                    p.data.mul_(
+                        1
+                        - group['lr']
+                        * group['weight_decay']
+                        * wd_ratio
+                        / (1 - momentum)
+                    )
 
                 # Step
                 p.data.add_(-group['lr'], d_p)

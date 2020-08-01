@@ -2,10 +2,10 @@ import functools
 from copy import deepcopy
 
 import torch
-import torch_optimizer as optim
 from torch.autograd import Variable
 from torch.optim.lr_scheduler import ExponentialLR, ReduceLROnPlateau, StepLR
 
+import torch_optimizer as optim
 from tests.utils import assert_dict_equal
 
 

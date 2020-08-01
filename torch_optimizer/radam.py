@@ -1,9 +1,9 @@
 import math
+
 import torch
 from torch.optim.optimizer import Optimizer
 
 from .types import Betas2, OptFloat, OptLossClosure, Params
-
 
 __all__ = ('RAdam',)
 

@@ -1,9 +1,9 @@
 import numpy as np
 import pytest
 import torch
-import torch_optimizer as optim
-
 from torch import nn
+
+import torch_optimizer as optim
 
 
 def make_dataset(seed=42):
@@ -15,7 +15,7 @@ def make_dataset(seed=42):
 
     # center the first N/2 points at (-2,-2)
     mid = N // 2
-    X[: mid, :] = X[: mid, :] - 2 * np.ones((mid, D))
+    X[:mid, :] = X[:mid, :] - 2 * np.ones((mid, D))
 
     # center the last N/2 points at (2, 2)
     X[mid:, :] = X[mid:, :] + 2 * np.ones((mid, D))

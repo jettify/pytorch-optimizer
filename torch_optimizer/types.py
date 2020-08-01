@@ -1,4 +1,5 @@
-from typing import Iterable, Union, Callable, Dict, Optional, Tuple, Any
+from typing import Any, Callable, Dict, Iterable, Optional, Tuple, Union
+
 from torch import Tensor
 
 Params = Union[Iterable[Tensor], Iterable[Dict[str, Any]]]

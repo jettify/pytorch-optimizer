@@ -3,7 +3,6 @@ from torch.optim.optimizer import Optimizer
 
 from .types import OptFloat, OptLossClosure, Params, State
 
-
 __all__ = ('SGDW',)
 
 

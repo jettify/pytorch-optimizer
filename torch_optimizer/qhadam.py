@@ -1,8 +1,7 @@
 import torch
 from torch.optim.optimizer import Optimizer
 
-from .types import Betas2, OptFloat, OptLossClosure, Params, Nus2
-
+from .types import Betas2, Nus2, OptFloat, OptLossClosure, Params
 
 __all__ = ('QHAdam',)
 

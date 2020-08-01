@@ -1,8 +1,9 @@
+import math
+
 import torch
 from torch.optim.optimizer import Optimizer
-import math
-from .types import Betas2, OptFloat, OptLossClosure, Params
 
+from .types import Betas2, OptFloat, OptLossClosure, Params
 
 __all__ = ('Lamb',)
 
