@@ -14,7 +14,7 @@ See documentation for full list of supported optimizers.
 
 __ https://pytorch.org/docs/stable/optim.html#module-torch.optim
 """
-from typing import Type, List, Dict
+from typing import Dict, List, Type
 
 from pytorch_ranger import Ranger, RangerQH, RangerVA
 from torch.optim.optimizer import Optimizer
@@ -32,11 +32,10 @@ from .pid import PID
 from .qhadam import QHAdam
 from .qhm import QHM
 from .radam import RAdam
-from .sgdw import SGDW
 from .sgdp import SGDP
+from .sgdw import SGDW
 from .shampoo import Shampoo
 from .yogi import Yogi
-
 
 __all__ = (
     'AccSGD',

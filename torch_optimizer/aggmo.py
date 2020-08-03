@@ -1,15 +1,14 @@
-from typing import List, Union, Tuple, TypeVar, Type
+from typing import List, Tuple, Type, TypeVar, Union
 
 import torch
 from torch.optim.optimizer import Optimizer
 
-from .types import OptLossClosure, Params, OptFloat
-
+from .types import OptFloat, OptLossClosure, Params
 
 __all__ = ('AggMo',)
 
 
-T = TypeVar('T', bound='Parent')
+T = TypeVar('T', bound='AggMo')
 
 
 class AggMo(Optimizer):
@@ -62,7 +61,7 @@ class AggMo(Optimizer):
         a: float = 0.1,
         k: int = 3,
         weight_decay: float = 0,
-    ) -> Type[T]:
+    ) -> T:
         if lr <= 0.0:
             raise ValueError('Invalid parameter k: {}'.format(k))
 

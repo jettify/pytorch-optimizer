@@ -1,8 +1,11 @@
 # Some simple testing tasks (sorry, UNIX only).
 
+FILES := torch_optimizer tests examples setup.py
+
+
 
 flake:
-	flake8 torch_optimizer tests examples setup.py
+	flake8  ${FILES}
 
 test: flake
 	pytest -sv
@@ -26,6 +29,12 @@ cov cover coverage: flake checkrst pyroma bandit
 	pytest -sv -vv --cov=torch_optimizer --cov-report=term --cov-report=html ./tests
 	@echo "open file://`pwd`/htmlcov/index.html"
 
+lint: flake checkrst bandit
+	isort -rc --check-only --diff $(FILES)
+	black -S -l 79 --check $(FILES)
+	mypy --show-error-codes --strict torch_optimizer
+	flake8 $(FILES)
+
 clean:
 	rm -rf `find . -name __pycache__`
 	rm -f `find . -type f -name '*.py[co]' `
@@ -48,5 +57,10 @@ doc:
 
 black:
 	black -S -l 79 setup.py torch_optimizer/ tests/ examples/
+
+fmt:
+	isort -rc ${FILES}
+	black -S -l 79 ${FILES}
+
 
 .PHONY: all flake test vtest cov clean doc

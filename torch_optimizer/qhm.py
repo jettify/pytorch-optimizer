@@ -1,7 +1,7 @@
 import torch
 from torch.optim.optimizer import Optimizer
-from .types import OptLossClosure, Params, OptFloat
 
+from .types import OptFloat, OptLossClosure, Params
 
 __all__ = ('QHM',)
 

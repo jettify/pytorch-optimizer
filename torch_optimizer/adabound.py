@@ -1,9 +1,9 @@
 import math
+
 import torch
 from torch.optim.optimizer import Optimizer
 
-from .types import Betas2, OptLossClosure, Params, State, OptFloat
-
+from .types import Betas2, OptFloat, OptLossClosure, Params, State
 
 __all__ = ('AdaBound',)
 

@@ -1,11 +1,10 @@
 from collections import defaultdict
-from typing import Dict, Any
+from typing import Any, Dict
 
 import torch
 from torch.optim.optimizer import Optimizer
 
-from .types import OptLossClosure, OptFloat, State
-
+from .types import OptFloat, OptLossClosure, State
 
 __all__ = ('Lookahead',)
 

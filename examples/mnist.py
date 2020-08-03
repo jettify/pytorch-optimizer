@@ -1,11 +1,11 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torch_optimizer as optim
-
-from torchvision import datasets, transforms, utils
 from torch.optim.lr_scheduler import StepLR
 from torch.utils.tensorboard import SummaryWriter
+
+import torch_optimizer as optim
+from torchvision import datasets, transforms, utils
 
 
 class Net(nn.Module):

@@ -3,7 +3,7 @@ import math
 import torch
 from torch.optim.optimizer import Optimizer
 
-from .types import OptLossClosure, Params, OptFloat, Betas2
+from .types import Betas2, OptFloat, OptLossClosure, Params
 
 __all__ = ('AdamP',)
 
@@ -44,15 +44,15 @@ class AdamP(Optimizer):
     """
 
     def __init__(
-            self,
-            params: Params,
-            lr: float = 1e-3,
-            betas: Betas2 = (0.9, 0.999),
-            eps: float = 1e-8,
-            weight_decay: float = 0,
-            delta: float = 0.1,
-            wd_ratio: float = 0.1,
-            nesterov: bool = False
+        self,
+        params: Params,
+        lr: float = 1e-3,
+        betas: Betas2 = (0.9, 0.999),
+        eps: float = 1e-8,
+        weight_decay: float = 0,
+        delta: float = 0.1,
+        wd_ratio: float = 0.1,
+        nesterov: bool = False,
     ) -> None:
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -82,7 +82,7 @@ class AdamP(Optimizer):
             weight_decay=weight_decay,
             delta=delta,
             wd_ratio=wd_ratio,
-            nesterov=nesterov
+            nesterov=nesterov,
         )
         super(AdamP, self).__init__(params, defaults)
 
@@ -113,13 +113,12 @@ class AdamP(Optimizer):
             cosine_sim = self._cosine_similarity(grad, p.data, eps, view_func)
 
             if cosine_sim.max() < delta / math.sqrt(view_func(p.data).size(1)):
-                p_n = (p.data / view_func(p.data)
-                       .norm(dim=1)
-                       .view(expand_size)
-                       .add_(eps))
-                perturb -= (p_n * view_func(p_n * perturb)
-                            .sum(dim=1)
-                            .view(expand_size))
+                p_n = p.data / view_func(p.data).norm(dim=1).view(
+                    expand_size
+                ).add_(eps)
+                perturb -= p_n * view_func(p_n * perturb).sum(dim=1).view(
+                    expand_size
+                )
                 wd = wd_ratio
 
                 return perturb, wd
@@ -163,8 +162,9 @@ class AdamP(Optimizer):
                 exp_avg.mul_(beta1).add_(1 - beta1, grad)
                 exp_avg_sq.mul_(beta2).addcmul_(1 - beta2, grad, grad)
 
-                denom = (exp_avg_sq.sqrt() /
-                         math.sqrt(bias_correction2)).add_(group['eps'])
+                denom = (exp_avg_sq.sqrt() / math.sqrt(bias_correction2)).add_(
+                    group['eps']
+                )
                 step_size = group['lr'] / bias_correction1
 
                 if nesterov:
@@ -176,14 +176,19 @@ class AdamP(Optimizer):
                 wd_ratio = 1
                 if len(p.shape) > 1:
                     perturb, wd_ratio = self._projection(
-                            p, grad, perturb, group['delta'],
-                            group['wd_ratio'], group['eps']
-                        )
+                        p,
+                        grad,
+                        perturb,
+                        group['delta'],
+                        group['wd_ratio'],
+                        group['eps'],
+                    )
 
                 # Weight decay
                 if group['weight_decay'] > 0:
-                    p.data.mul_(1 - group['lr'] *
-                                group['weight_decay'] * wd_ratio)
+                    p.data.mul_(
+                        1 - group['lr'] * group['weight_decay'] * wd_ratio
+                    )
 
                 # Step
                 p.data.add_(-step_size, perturb)
