@@ -118,9 +118,9 @@ class Lamb(Optimizer):
 
                 # Decay the first and second moment running average coefficient
                 # m_t
-                exp_avg.mul_(beta1).add_(1 - beta1, grad)
+                exp_avg.mul_(beta1).add_(grad, alpha=1 - beta1)
                 # v_t
-                exp_avg_sq.mul_(beta2).addcmul_(1 - beta2, grad, grad)
+                exp_avg_sq.mul_(beta2).addcmul_(grad, grad, value=1 - beta2)
 
                 # Paper v3 does not use debiasing.
                 if self.debias:
@@ -136,7 +136,7 @@ class Lamb(Optimizer):
 
                 adam_step = exp_avg / exp_avg_sq.sqrt().add(group['eps'])
                 if group['weight_decay'] != 0:
-                    adam_step.add_(group['weight_decay'], p.data)
+                    adam_step.add_(p.data, alpha=group['weight_decay'])
 
                 adam_norm = torch.norm(adam_step)
                 if weight_norm == 0 or adam_norm == 0:
@@ -149,6 +149,6 @@ class Lamb(Optimizer):
                 if self.adam:
                     trust_ratio = 1
 
-                p.data.add_(-step_size * trust_ratio, adam_step)
+                p.data.add_(adam_step, alpha=-step_size * trust_ratio)
 
         return loss
