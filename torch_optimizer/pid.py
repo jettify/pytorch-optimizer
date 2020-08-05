@@ -89,7 +89,7 @@ class PID(Optimizer):
                     continue
                 d_p = p.grad.data
                 if weight_decay != 0:
-                    d_p.add_(weight_decay, p.data)
+                    d_p.add_(p.data, alpha=weight_decay)
                 if momentum != 0:
                     param_state = self.state[p]
                     if 'i_buffer' not in param_state:
@@ -97,7 +97,7 @@ class PID(Optimizer):
                         i_buf.mul_(momentum).add_(d_p)
                     else:
                         i_buf = param_state['i_buffer']
-                        i_buf.mul_(momentum).add_(1 - dampening, d_p)
+                        i_buf.mul_(momentum).add_(d_p, alpha=1 - dampening)
                     if 'grad_buffer' not in param_state:
                         g_buf = param_state['grad_buffer'] = torch.zeros_like(
                             p
@@ -109,9 +109,13 @@ class PID(Optimizer):
                     else:
                         d_buf = param_state['d_buffer']
                         g_buf = param_state['grad_buffer']
-                        d_buf.mul_(momentum).add_(1 - momentum, d_p - g_buf)
+                        d_buf.mul_(momentum).add_(
+                            d_p - g_buf, alpha=1 - momentum
+                        )
                         self.state[p]['grad_buffer'] = d_p.clone()
 
-                    d_p = d_p.add_(integral, i_buf).add_(derivative, d_buf)
-                p.data.add_(-group['lr'], d_p)
+                    d_p = d_p.add_(i_buf, alpha=integral).add_(
+                        d_buf, alpha=derivative
+                    )
+                p.data.add_(d_p, alpha=-group['lr'])
         return loss
