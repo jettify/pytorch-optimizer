@@ -130,8 +130,8 @@ class RAdam(Optimizer):
 
                 exp_avg, exp_avg_sq = state['exp_avg'], state['exp_avg_sq']
 
-                exp_avg_sq.mul_(beta2).addcmul_(1 - beta2, grad, grad)
-                exp_avg.mul_(beta1).add_(1 - beta1, grad)
+                exp_avg_sq.mul_(beta2).addcmul_(grad, grad, value=1 - beta2)
+                exp_avg.mul_(beta1).add_(grad, alpha=1 - beta1)
 
                 state['step'] += 1
                 buffered = group['buffer'][int(state['step'] % 10)]
@@ -166,14 +166,14 @@ class RAdam(Optimizer):
                     buffered[2] = step_size
 
                 if weight_decay != 0:
-                    p_data_fp32.add_(-weight_decay * lr, p_data_fp32)
+                    p_data_fp32.add_(p_data_fp32, alpha=-weight_decay * lr)
 
                 # more conservative since it's an approximated value
                 if N_sma >= 5:
                     denom = exp_avg_sq.sqrt().add_(eps)
-                    p_data_fp32.addcdiv_(-step_size, exp_avg, denom)
+                    p_data_fp32.addcdiv_(exp_avg, denom, value=-step_size)
                 else:
-                    p_data_fp32.add_(-step_size, exp_avg)
+                    p_data_fp32.add_(exp_avg, alpha=-step_size)
 
                 p.data.copy_(p_data_fp32)
 
