@@ -107,14 +107,14 @@ class SGDW(Optimizer):
                         ).detach()
                     else:
                         buf = param_state['momentum_buffer']
-                        buf.mul_(momentum).add_(1 - dampening, d_p)
+                        buf.mul_(momentum).add_(d_p, alpha=1 - dampening)
                     if nesterov:
                         d_p = d_p.add(momentum, buf)
                     else:
                         d_p = buf
 
                 # Apply momentum
-                p.data.add_(-group['lr'], d_p)
+                p.data.add_(d_p, alpha=-group['lr'])
 
                 # Apply weight decay
                 if weight_decay != 0:
