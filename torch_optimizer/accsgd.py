@@ -91,12 +91,12 @@ class AccSGD(Optimizer):
                     param_state['momentum_buffer'] = copy.deepcopy(p.data)
                 buf = param_state['momentum_buffer']
                 buf.mul_((1.0 / beta) - 1.0)
-                buf.add_(-large_lr, d_p)
+                buf.add_(d_p, alpha=-large_lr)
                 buf.add_(p.data)
                 buf.mul_(beta)
 
-                p.data.add_(-group['lr'], d_p)
+                p.data.add_(d_p, alpha=-group['lr'])
                 p.data.mul_(zeta)
-                p.data.add_(1.0 - zeta, buf)
+                p.data.add_(buf, alpha=1.0 - zeta)
 
         return loss
