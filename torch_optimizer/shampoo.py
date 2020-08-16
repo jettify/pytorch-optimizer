@@ -108,11 +108,11 @@ class Shampoo(Optimizer):
 
                 if momentum > 0:
                     grad.mul_(1 - momentum).add_(
-                        momentum, state['momentum_buffer']
+                        state['momentum_buffer'], alpha=momentum
                     )
 
                 if weight_decay > 0:
-                    grad.add_(group['weight_decay'], p.data)
+                    grad.add_(p.data, alpha=group['weight_decay'])
 
                 # See Algorithm 2 for detail
                 for dim_id, dim in enumerate(grad.size()):
@@ -142,6 +142,6 @@ class Shampoo(Optimizer):
 
                 state['step'] += 1
                 state['momentum_buffer'] = grad
-                p.data.add_(-group['lr'], grad)
+                p.data.add_(grad, alpha=-group['lr'])
 
         return loss
