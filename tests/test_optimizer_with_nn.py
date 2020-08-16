@@ -71,6 +71,7 @@ optimizers = [
     (optim.AdamP, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.SGDP, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.AggMo, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
+    (optim.SWATS, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
 ]
 
 

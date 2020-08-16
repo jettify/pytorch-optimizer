@@ -68,9 +68,9 @@ optimizers = [
     build_lookahead,
     optim.AccSGD,
     optim.AdaBound,
-    optim.AggMo,
     optim.AdaMod,
     optim.AdamP,
+    optim.AggMo,
     optim.DiffGrad,
     optim.Lamb,
     optim.NovoGrad,
@@ -83,6 +83,7 @@ optimizers = [
     optim.RangerVA,
     optim.SGDP,
     optim.SGDW,
+    optim.SWATS,
     optim.Shampoo,
     optim.Yogi,
 ]

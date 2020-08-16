@@ -50,6 +50,7 @@ optimizers = [
     optim.SGDP,
     optim.Shampoo,
     optim.Yogi,
+    optim.SWATS,
 ]
 
 
@@ -72,6 +73,7 @@ eps_optimizers = [
     optim.QHAdam,
     optim.RAdam,
     optim.SGDP,
+    optim.SWATS,
     optim.Yogi,
 ]
 

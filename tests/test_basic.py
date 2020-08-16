@@ -63,6 +63,7 @@ optimizers = [
     (optim.AdamP, {'lr': 0.01, 'betas': (0.9, 0.95), 'eps': 1e-3}, 800),
     (optim.SGDP, {'lr': 0.002, 'momentum': 0.91}, 900),
     (optim.AggMo, {'lr': 0.003}, 1800),
+    (optim.SWATS, {'lr': 0.1, 'amsgrad': True, 'nesterov': True}, 900),
 ]
 
 
