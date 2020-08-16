@@ -126,7 +126,9 @@ class AdaMod(Optimizer):
                 )
 
                 if group['weight_decay'] != 0:
-                    p.data.add_(-group['weight_decay'] * group['lr'], p.data)
+                    p.data.add_(
+                        p.data, alpha=-group['weight_decay'] * group['lr']
+                    )
 
                 # Applies momental bounds on actual learning rates
                 step_size = torch.full_like(denom, step_size)

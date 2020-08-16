@@ -88,7 +88,7 @@ class AggMo(Optimizer):
                     continue
                 d_p = p.grad.data
                 if weight_decay != 0:
-                    d_p.add_(weight_decay, p.data)
+                    d_p.add_(p.data, alpha=weight_decay)
                 param_state = self.state[p]
                 if 'momentum_buffer' not in param_state:
                     param_state['momentum_buffer'] = {}
@@ -99,5 +99,5 @@ class AggMo(Optimizer):
                 for beta in betas:
                     buf = param_state['momentum_buffer'][beta]
                     buf.mul_(beta).add_(d_p)
-                    p.data.sub_(group['lr'] / total_mom, buf)
+                    p.data.sub_(buf, alpha=group['lr'] / total_mom)
         return loss

@@ -126,7 +126,7 @@ class Yogi(Optimizer):
                 bias_correction2 = 1 - beta2 ** state['step']
 
                 if group['weight_decay'] != 0:
-                    grad = grad.add(group['weight_decay'], p.data)
+                    grad = grad.add(p.data, alpha=group['weight_decay'])
 
                 # Decay the first and second moment running average coefficient
                 exp_avg.mul_(beta1).add_(grad, alpha=1 - beta1)
