@@ -61,7 +61,7 @@ class Lookahead(Optimizer):
                 param_state['slow_param'] = torch.clone(fast.data).detach()
 
             slow = param_state['slow_param']
-            fast.data.mul_(self.alpha).add_(1.0 - self.alpha, slow)
+            fast.data.mul_(self.alpha).add_(slow, alpha=1.0 - self.alpha)
             slow.data.copy_(fast)
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:

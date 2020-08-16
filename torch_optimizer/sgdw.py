@@ -118,5 +118,5 @@ class SGDW(Optimizer):
 
                 # Apply weight decay
                 if weight_decay != 0:
-                    p.data.add_(-group['lr'], weight_decay)
+                    p.data.add_(weight_decay, alpha=-group['lr'])
         return loss
