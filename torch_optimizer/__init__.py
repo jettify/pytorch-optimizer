@@ -35,6 +35,7 @@ from .radam import RAdam
 from .sgdp import SGDP
 from .sgdw import SGDW
 from .shampoo import Shampoo
+from .swats import SWATS
 from .yogi import Yogi
 
 __all__ = (
@@ -56,6 +57,7 @@ __all__ = (
     'RangerVA',
     'SGDW',
     'SGDP',
+    'SWATS',
     'Shampoo',
     'Yogi',
     # utils
