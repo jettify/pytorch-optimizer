@@ -102,6 +102,9 @@ Supported Optimizers
 | `SGDW`_     | https://arxiv.org/abs/1608.03983                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `SWATS`_    | https://arxiv.org/abs/1712.07628                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `Shampoo`_  | https://arxiv.org/abs/1802.09568                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
@@ -665,6 +668,35 @@ SGDW
 **Paper**: *SGDR: Stochastic Gradient Descent with Warm Restarts* (2017) [https://arxiv.org/abs/1608.03983]
 
 **Reference Code**: https://github.com/pytorch/pytorch/pull/22466
+
+
+SWATS
+-----
+
++---------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_SWATS.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_SWATS.png  |
++---------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.SWATS(
+        model.parameters(),
+        lr=1e-1,
+        betas=(0.9, 0.999),
+        eps=1e-3,
+        weight_decay= 0.0,
+        amsgrad=False,
+        nesterov=False,
+    )
+    optimizer.step()
+
+
+**Paper**: *Improving Generalization Performance by Switching from Adam to SGD* (2017) [https://arxiv.org/abs/1712.07628]
+
+**Reference Code**: https://github.com/Mrpatekful/swats
 
 
 Shampoo

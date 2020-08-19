@@ -186,6 +186,7 @@ if __name__ == '__main__':
         (optim.Shampoo, -8, 0.1),
         (LookaheadYogi, -8, 0.1),
         (optim.AggMo, -8, -1.5),
+        (optim.SWATS, -8, -1.5),
     ]
     execute_experiments(
         optimizers,
