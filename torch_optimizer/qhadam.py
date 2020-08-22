@@ -110,7 +110,7 @@ class QHAdam(Optimizer):
                     if decouple_weight_decay:
                         p.data.mul_(1 - lr * weight_decay)
                     else:
-                        d_p.add_(weight_decay, p.data)
+                        d_p.add_(p.data, alpha=weight_decay)
 
                 d_p_sq = d_p.mul(d_p)
 
@@ -130,20 +130,20 @@ class QHAdam(Optimizer):
 
                 beta1_adj = 1.0 - (1.0 / beta1_weight)
                 beta2_adj = 1.0 - (1.0 / beta2_weight)
-                exp_avg.mul_(beta1_adj).add_(1.0 - beta1_adj, d_p)
-                exp_avg_sq.mul_(beta2_adj).add_(1.0 - beta2_adj, d_p_sq)
+                exp_avg.mul_(beta1_adj).add_(d_p, alpha=1.0 - beta1_adj)
+                exp_avg_sq.mul_(beta2_adj).add_(d_p_sq, alpha=1.0 - beta2_adj)
 
                 avg_grad = exp_avg.mul(nu1)
                 if nu1 != 1.0:
-                    avg_grad.add_(1.0 - nu1, d_p)
+                    avg_grad.add_(d_p, alpha=1.0 - nu1)
 
                 avg_grad_rms = exp_avg_sq.mul(nu2)
                 if nu2 != 1.0:
-                    avg_grad_rms.add_(1.0 - nu2, d_p_sq)
+                    avg_grad_rms.add_(d_p_sq, alpha=1.0 - nu2)
                 avg_grad_rms.sqrt_()
                 if eps != 0.0:
                     avg_grad_rms.add_(eps)
 
-                p.data.addcdiv_(-lr, avg_grad, avg_grad_rms)
+                p.data.addcdiv_(avg_grad, avg_grad_rms, value=-lr)
 
         return loss
