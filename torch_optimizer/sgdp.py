@@ -152,7 +152,7 @@ class SGDP(Optimizer):
 
                 # SGD
                 buf = state['momentum']
-                buf.mul_(momentum).add_(1 - dampening, grad)
+                buf.mul_(momentum).add_(grad, alpha=1 - dampening)
                 if nesterov:
                     d_p = grad + momentum * buf
                 else:
@@ -181,6 +181,6 @@ class SGDP(Optimizer):
                     )
 
                 # Step
-                p.data.add_(-group['lr'], d_p)
+                p.data.add_(d_p, alpha=-group['lr'])
 
         return loss
