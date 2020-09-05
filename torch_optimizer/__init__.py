@@ -21,6 +21,7 @@ from torch.optim.optimizer import Optimizer
 
 from .accsgd import AccSGD
 from .adabound import AdaBound
+from .adafactor import Adafactor
 from .adamod import AdaMod
 from .adamp import AdamP
 from .aggmo import AggMo
@@ -60,6 +61,7 @@ __all__ = (
     'SWATS',
     'Shampoo',
     'Yogi',
+    'Adafactor',
     # utils
     'get',
 )
