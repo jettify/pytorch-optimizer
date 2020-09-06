@@ -51,6 +51,7 @@ def build_lookahead(*a, **kw):
 
 
 optimizers = [
+    (optim.Adafactor, {'lr': None, 'weight_decay': 1e-3}, 200),
     (optim.NovoGrad, {'lr': 0.01, 'weight_decay': 1e-3}, 200),
     (optim.PID, {'lr': 0.01, 'weight_decay': 1e-3, 'momentum': 0.1}, 200),
     (optim.Lamb, {'lr': 0.01, 'weight_decay': 1e-3}, 200),

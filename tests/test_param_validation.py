@@ -91,6 +91,7 @@ weight_decay_optimizers = [
     optim.AccSGD,
     optim.AdaBound,
     optim.AdaMod,
+    optim.Adafactor,
     optim.AdamP,
     optim.DiffGrad,
     optim.Lamb,
