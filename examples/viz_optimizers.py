@@ -187,6 +187,7 @@ if __name__ == '__main__':
         (LookaheadYogi, -8, 0.1),
         (optim.AggMo, -8, -1.5),
         (optim.SWATS, -8, -1.5),
+        (optim.Adafactor, -8, 0.5),
     ]
     execute_experiments(
         optimizers,

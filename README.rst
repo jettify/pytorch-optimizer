@@ -57,6 +57,9 @@ Supported Optimizers
 | `AdaMod`_   | https://arxiv.org/abs/1910.12249                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `Adafactor`_| https://arxiv.org/abs/1804.04235                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `AdamP`_    | https://arxiv.org/abs/2006.08217                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
@@ -229,6 +232,37 @@ unexpected large learning rates and stabilize the training of deep neural networ
 **Paper**: *An Adaptive and Momental Bound Method for Stochastic Learning.* (2019) [https://arxiv.org/abs/1910.12249]
 
 **Reference Code**: https://github.com/lancopku/AdaMod
+
+
+Adafactor
+---------
++------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Adafactor.png |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_Adafactor.png |
++------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.Adafactor(
+        m.parameters(),
+        lr= 1e-3,
+        eps2= (1e-30, 1e-3),
+        clip_threshold=1.0,
+        decay_rate=-0.8,
+        beta1=None,
+        weight_decay=0.0,
+        scale_parameter=True,
+        relative_step=True,
+        warmup_init=False,
+    )
+    optimizer.step()
+
+**Paper**: *Adafactor: Adaptive Learning Rates with Sublinear Memory Cost.* (2018) [https://arxiv.org/abs/1804.04235]
+
+**Reference Code**: https://github.com/pytorch/fairseq/blob/master/fairseq/optim/adafactor.py
+
 
 AdamP
 ------
