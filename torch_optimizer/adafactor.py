@@ -71,7 +71,7 @@ class Adafactor(Optimizer):
 
         defaults = dict(
             lr=lr,
-            eps=eps2,
+            eps2=eps2,
             clip_threshold=clip_threshold,
             decay_rate=decay_rate,
             beta1=beta1,
