@@ -9,7 +9,7 @@ __all__ = ('SWATS',)
 class SWATS(Optimizer):
     r"""Implements SWATS Optimizer Algorithm.
     It has been proposed in `Improving Generalization Performance by
-    Switching from Adam to SGD`
+    Switching from Adam to SGD`__.
 
     Arguments:
         params: iterable of parameters to optimize or dicts defining

@@ -25,7 +25,15 @@ AdaMod
 .. autoclass:: torch_optimizer.AdaMod
     :members:
 
-.. _DiffGrad:
+.. _Adafactor:
+
+Adafactor
+---------
+
+.. autoclass:: torch_optimizer.Adafactor
+    :members:
+
+.. _AdamP:
 
 AdamP
 ------
@@ -33,7 +41,15 @@ AdamP
 .. autoclass:: torch_optimizer.AdamP
     :members:
 
-.. _AdamP:
+.. _AggMo:
+
+AggMo
+-----
+
+.. autoclass:: torch_optimizer.AggMo
+    :members:
+
+.. _DiffGrad:
 
 DiffGrad
 --------
@@ -111,6 +127,14 @@ Shampoo
 -------
 
 .. autoclass:: torch_optimizer.Shampoo
+    :members:
+
+.. _SWATS:
+
+SWATS
+-----
+
+.. autoclass:: torch_optimizer.SWATS
     :members:
 
 .. _Yogi:
