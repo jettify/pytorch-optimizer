@@ -43,6 +43,7 @@ __all__ = (
     'AccSGD',
     'AdaBound',
     'AdaMod',
+    'Adafactor',
     'AdamP',
     'AggMo',
     'DiffGrad',
@@ -56,12 +57,11 @@ __all__ = (
     'Ranger',
     'RangerQH',
     'RangerVA',
-    'SGDW',
     'SGDP',
+    'SGDW',
     'SWATS',
     'Shampoo',
     'Yogi',
-    'Adafactor',
     # utils
     'get',
 )
@@ -85,8 +85,9 @@ _package_opts = [
     Ranger,
     RangerQH,
     RangerVA,
-    SGDW,
     SGDP,
+    SGDW,
+    SWATS,
     Shampoo,
     Yogi,
 ]  # type: List[Type[Optimizer]]
