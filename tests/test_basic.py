@@ -44,6 +44,7 @@ def build_lookahead(*a, **kw):
 
 
 optimizers = [
+    (optim.A2GradUni, {'lips': 40, 'beta': 0.0001}, 800),
     (optim.PID, {'lr': 0.002, 'momentum': 0.8, 'weight_decay': 0.0001}, 900),
     (optim.QHM, {'lr': 0.02, 'momentum': 0.95, 'nu': 1}, 900),
     (
