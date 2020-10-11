@@ -188,6 +188,9 @@ if __name__ == '__main__':
         (optim.AggMo, -8, -1.5),
         (optim.SWATS, -8, -1.5),
         (optim.Adafactor, -8, 0.5),
+        (optim.A2GradUni, -8, 0.1),
+        (optim.A2GradInc, -8, 0.1),
+        (optim.A2GradExp, -8, 0.1),
     ]
     execute_experiments(
         optimizers,

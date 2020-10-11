@@ -48,6 +48,15 @@ Supported Optimizers
 
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `A2GradExp`_| https://arxiv.org/abs/1810.00553                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
+| `A2GradInc`_| https://arxiv.org/abs/1810.00553                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
+| `A2GradUni`_| https://arxiv.org/abs/1810.00553                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `AccSGD`_   | https://arxiv.org/abs/1803.05591                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
@@ -145,6 +154,84 @@ is very easy to extend script and tune other optimizer parameters.
 .. code::
 
     python examples/viz_optimizers.py
+
+A2GradExp
+---------
+
++--------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_A2GradExp.png   |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_A2GradExp.png  |
++--------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.A2GradExp(
+        model.parameters(),
+        kappa=1000.0,
+        beta=10.0,
+        lips=10.0,
+        rho=0.5,
+    )
+    optimizer.step()
+
+
+**Paper**: *Optimal Adaptive and Accelerated Stochastic Gradient Descent* (2018) [https://arxiv.org/abs/1803.05591]
+
+**Reference Code**: https://github.com/severilov/A2Grad_optimizer
+
+
+A2GradInc
+---------
+
++--------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_A2GradInc.png   |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_A2GradInc.png  |
++--------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.A2GradInc(
+        model.parameters(),
+        kappa=1000.0,
+        beta=10.0,
+        lips=10.0,
+    )
+    optimizer.step()
+
+
+**Paper**: *Optimal Adaptive and Accelerated Stochastic Gradient Descent* (2018) [https://arxiv.org/abs/1803.05591]
+
+**Reference Code**: https://github.com/severilov/A2Grad_optimizer
+
+
+A2GradUni
+---------
+
++--------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_A2GradUni.png   |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_A2GradUni.png  |
++--------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.A2GradUni(
+        model.parameters(),
+        kappa=1000.0,
+        beta=10.0,
+        lips=10.0,
+    )
+    optimizer.step()
+
+
+**Paper**: *Optimal Adaptive and Accelerated Stochastic Gradient Descent* (2018) [https://arxiv.org/abs/1803.05591]
+
+**Reference Code**: https://github.com/severilov/A2Grad_optimizer
 
 
 AccSGD
