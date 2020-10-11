@@ -19,7 +19,7 @@ from typing import Dict, List, Type
 from pytorch_ranger import Ranger, RangerQH, RangerVA
 from torch.optim.optimizer import Optimizer
 
-from .a2grad import A2GradUni
+from .a2grad import A2GradExp, A2GradInc, A2GradUni
 from .accsgd import AccSGD
 from .adabound import AdaBound
 from .adafactor import Adafactor
@@ -41,6 +41,8 @@ from .swats import SWATS
 from .yogi import Yogi
 
 __all__ = (
+    'A2GradExp',
+    'A2GradInc',
     'A2GradUni',
     'AccSGD',
     'AdaBound',

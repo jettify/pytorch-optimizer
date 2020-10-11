@@ -51,6 +51,8 @@ def build_lookahead(*a, **kw):
 
 
 optimizers = [
+    (optim.A2GradExp, {'lips': 1.0, 'beta': 1e-3}, 200),
+    (optim.A2GradInc, {'lips': 1.0, 'beta': 1e-3}, 200),
     (optim.A2GradUni, {'lips': 1.0, 'beta': 1e-3}, 200),
     (optim.Adafactor, {'lr': None, 'weight_decay': 1e-3}, 200),
     (optim.NovoGrad, {'lr': 0.01, 'weight_decay': 1e-3}, 200),
