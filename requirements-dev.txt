@@ -12,6 +12,6 @@ pyroma==2.6
 pytest-cov==2.10.1
 pytest==6.1.1
 pytorch_ranger==0.1.1
-sphinx-autodoc-typehints==1.11.0
+sphinx-autodoc-typehints==1.11.1
 sphinx==3.2.1
 torch==1.6.0
