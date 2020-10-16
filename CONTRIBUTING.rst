@@ -10,7 +10,7 @@ Running Tests
 Thanks for your interest in contributing to ``pytorch-optimizer``, there are multiple
 ways and places you can contribute.
 
-Fist of all just clone repository::
+First of all just clone repository::
 
     $ git clone git@github.com:jettify/pytorch-optimizer.git
 
