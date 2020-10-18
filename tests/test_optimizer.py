@@ -65,11 +65,12 @@ def build_lookahead(*a, **kw):
 
 
 optimizers = [
+    build_lookahead,
     optim.A2GradExp,
     optim.A2GradInc,
     optim.A2GradUni,
-    build_lookahead,
     optim.AccSGD,
+    optim.AdaBelief,
     optim.AdaBound,
     optim.AdaMod,
     optim.AdamP,
