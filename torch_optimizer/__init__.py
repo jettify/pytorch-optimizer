@@ -21,6 +21,7 @@ from torch.optim.optimizer import Optimizer
 
 from .a2grad import A2GradExp, A2GradInc, A2GradUni
 from .accsgd import AccSGD
+from .adabelief import AdaBelief
 from .adabound import AdaBound
 from .adafactor import Adafactor
 from .adamod import AdaMod
@@ -41,6 +42,7 @@ from .swats import SWATS
 from .yogi import Yogi
 
 __all__ = (
+    'AdaBelief',
     'A2GradExp',
     'A2GradInc',
     'A2GradUni',
@@ -73,6 +75,7 @@ __version__ = '0.0.1a16'
 
 
 _package_opts = [
+    AdaBelief,
     AccSGD,
     AdaBound,
     AdaMod,
