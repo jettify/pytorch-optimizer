@@ -60,6 +60,9 @@ Supported Optimizers
 | `AccSGD`_   | https://arxiv.org/abs/1803.05591                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `AdaBelief`_| https://arxiv.org/abs/2010.07468                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `AdaBound`_ | https://arxiv.org/abs/1902.09843                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
@@ -260,6 +263,38 @@ AccSGD
 **Paper**: *On the insufficiency of existing momentum schemes for Stochastic Optimization* (2019) [https://arxiv.org/abs/1803.05591]
 
 **Reference Code**: https://github.com/rahulkidambi/AccSGD
+
+
+AdaBelief
+---------
+
++-------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_AdaBelief.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_AdaBelief.png |
++-------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.AdaBelief(
+        m.parameters(),
+        lr= 1e-3,
+        betas=(0.9, 0.999),
+        eps=1e-3,
+        weight_decay=0,
+        amsgrad=False,
+        weight_decouple=False,
+        fixed_decay=False,
+        rectify=False,
+    )
+    optimizer.step()
+
+
+**Paper**: *AdaBelief Optimizer, adapting stepsizes by the belief in observed gradients* (2020) [https://arxiv.org/abs/2010.07468]
+
+**Reference Code**: https://github.com/juntang-zhuang/Adabelief-Optimizer
+
 
 AdaBound
 --------
