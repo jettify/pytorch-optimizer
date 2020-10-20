@@ -191,6 +191,7 @@ if __name__ == '__main__':
         (optim.A2GradUni, -8, 0.1),
         (optim.A2GradInc, -8, 0.1),
         (optim.A2GradExp, -8, 0.1),
+        (optim.AdaBelief, -8, 0.1),
     ]
     execute_experiments(
         optimizers,
