@@ -71,7 +71,7 @@ __all__ = (
     # utils
     'get',
 )
-__version__ = '0.0.1a16'
+__version__ = '0.0.1a17'
 
 
 _package_opts = [
