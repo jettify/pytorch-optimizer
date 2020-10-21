@@ -180,7 +180,7 @@ A2GradExp
     optimizer.step()
 
 
-**Paper**: *Optimal Adaptive and Accelerated Stochastic Gradient Descent* (2018) [https://arxiv.org/abs/1803.05591]
+**Paper**: *Optimal Adaptive and Accelerated Stochastic Gradient Descent* (2018) [https://arxiv.org/abs/1810.00553]
 
 **Reference Code**: https://github.com/severilov/A2Grad_optimizer
 
@@ -206,7 +206,7 @@ A2GradInc
     optimizer.step()
 
 
-**Paper**: *Optimal Adaptive and Accelerated Stochastic Gradient Descent* (2018) [https://arxiv.org/abs/1803.05591]
+**Paper**: *Optimal Adaptive and Accelerated Stochastic Gradient Descent* (2018) [https://arxiv.org/abs/1810.00553]
 
 **Reference Code**: https://github.com/severilov/A2Grad_optimizer
 
@@ -232,7 +232,7 @@ A2GradUni
     optimizer.step()
 
 
-**Paper**: *Optimal Adaptive and Accelerated Stochastic Gradient Descent* (2018) [https://arxiv.org/abs/1803.05591]
+**Paper**: *Optimal Adaptive and Accelerated Stochastic Gradient Descent* (2018) [https://arxiv.org/abs/1810.00553]
 
 **Reference Code**: https://github.com/severilov/A2Grad_optimizer
 
