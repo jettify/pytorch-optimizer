@@ -62,6 +62,7 @@ optimizers = [
     (optim.Adafactor, {'lr': None, 'weight_decay': 1e-3}, 200),
     (optim.AdamP, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.AggMo, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
+    (optim.Apollo, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.DiffGrad, {'lr': 0.5, 'weight_decay': 1e-3}, 200),
     (optim.Lamb, {'lr': 0.01, 'weight_decay': 1e-3}, 200),
     (optim.NovoGrad, {'lr': 0.01, 'weight_decay': 1e-3}, 200),

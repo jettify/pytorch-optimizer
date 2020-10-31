@@ -73,8 +73,10 @@ optimizers = [
     optim.AdaBelief,
     optim.AdaBound,
     optim.AdaMod,
+    optim.Adafactor,
     optim.AdamP,
     optim.AggMo,
+    optim.Apollo,
     optim.DiffGrad,
     optim.Lamb,
     optim.NovoGrad,
@@ -90,7 +92,6 @@ optimizers = [
     optim.SWATS,
     optim.Shampoo,
     optim.Yogi,
-    optim.Adafactor,
 ]
 
 
