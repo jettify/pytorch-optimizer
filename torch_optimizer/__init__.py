@@ -27,6 +27,7 @@ from .adafactor import Adafactor
 from .adamod import AdaMod
 from .adamp import AdamP
 from .aggmo import AggMo
+from .apollo import Apollo
 from .diffgrad import DiffGrad
 from .lamb import Lamb
 from .lookahead import Lookahead
@@ -42,16 +43,17 @@ from .swats import SWATS
 from .yogi import Yogi
 
 __all__ = (
-    'AdaBelief',
     'A2GradExp',
     'A2GradInc',
     'A2GradUni',
     'AccSGD',
+    'AdaBelief',
     'AdaBound',
     'AdaMod',
     'Adafactor',
     'AdamP',
     'AggMo',
+    'Apollo',
     'DiffGrad',
     'Lamb',
     'Lookahead',
