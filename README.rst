@@ -78,6 +78,9 @@ Supported Optimizers
 | `AggMo`_    | https://arxiv.org/abs/1804.00325                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
+| `Apollo`_   | https://arxiv.org/abs/2009.13586                                              |
++-------------+-------------------------------------------------------------------------------+
+|             |                                                                               |
 | `DiffGrad`_ | https://arxiv.org/abs/1909.11015                                              |
 +-------------+-------------------------------------------------------------------------------+
 |             |                                                                               |
@@ -442,6 +445,34 @@ AggMo
 **Paper**: *Aggregated Momentum: Stability Through Passive Damping.* (2019) [https://arxiv.org/abs/1804.00325]
 
 **Reference Code**: https://github.com/AtheMathmo/AggMo
+
+
+Apollo
+------
+
++------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Apollo.png    |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_Apollo.png   |
++------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.Apollo(
+        m.parameters(),
+        lr= 1e-2,
+        beta=0.9,
+        eps=1e-4,
+        warmup=0,
+        init_lr=0.01,
+        weight_decay=0,
+    )
+    optimizer.step()
+
+**Paper**: *Apollo: An Adaptive Parameter-wise Diagonal Quasi-Newton Method for Nonconvex Stochastic Optimization.* (2020) [https://arxiv.org/abs/2009.13586]
+
+**Reference Code**: https://github.com/XuezheMax/apollo
 
 
 DiffGrad
