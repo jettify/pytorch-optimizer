@@ -166,8 +166,8 @@ Warning
 -------
 Do not pick optimizer based on visualizations, optimization approaches
 have unique properties and may be tailored for different purposes or may
-require explicit learning rate schedule  etc. Best way to find out, is to try one
-to on your particular problem and see if it improves scores.
+require explicit learning rate schedule etc. Best way to find out, is to try one
+on your particular problem and see if it improves scores.
 
 If you do not know which optimizer to use start with built in SGD/Adam, once
 training logic is ready and baseline scores are established, swap optimizer and

@@ -35,10 +35,12 @@ def test_sparse_not_supported(optimizer_class):
 
 optimizers = [
     optim.AccSGD,
+    optim.AdaBelief,
     optim.AdaBound,
     optim.AdaMod,
-    optim.AggMo,
     optim.AdamP,
+    optim.AggMo,
+    optim.Apollo,
     optim.DiffGrad,
     optim.Lamb,
     optim.NovoGrad,
@@ -46,11 +48,11 @@ optimizers = [
     optim.QHAdam,
     optim.QHM,
     optim.RAdam,
-    optim.SGDW,
     optim.SGDP,
+    optim.SGDW,
+    optim.SWATS,
     optim.Shampoo,
     optim.Yogi,
-    optim.SWATS,
 ]
 
 
@@ -64,9 +66,11 @@ def test_learning_rate(optimizer_class):
 
 
 eps_optimizers = [
+    optim.AdaBelief,
     optim.AdaBound,
     optim.AdaMod,
     optim.AdamP,
+    optim.Apollo,
     optim.DiffGrad,
     optim.Lamb,
     optim.NovoGrad,

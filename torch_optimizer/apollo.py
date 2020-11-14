@@ -45,8 +45,8 @@ class Apollo(Optimizer):
         init_lr: float = 0.01,
         weight_decay: float = 0,
     ):
-        if not 0.0 < lr:
-            raise ValueError('Invalid learning rate value: {}'.format(lr))
+        if lr <= 0.0:
+            raise ValueError('Invalid learning rate: {}'.format(lr))
         if eps < 0.0:
             raise ValueError('Invalid epsilon value: {}'.format(eps))
         if not 0.0 <= beta < 1.0:
