@@ -93,18 +93,23 @@ def test_eps_validation(optimizer_class):
 
 weight_decay_optimizers = [
     optim.AccSGD,
+    optim.AdaBelief,
     optim.AdaBound,
     optim.AdaMod,
     optim.Adafactor,
     optim.AdamP,
+    optim.AggMo,
+    optim.Apollo,
     optim.DiffGrad,
     optim.Lamb,
+    optim.NovoGrad,
     optim.PID,
     optim.QHAdam,
     optim.QHM,
     optim.RAdam,
-    optim.SGDW,
     optim.SGDP,
+    optim.SGDW,
+    optim.SWATS,
     optim.Shampoo,
     optim.Yogi,
 ]
@@ -120,15 +125,16 @@ def test_weight_decay_validation(optimizer_class):
 
 
 betas_optimizers = [
+    optim.AdaBelief,
     optim.AdaBound,
     optim.AdaMod,
     optim.AdamP,
     optim.DiffGrad,
     optim.Lamb,
     optim.NovoGrad,
+    optim.QHAdam,
     optim.RAdam,
     optim.Yogi,
-    optim.QHAdam,
 ]
 
 
