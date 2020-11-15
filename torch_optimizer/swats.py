@@ -61,6 +61,10 @@ class SWATS(Optimizer):
             raise ValueError(
                 'Invalid beta parameter at index 1: {}'.format(betas[1])
             )
+        if weight_decay < 0:
+            raise ValueError(
+                'Invalid weight_decay value: {}'.format(weight_decay)
+            )
         defaults = dict(
             lr=lr,
             betas=betas,
