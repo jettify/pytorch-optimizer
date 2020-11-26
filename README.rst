@@ -1,7 +1,8 @@
 torch-optimizer
 ===============
-.. image:: https://travis-ci.com/jettify/pytorch-optimizer.svg?branch=master
-    :target: https://travis-ci.com/jettify/pytorch-optimizer
+.. image:: https://github.com/jettify/pytorch-optimizer/workflows/CI/badge.svg
+   :target: https://github.com/jettify/pytorch-optimizer/actions?query=workflow%3ACI
+   :alt: GitHub Actions status for master branch
 .. image:: https://codecov.io/gh/jettify/pytorch-optimizer/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/jettify/pytorch-optimizer
 .. image:: https://img.shields.io/pypi/pyversions/torch-optimizer.svg
