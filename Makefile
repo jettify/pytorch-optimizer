@@ -25,6 +25,10 @@ bandit:
 mypy:
 	mypy torch_optimizer --ignore-missing-imports
 
+checkbuild:
+	python setup.py sdist bdist_wheel
+	twine check dist/*
+
 cov cover coverage:
 	pytest -sv -vv --cov=torch_optimizer --cov-report=term --cov-report=html ./tests
 	@echo "open file://`pwd`/htmlcov/index.html"
