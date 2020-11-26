@@ -25,15 +25,15 @@ bandit:
 mypy:
 	mypy torch_optimizer --ignore-missing-imports
 
-cov cover coverage: flake checkrst pyroma bandit
+cov cover coverage:
 	pytest -sv -vv --cov=torch_optimizer --cov-report=term --cov-report=html ./tests
 	@echo "open file://`pwd`/htmlcov/index.html"
 
-lint: flake checkrst bandit
+checkfmt:
 	isort -rc --check-only --diff $(FILES)
 	black -S -l 79 --check $(FILES)
-	mypy --show-error-codes --strict torch_optimizer
-	flake8 $(FILES)
+
+lint: flake checkrst pyroma bandit checkfmt
 
 clean:
 	rm -rf `find . -name __pycache__`

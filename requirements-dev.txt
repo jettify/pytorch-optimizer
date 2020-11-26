@@ -6,6 +6,7 @@ flake8-quotes==3.2.0
 flake8==3.8.4
 ipdb==0.13.4
 ipython==7.16.1
+isort==4.3.21
 mypy==0.790
 numpy==1.19.4
 pyroma==2.6
