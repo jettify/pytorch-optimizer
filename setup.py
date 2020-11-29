@@ -34,6 +34,7 @@ def _read_version():
 classifiers = [
     'License :: OSI Approved :: Apache Software License',
     'Intended Audience :: Developers',
+    'Intended Audience :: Science/Research',
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
@@ -41,6 +42,7 @@ classifiers = [
     'Programming Language :: Python :: 3.8',
     'Operating System :: OS Independent',
     'Development Status :: 3 - Alpha',
+    'Topic :: Scientific/Engineering :: Artificial Intelligence',
 ]
 
 keywords = [
