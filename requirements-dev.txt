@@ -1,5 +1,5 @@
 -e .
-bandit==1.6.2
+bandit==1.6.3
 black==20.8b1
 flake8-bugbear==20.11.1
 flake8-quotes==3.2.0
