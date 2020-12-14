@@ -59,7 +59,7 @@ class AdaBelief(Optimizer):
         params: Params,
         lr: float = 1e-3,
         betas: Betas2 = (0.9, 0.999),
-        eps: float = 1e-3,
+        eps: float = 1e-8,
         weight_decay: float = 0,
         amsgrad: bool = False,
         weight_decouple: bool = False,
