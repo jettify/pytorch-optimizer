@@ -11,7 +11,7 @@ mypy==0.790
 numpy==1.19.4
 pyroma==2.6
 pytest-cov==2.10.1
-pytest==6.1.2
+pytest==6.2.1
 pytorch_ranger==0.1.1
 sphinx-autodoc-typehints==1.11.1
 sphinx==3.3.1
