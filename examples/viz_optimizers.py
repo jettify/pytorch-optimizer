@@ -39,7 +39,7 @@ def execute_steps(
     for i in range(1, num_iter + 1):
         optimizer.zero_grad()
         f = func(x)
-        f.backward(retain_graph=True)
+        f.backward(create_graph=True, retain_graph=True)
         torch.nn.utils.clip_grad_norm_(x, 1.0)
         optimizer.step()
         steps[:, i] = x.detach().numpy()
@@ -166,6 +166,7 @@ if __name__ == '__main__':
         (torch.optim.SGD, -8, -1.0),
         # Adam based
         (optim.AdaBound, -8, 0.3),
+        (optim.Adahessian, -1, 8),
         (optim.AdaMod, -8, 0.2),
         (optim.AdamP, -8, 0.2),
         (optim.DiffGrad, -8, 0.4),

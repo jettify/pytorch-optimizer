@@ -24,6 +24,7 @@ from .accsgd import AccSGD
 from .adabelief import AdaBelief
 from .adabound import AdaBound
 from .adafactor import Adafactor
+from .adahessian import Adahessian
 from .adamod import AdaMod
 from .adamp import AdamP
 from .aggmo import AggMo
@@ -51,6 +52,7 @@ __all__ = (
     'AdaBound',
     'AdaMod',
     'Adafactor',
+    'Adahessian',
     'AdamP',
     'AggMo',
     'Apollo',
