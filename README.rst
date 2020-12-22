@@ -406,7 +406,7 @@ Adafactor
 **Reference Code**: https://github.com/pytorch/fairseq/blob/master/fairseq/optim/adafactor.py
 
 Adahessian
----------
+----------
 +------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
 | .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Adahessian.png |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_Adahessian.png |
 +------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+

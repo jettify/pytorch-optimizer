@@ -78,6 +78,7 @@ optimizers = [
     (optim.SWATS, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.Shampoo, {'lr': 0.1, 'weight_decay': 1e-3, 'momentum': 0.8}, 200),
     (optim.Yogi, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
+    (optim.Adahessian, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
 ]
 
 
@@ -97,6 +98,6 @@ def test_basic_nn_modeloptimizer_config(optimizer_config):
         if init_loss is None:
             init_loss = loss
         optimizer.zero_grad()
-        loss.backward()
+        loss.backward(create_graph=True)
         optimizer.step()
     assert init_loss.item() > 2.0 * loss.item()

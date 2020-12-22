@@ -67,6 +67,7 @@ optimizers = [
     (optim.SWATS, {'lr': 0.1, 'amsgrad': True, 'nesterov': True}, 900),
     (optim.Adafactor, {'lr': None, 'decay_rate': -0.3, 'beta1': 0.9}, 800),
     (optim.AdaBelief, {'lr': 1.0}, 500),
+    (optim.Adahessian, {'lr': 0.15, 'hessian_power': 0.6}, 900),
 ]
 
 
@@ -82,7 +83,7 @@ def test_benchmark_function(case, optimizer_config):
     for _ in range(iterations):
         optimizer.zero_grad()
         f = func(x)
-        f.backward(retain_graph=True)
+        f.backward(retain_graph=True, create_graph=True)
         optimizer.step()
     assert torch.allclose(x, x_min, atol=0.001)
 
