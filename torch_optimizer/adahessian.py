@@ -80,8 +80,9 @@ class Adahessian(Optimizer):
     def get_trace(
             self, params: Params, grads: Grads, seed: int
             ) -> List[torch.Tensor]:
-        """Compute the Hessian vector product with a random vector v, at the
-        current gradient point, to estimate Hessian trace by
+        """Get an estimate of Hessian Trace.
+        This is done by computing the Hessian vector product with a random
+        vector v at the current gradient point, to estimate Hessian trace by
         computing the gradient of <gradsH,v>.
         :param gradsH: a list of torch variables
         :return: a list of torch tensors
