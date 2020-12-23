@@ -51,9 +51,9 @@ class Adahessian(Optimizer):
         hessian_power: float = 0.5,
         seed: int = 0,
     ) -> None:
-        if not 0.0 <= lr:
+        if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
-        if not 0.0 <= eps:
+        if eps <= 0.0:
             raise ValueError('Invalid epsilon value: {}'.format(eps))
         if not 0.0 <= betas[0] < 1.0:
             raise ValueError(
@@ -80,10 +80,9 @@ class Adahessian(Optimizer):
     def get_trace(
             self, params: Params, grads: Grads, seed: int
             ) -> List[torch.Tensor]:
-        """
-        compute the Hessian vector product with a random vector v, at the
-        current gradient point,
-        i.e., compute the gradient of <gradsH,v>.
+        """Compute the Hessian vector product with a random vector v, at the
+        current gradient point, to estimate Hessian trace by
+        computing the gradient of <gradsH,v>.
         :param gradsH: a list of torch variables
         :return: a list of torch tensors
         """
@@ -127,7 +126,7 @@ class Adahessian(Optimizer):
         return hutchinson_trace
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
-        r"""Performs a single optimization step.
+        """Perform a single optimization step.
 
         Arguments:
             closure: A closure that reevaluates the model and returns the loss.
