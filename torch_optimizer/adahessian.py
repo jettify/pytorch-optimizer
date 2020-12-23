@@ -26,6 +26,7 @@ class Adahessian(Optimizer):
             numerical stability (default: 1e-4)
         weight_decay (float, optional): weight decay (L2 penalty) (default: 0)
         hessian_power (float, optional): Hessian power (default: 0.5)
+        seed (int, optional): Seed used to generate random vectr (default: 0)
 
         Example:
         >>> import torch_optimizer as optim
@@ -48,6 +49,7 @@ class Adahessian(Optimizer):
         eps: float = 1e-4,
         weight_decay: float = 0,
         hessian_power: float = 0.5,
+        seed: int = 0,
     ) -> None:
         if not 0.0 <= lr:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -71,10 +73,13 @@ class Adahessian(Optimizer):
             eps=eps,
             weight_decay=weight_decay,
             hessian_power=hessian_power,
+            seed=seed
         )
         super(Adahessian, self).__init__(params, defaults)
 
-    def get_trace(self, params: Params, grads: Grads) -> List[torch.Tensor]:
+    def get_trace(
+            self, params: Params, grads: Grads, seed: int
+            ) -> List[torch.Tensor]:
         """
         compute the Hessian vector product with a random vector v, at the
         current gradient point,
@@ -93,7 +98,10 @@ class Adahessian(Optimizer):
                 )
                 raise RuntimeError(msg.format(i))
 
-        v = [2 * torch.randint_like(p, high=2) - 1 for p in params]
+        torch.manual_seed(seed)
+        v = [2 * torch.randint_like(
+            p, high=2, memory_format=torch.preserve_format
+            ) - 1 for p in params]
 
         # this is for distributed setting with single node and multi-gpus,
         # for multi nodes setting, we have not support it yet.
@@ -144,7 +152,7 @@ class Adahessian(Optimizer):
 
         # get the Hessian diagonal
 
-        hut_traces = self.get_trace(params, grads)
+        hut_traces = self.get_trace(params, grads, group['seed'])
 
         for (p, group, grad, hut_trace) in zip(
             params, groups, grads, hut_traces
