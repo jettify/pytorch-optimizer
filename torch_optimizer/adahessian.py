@@ -67,19 +67,17 @@ class Adahessian(Optimizer):
             raise ValueError(
                 'Invalid Hessian power value: {}'.format(hessian_power)
             )
+        torch.manual_seed(seed)
         defaults = dict(
             lr=lr,
             betas=betas,
             eps=eps,
             weight_decay=weight_decay,
             hessian_power=hessian_power,
-            seed=seed
         )
         super(Adahessian, self).__init__(params, defaults)
 
-    def get_trace(
-            self, params: Params, grads: Grads, seed: int
-            ) -> List[torch.Tensor]:
+    def get_trace(self, params: Params, grads: Grads) -> List[torch.Tensor]:
         """Get an estimate of Hessian Trace.
         This is done by computing the Hessian vector product with a random
         vector v at the current gradient point, to estimate Hessian trace by
@@ -98,7 +96,6 @@ class Adahessian(Optimizer):
                 )
                 raise RuntimeError(msg.format(i))
 
-        torch.manual_seed(seed)
         v = [2 * torch.randint_like(
             p, high=2, memory_format=torch.preserve_format
             ) - 1 for p in params]
@@ -152,7 +149,7 @@ class Adahessian(Optimizer):
 
         # get the Hessian diagonal
 
-        hut_traces = self.get_trace(params, grads, group['seed'])
+        hut_traces = self.get_trace(params, grads)
 
         for (p, group, grad, hut_trace) in zip(
             params, groups, grads, hut_traces
