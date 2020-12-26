@@ -26,7 +26,7 @@ class Adahessian(Optimizer):
             numerical stability (default: 1e-4)
         weight_decay (float, optional): weight decay (L2 penalty) (default: 0)
         hessian_power (float, optional): Hessian power (default: 0.5)
-        seed (int, optional): Seed used to generate random vectr (default: 0)
+        seed (int, optional): Random number generator seed (default: None)
 
         Example:
         >>> import torch_optimizer as optim
@@ -49,7 +49,7 @@ class Adahessian(Optimizer):
         eps: float = 1e-4,
         weight_decay: float = 0,
         hessian_power: float = 0.5,
-        seed: int = 0,
+        seed: int = None,
     ) -> None:
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -67,7 +67,8 @@ class Adahessian(Optimizer):
             raise ValueError(
                 'Invalid Hessian power value: {}'.format(hessian_power)
             )
-        torch.manual_seed(seed)
+        if seed is not None:
+            torch.manual_seed(seed)
         defaults = dict(
             lr=lr,
             betas=betas,
