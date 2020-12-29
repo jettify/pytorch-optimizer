@@ -81,8 +81,7 @@ class Apollo(Optimizer):
         """
         loss = None
         if closure is not None:
-            with torch.enable_grad():
-                loss = closure()
+            loss = closure()
 
         for group in self.param_groups:
             for p in group['params']:
@@ -116,7 +115,7 @@ class Apollo(Optimizer):
                     curr_lr = group['lr']
 
                 # Perform optimization step
-                grad = p.grad
+                grad = p.grad.data
                 if grad.is_sparse:
                     raise RuntimeError(
                         'Atom does not support sparse gradients.'
