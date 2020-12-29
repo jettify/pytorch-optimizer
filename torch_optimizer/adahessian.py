@@ -1,5 +1,5 @@
 import math
-from typing import List
+from typing import List, Optional
 
 import torch
 from torch.optim.optimizer import Optimizer
@@ -49,7 +49,7 @@ class Adahessian(Optimizer):
         eps: float = 1e-4,
         weight_decay: float = 0,
         hessian_power: float = 0.5,
-        seed: int = None,
+        seed: Optional[int] = None,
     ) -> None:
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -97,9 +97,14 @@ class Adahessian(Optimizer):
                 )
                 raise RuntimeError(msg.format(i))
 
-        v = [2 * torch.randint_like(
-            p, high=2, memory_format=torch.preserve_format
-            ) - 1 for p in params]
+        v = [
+            2
+            * torch.randint_like(
+                p, high=2, memory_format=torch.preserve_format
+            )
+            - 1
+            for p in params
+        ]
 
         # this is for distributed setting with single node and multi-gpus,
         # for multi nodes setting, we have not support it yet.
