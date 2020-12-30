@@ -131,7 +131,7 @@ class TestOptim:
             ):
                 y = y.cuda(bias.get_device())
             loss = (y + bias).pow(2).sum()
-            loss.backward()
+            loss.backward(create_graph=True)
             return loss
 
         initial_value = fn().item()
@@ -156,7 +156,7 @@ class TestOptim:
             optimizer.zero_grad()
             i = input_cuda if weight.is_cuda else input
             loss = (weight.mv(i) + bias).pow(2).sum()
-            loss.backward()
+            loss.backward(create_graph=True)
             return loss
 
         optimizer = constructor(weight, bias)

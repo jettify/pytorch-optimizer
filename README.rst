@@ -73,6 +73,9 @@ Supported Optimizers
 | `Adafactor`_| https://arxiv.org/abs/1804.04235                                                                                                     |
 +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
 |             |                                                                                                                                      |
+| `Adahessian`| https://arxiv.org/abs/2006.00719                                                                                                     |
++-------------+--------------------------------------------------------------------------------------------------------------------------------------+
+|             |                                                                                                                                      |
 | `AdamP`_    | https://arxiv.org/abs/2006.08217                                                                                                     |
 +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
 |             |                                                                                                                                      |
@@ -401,6 +404,34 @@ Adafactor
 **Paper**: *Adafactor: Adaptive Learning Rates with Sublinear Memory Cost.* (2018) [https://arxiv.org/abs/1804.04235]
 
 **Reference Code**: https://github.com/pytorch/fairseq/blob/master/fairseq/optim/adafactor.py
+
+
+Adahessian
+----------
++-------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_Adahessian.png |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_Adahessian.png  |
++-------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.Adahessian(
+        m.parameters(),
+        lr= 1.0,
+        betas= (0.9, 0.999)
+        eps= 1e-4,
+        weight_decay=0.0,
+        hessian_power=1.0,
+    )
+	  loss_fn(m(input), target).backward(create_graph = True) # create_graph=True is necessary for Hessian calculation
+    optimizer.step()
+
+
+**Paper**: *ADAHESSIAN: An Adaptive Second Order Optimizer for Machine Learning* (2020) [https://arxiv.org/abs/2006.00719]
+
+**Reference Code**: https://github.com/amirgholami/adahessian
 
 
 AdamP
