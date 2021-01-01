@@ -4,8 +4,6 @@ import re
 from setuptools import find_packages, setup
 
 install_requires = [
-    'numpy<=1.18.5;python_version<"3.6"',
-    'torch<=1.5.1;python_version<"3.6"',
     'torch>=1.1.0',
     'pytorch_ranger>=0.1.1',
 ]
@@ -36,7 +34,6 @@ classifiers = [
     'Intended Audience :: Developers',
     'Intended Audience :: Science/Research',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
@@ -91,5 +88,5 @@ setup(
     zip_safe=True,
     include_package_data=True,
     project_urls=project_urls,
-    python_requires='>3.5.0',
+    python_requires='>=3.6.0',
 )
