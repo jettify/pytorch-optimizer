@@ -117,8 +117,12 @@ class QHAdam(Optimizer):
                 if len(state) == 0:
                     state['beta1_weight'] = 0.0
                     state['beta2_weight'] = 0.0
-                    state['exp_avg'] = torch.zeros_like(p.data)
-                    state['exp_avg_sq'] = torch.zeros_like(p.data)
+                    state['exp_avg'] = torch.zeros_like(
+                        p.data, memory_format=torch.preserve_format
+                    )
+                    state['exp_avg_sq'] = torch.zeros_like(
+                        p.data, memory_format=torch.preserve_format
+                    )
 
                 state['beta1_weight'] = 1.0 + beta1 * state['beta1_weight']
                 state['beta2_weight'] = 1.0 + beta2 * state['beta2_weight']

@@ -148,7 +148,9 @@ class SGDP(Optimizer):
 
                 # State initialization
                 if len(state) == 0:
-                    state['momentum'] = torch.zeros_like(p.data)
+                    state['momentum'] = torch.zeros_like(
+                        p.data, memory_format=torch.preserve_format
+                    )
 
                 # SGD
                 buf = state['momentum']

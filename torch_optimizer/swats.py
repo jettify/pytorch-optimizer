@@ -113,15 +113,21 @@ class SWATS(Optimizer):
                 if len(state) == 0:
                     state['step'] = 0
                     # exponential moving average of gradient values
-                    state['exp_avg'] = torch.zeros_like(w.data)
+                    state['exp_avg'] = torch.zeros_like(
+                        w.data, memory_format=torch.preserve_format
+                    )
                     # exponential moving average of squared gradient values
-                    state['exp_avg_sq'] = torch.zeros_like(w.data)
+                    state['exp_avg_sq'] = torch.zeros_like(
+                        w.data, memory_format=torch.preserve_format
+                    )
                     # moving average for the non-orthogonal projection scaling
                     state['exp_avg2'] = w.new(1).fill_(0)
                     if amsgrad:
                         # maintains max of all exp. moving avg.
                         # of sq. grad. values
-                        state['max_exp_avg_sq'] = torch.zeros_like(w.data)
+                        state['max_exp_avg_sq'] = torch.zeros_like(
+                            w.data, memory_format=torch.preserve_format
+                        )
 
                 exp_avg, exp_avg2, exp_avg_sq = (
                     state['exp_avg'],
