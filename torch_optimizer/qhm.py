@@ -105,7 +105,9 @@ class QHM(Optimizer):
                         p.data.mul_(1.0 - lr * weight_decay)
 
                 if len(param_state) == 0:
-                    param_state['momentum_buffer'] = torch.zeros_like(p.data)
+                    param_state['momentum_buffer'] = torch.zeros_like(
+                        p.data, memory_format=torch.preserve_format
+                    )
 
                 momentum_buffer = param_state['momentum_buffer']
                 momentum_buffer.mul_(momentum).add_(d_p, alpha=1.0 - momentum)
