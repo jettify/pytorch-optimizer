@@ -95,11 +95,17 @@ class DiffGrad(Optimizer):
                 if len(state) == 0:
                     state['step'] = 0
                     # Exponential moving average of gradient values
-                    state['exp_avg'] = torch.zeros_like(p)
+                    state['exp_avg'] = torch.zeros_like(
+                        p, memory_format=torch.preserve_format
+                    )
                     # Exponential moving average of squared gradient values
-                    state['exp_avg_sq'] = torch.zeros_like(p)
+                    state['exp_avg_sq'] = torch.zeros_like(
+                        p, memory_format=torch.preserve_format
+                    )
                     # Previous gradient
-                    state['previous_grad'] = torch.zeros_like(p)
+                    state['previous_grad'] = torch.zeros_like(
+                        p, memory_format=torch.preserve_format
+                    )
 
                 exp_avg, exp_avg_sq, previous_grad = (
                     state['exp_avg'],
