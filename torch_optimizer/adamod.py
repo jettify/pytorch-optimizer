@@ -96,11 +96,17 @@ class AdaMod(Optimizer):
                 if len(state) == 0:
                     state['step'] = 0
                     # Exponential moving average of gradient values
-                    state['exp_avg'] = torch.zeros_like(p)
+                    state['exp_avg'] = torch.zeros_like(
+                        p, memory_format=torch.preserve_format
+                    )
                     # Exponential moving average of squared gradient values
-                    state['exp_avg_sq'] = torch.zeros_like(p)
+                    state['exp_avg_sq'] = torch.zeros_like(
+                        p, memory_format=torch.preserve_format
+                    )
                     # Exponential moving average of actual learning rates
-                    state['exp_avg_lr'] = torch.zeros_like(p)
+                    state['exp_avg_lr'] = torch.zeros_like(
+                        p, memory_format=torch.preserve_format
+                    )
 
                 exp_avg, exp_avg_sq, exp_avg_lr = (
                     state['exp_avg'],
@@ -131,7 +137,9 @@ class AdaMod(Optimizer):
                     )
 
                 # Applies momental bounds on actual learning rates
-                step_size = torch.full_like(denom, step_size)
+                step_size = torch.full_like(
+                    denom, step_size, memory_format=torch.preserve_format
+                )
                 step_size.div_(denom)
                 exp_avg_lr.mul_(group['beta3']).add_(
                     step_size, alpha=1 - group['beta3']

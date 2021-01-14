@@ -152,7 +152,9 @@ class Adafactor(Optimizer):
 
                     if use_first_moment:
                         # Exponential moving average of gradient values
-                        state['exp_avg'] = torch.zeros_like(grad)
+                        state['exp_avg'] = torch.zeros_like(
+                            grad, memory_format=torch.preserve_format
+                        )
                     if factored:
                         state['exp_avg_sq_row'] = torch.zeros(
                             grad_shape[:-1]
@@ -161,7 +163,9 @@ class Adafactor(Optimizer):
                             grad_shape[:-2] + grad_shape[-1:]
                         ).type_as(grad)
                     else:
-                        state['exp_avg_sq'] = torch.zeros_like(grad)
+                        state['exp_avg_sq'] = torch.zeros_like(
+                            grad, memory_format=torch.preserve_format
+                        )
 
                     state['RMS'] = 0
 

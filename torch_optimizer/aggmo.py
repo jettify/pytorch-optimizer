@@ -95,7 +95,9 @@ class AggMo(Optimizer):
                     for beta in betas:
                         param_state['momentum_buffer'][
                             beta
-                        ] = torch.zeros_like(p.data)
+                        ] = torch.zeros_like(
+                            p.data, memory_format=torch.preserve_format
+                        )
                 for beta in betas:
                     buf = param_state['momentum_buffer'][beta]
                     buf.mul_(beta).add_(d_p)
