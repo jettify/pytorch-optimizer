@@ -162,8 +162,6 @@ def main():
         images, labels = next(iter(train_loader))
         img_grid = utils.make_grid(images)
         writer.add_image('mnist_images', img_grid)
-        # visualize NN computation graph
-        writer.add_graph(model, images)
 
         # custom optimizer from torch_optimizer package
         optimizer = optim.DiffGrad(model.parameters(), lr=conf.lr)
