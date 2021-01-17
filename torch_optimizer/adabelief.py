@@ -5,9 +5,6 @@ from torch.optim.optimizer import Optimizer
 
 from .types import Betas2, OptFloat, OptLossClosure, Params
 
-version_higher = torch.__version__ >= '1.5.0'
-
-
 __all__ = ('AdaBelief',)
 
 
@@ -131,30 +128,18 @@ class AdaBelief(Optimizer):
                     state['rho_inf'] = 2.0 / (1.0 - beta2) - 1.0
                     state['step'] = 0
                     # Exponential moving average of gradient values
-                    state['exp_avg'] = (
-                        torch.zeros_like(
-                            p.data, memory_format=torch.preserve_format
-                        )
-                        if version_higher
-                        else torch.zeros_like(p.data)
+                    state['exp_avg'] = torch.zeros_like(
+                        p.data, memory_format=torch.preserve_format
                     )
                     # Exponential moving average of squared gradient values
-                    state['exp_avg_var'] = (
-                        torch.zeros_like(
-                            p.data, memory_format=torch.preserve_format
-                        )
-                        if version_higher
-                        else torch.zeros_like(p.data)
+                    state['exp_avg_var'] = torch.zeros_like(
+                        p.data, memory_format=torch.preserve_format
                     )
                     if amsgrad:
                         # Maintains max of all exp. moving avg. of
                         # sq. grad. values
-                        state['max_exp_avg_var'] = (
-                            torch.zeros_like(
-                                p.data, memory_format=torch.preserve_format
-                            )
-                            if version_higher
-                            else torch.zeros_like(p.data)
+                        state['max_exp_avg_var'] = torch.zeros_like(
+                            p.data, memory_format=torch.preserve_format
                         )
 
                 # get current state variable
