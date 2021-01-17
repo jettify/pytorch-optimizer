@@ -4,7 +4,7 @@ import re
 from setuptools import find_packages, setup
 
 install_requires = [
-    'torch>=1.1.0',
+    'torch>=1.5.0',
     'pytorch_ranger>=0.1.1',
 ]
 
