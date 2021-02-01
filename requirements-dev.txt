@@ -8,7 +8,7 @@ ipdb==0.13.4
 ipython==7.16.1
 isort==4.3.21
 mypy==0.800
-numpy==1.19.5
+numpy==1.20.0
 pyroma==2.6
 pytest-cov==2.11.1
 pytest==6.2.2
