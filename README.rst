@@ -94,6 +94,9 @@ Supported Optimizers
 | `Lookahead`_  | https://arxiv.org/abs/1907.08610                                                                                                     |
 +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
 |               |                                                                                                                                      |
+| `MADGRAD`_    | https://arxiv.org/abs/2101.11075                                                                                                     |
++---------------+--------------------------------------------------------------------------------------------------------------------------------------+
+|               |                                                                                                                                      |
 | `NovoGrad`_   | https://arxiv.org/abs/1905.11286                                                                                                     |
 +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
 |               |                                                                                                                                      |
@@ -605,6 +608,33 @@ Lookahead
 **Paper**: *Lookahead Optimizer: k steps forward, 1 step back* (2019) [https://arxiv.org/abs/1907.08610]
 
 **Reference Code**: https://github.com/alphadl/lookahead.pytorch
+
+
+MADGRAD
+---------
+
++-----------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_MADGRAD.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_MADGRAD.png  |
++-----------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.MADGRAD(
+        m.parameters(),
+        lr=1e-2,
+        momentum=0.9,
+        weight_decay=0,
+        eps=1e-6,
+    )
+    optimizer.step()
+
+
+**Paper**: *Adaptivity without Compromise: A Momentumized, Adaptive, Dual Averaged Gradient Method for Stochastic Optimization* (2021) [https://arxiv.org/abs/2101.11075]
+
+**Reference Code**: https://github.com/facebookresearch/madgrad
 
 
 NovoGrad
