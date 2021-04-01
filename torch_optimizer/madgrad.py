@@ -11,7 +11,7 @@ __all__ = ('MADGRAD',)
 
 class MADGRAD(torch.optim.Optimizer):
     """
-    MADGRAD_: A Momentumized, Adaptive, Dual Averaged Gradient Method
+    MADGRAD_: A Momentumized, Adaptive, Dual Averaged Gradient Method \
     for Stochastic Optimization.
     .. _MADGRAD: https://arxiv.org/abs/2101.11075
     MADGRAD is a general purpose optimizer that can be used in place of SGD or
@@ -64,7 +64,7 @@ class MADGRAD(torch.optim.Optimizer):
             raise ValueError(f'Weight decay {weight_decay} '
                              f'must be non-negative')
         if eps < 0:
-            raise ValueError(f'Eps must be non-negative')
+            raise ValueError('Eps must be non-negative')
 
         defaults = dict(lr=lr, eps=eps, momentum=momentum,
                         weight_decay=weight_decay, k=0)
@@ -79,13 +79,13 @@ class MADGRAD(torch.optim.Optimizer):
                 if momentum != 0:
                     state['x0'] = torch.clone(p.data).detach()
 
+    # skipcq: PYL-W0212
     def step(self, closure: Optional[Callable[[], float]] = None) \
             -> Optional[float]:
-        """Performs a single optimization step.
+        r"""Performs a single optimization step.
 
         Arguments:
-            closure (callable, optional): A closure that reevaluates the model
-                and returns the loss.
+            closure: A closure that reevaluates the model and returns the loss.
         """
         loss = None
         if closure is not None:
