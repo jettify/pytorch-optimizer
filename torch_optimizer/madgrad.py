@@ -10,18 +10,10 @@ __all__ = ('MADGRAD',)
 
 
 class MADGRAD(torch.optim.Optimizer):
-    """
-    MADGRAD_: A Momentumized, Adaptive, Dual Averaged Gradient Method \
-    for Stochastic Optimization.
-    .. _MADGRAD: https://arxiv.org/abs/2101.11075
-    MADGRAD is a general purpose optimizer that can be used in place of SGD or
-    Adam may converge faster and generalize better. Currently GPU-only.
-    Typically, the same learning rate schedule that is used for SGD or Adam may
-    be used. The overall learning rate is not comparable to either method and
-    should be determined by a hyper-parameter sweep.
-    MADGRAD requires less weight decay than other methods, often as little as
-    zero. Momentum values used for SGD or Adam's beta1 should work here also.
-    On sparse problems both weight_decay and momentum should be set to 0.
+    r"""Implements MADGRAD algorithm.
+
+    It has been proposed in `Adaptivity without Compromise: A Momentumized,
+    Adaptive, Dual Averaged Gradient Method for Stochastic Optimization`__
 
     Arguments:
         params (iterable):
@@ -43,6 +35,8 @@ class MADGRAD(torch.optim.Optimizer):
         >>> optimizer.zero_grad()
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
+
+    __ https://arxiv.org/abs/2101.11075
 
     Note:
         Reference code: https://github.com/facebookresearch/madgrad
@@ -79,7 +73,6 @@ class MADGRAD(torch.optim.Optimizer):
                 if momentum != 0:
                     state['x0'] = torch.clone(p.data).detach()
 
-    # skipcq: PYL-W0212
     def step(self, closure: Optional[Callable[[], float]] = None) \
             -> Optional[float]:
         r"""Performs a single optimization step.
