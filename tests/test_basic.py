@@ -68,6 +68,7 @@ optimizers = [
     (optim.Adafactor, {'lr': None, 'decay_rate': -0.3, 'beta1': 0.9}, 800),
     (optim.AdaBelief, {'lr': 1.0}, 500),
     (optim.Adahessian, {'lr': 0.15, 'hessian_power': 0.6, 'seed': 0}, 900),
+    (optim.MADGRAD, {'lr': 0.01}, 500)
 ]
 
 

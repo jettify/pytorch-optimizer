@@ -92,6 +92,7 @@ optimizers = [
     optim.SWATS,
     optim.Shampoo,
     optim.Yogi,
+    optim.MADGRAD,
 ]
 
 

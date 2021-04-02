@@ -79,6 +79,7 @@ eps_optimizers = [
     optim.SGDP,
     optim.SWATS,
     optim.Yogi,
+    optim.MADGRAD,
 ]
 
 
@@ -112,6 +113,7 @@ weight_decay_optimizers = [
     optim.SWATS,
     optim.Shampoo,
     optim.Yogi,
+    optim.MADGRAD,
 ]
 
 

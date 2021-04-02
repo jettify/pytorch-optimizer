@@ -79,6 +79,7 @@ optimizers = [
     (optim.Shampoo, {'lr': 0.1, 'weight_decay': 1e-3, 'momentum': 0.8}, 200),
     (optim.Yogi, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.Adahessian, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
+    (optim.MADGRAD, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
 ]
 
 
