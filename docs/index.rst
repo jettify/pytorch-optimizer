@@ -94,6 +94,9 @@ Supported Optimizers
 |                 |                                                                               |
 | :ref:`Yogi`     | https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization |
 +-----------------+-------------------------------------------------------------------------------+
+|                 |                                                                               |
+| :ref:`MADGRAD`  | https://arxiv.org/pdf/2101.11075.pdf                                          |
++-----------------+-------------------------------------------------------------------------------+
 
 .. toctree::
    :maxdepth: 2
