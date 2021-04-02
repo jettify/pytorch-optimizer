@@ -44,13 +44,13 @@ class MADGRAD(Optimizer):
         eps: float = 1e-6,
     ) -> None:
         if momentum < 0 or momentum >= 1:
-            raise ValueError(f"Momentum {momentum} must be in the range [0,1]")
+            raise ValueError('Momentum {momentum} must be in the range [0,1]')
         if lr <= 0:
-            raise ValueError(f"Learning rate {lr} must be positive")
+            raise ValueError('Learning rate {lr} must be positive')
         if weight_decay < 0:
-            raise ValueError(f"Weight decay {weight_decay} must be non-negative") # noqa
+            raise ValueError('Weight decay {weight_decay} must be non-negative') # noqa
         if eps < 0:
-            raise ValueError(f"Eps must be non-negative")
+            raise ValueError('Eps must be non-negative')
 
         defaults = dict(lr=lr,
                         eps=eps,
@@ -75,36 +75,36 @@ class MADGRAD(Optimizer):
         k = self.state['k'].item()
 
         for group in self.param_groups:
-            eps = group["eps"]
-            lr = group["lr"] + eps
-            decay = group["weight_decay"]
-            momentum = group["momentum"]
+            eps = group['eps']
+            lr = group['lr'] + eps
+            decay = group['weight_decay']
+            momentum = group['momentum']
 
             ck = 1 - momentum
             lamb = lr * math.pow(k + 1, 0.5)
 
-            for p in group["params"]:
+            for p in group['params']:
                 if p.grad is None:
                     continue
                 grad = p.grad.data
                 state = self.state[p]
 
-                if "grad_sum_sq" not in state:
-                    state["grad_sum_sq"] = torch.zeros_like(p.data).detach()
-                    state["s"] = torch.zeros_like(p.data).detach()
+                if 'grad_sum_sq' not in state:
+                    state['grad_sum_sq'] = torch.zeros_like(p.data).detach()
+                    state['s'] = torch.zeros_like(p.data).detach()
                     if momentum != 0:
-                        state["x0"] = torch.clone(p.data).detach()
+                        state['x0'] = torch.clone(p.data).detach()
 
                 if momentum != 0.0 and grad.is_sparse:
-                    raise RuntimeError("momentum != 0 is not compatible with sparse gradients") # noqa
+                    raise RuntimeError('momentum != 0 is not compatible with sparse gradients') # noqa
 
-                grad_sum_sq = state["grad_sum_sq"]
-                s = state["s"]
+                grad_sum_sq = state['grad_sum_sq']
+                s = state['s']
 
                 # Apply weight decay
                 if decay != 0:
                     if grad.is_sparse:
-                        raise RuntimeError("weight_decay option is not compatible with sparse gradients") # noqa
+                        raise RuntimeError('weight_decay option is not compatible with sparse gradients') # noqa
 
                     grad.add_(p.data, alpha=decay)
 
@@ -147,7 +147,7 @@ class MADGRAD(Optimizer):
                         rms = grad_sum_sq.pow(1 / 3).add_(eps)
                         x0 = p.data.addcdiv(s, rms, value=1)
                     else:
-                        x0 = state["x0"]
+                        x0 = state['x0']
 
                     # Accumulate second moments
                     grad_sum_sq.addcmul_(grad, grad, value=lamb)
