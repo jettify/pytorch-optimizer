@@ -32,6 +32,7 @@ from .apollo import Apollo
 from .diffgrad import DiffGrad
 from .lamb import Lamb
 from .lookahead import Lookahead
+from .madgrad import MADGRAD
 from .novograd import NovoGrad
 from .pid import PID
 from .qhadam import QHAdam
@@ -42,7 +43,6 @@ from .sgdw import SGDW
 from .shampoo import Shampoo
 from .swats import SWATS
 from .yogi import Yogi
-from .madgrad import MADGRAD
 
 __all__ = (
     'A2GradExp',
@@ -60,6 +60,7 @@ __all__ = (
     'DiffGrad',
     'Lamb',
     'Lookahead',
+    'MADGRAD',
     'NovoGrad',
     'PID',
     'QHAdam',
@@ -73,7 +74,6 @@ __all__ = (
     'SWATS',
     'Shampoo',
     'Yogi',
-    'MADGRAD',
     # utils
     'get',
 )
