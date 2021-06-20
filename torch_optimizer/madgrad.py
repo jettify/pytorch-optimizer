@@ -51,17 +51,19 @@ class MADGRAD(torch.optim.Optimizer):
         eps: float = 1e-6,
     ):
         if momentum < 0 or momentum >= 1:
-            raise ValueError(f'Momentum {momentum} must be in the range [0,1]')
-        if lr <= 0:
-            raise ValueError(f'Learning rate {lr} must be positive')
+            raise ValueError('Invalid momentum value: {}'.format(momentum))
+        if lr <= 0.0:
+            raise ValueError('Invalid learning rate: {}'.format(lr))
         if weight_decay < 0:
-            raise ValueError(f'Weight decay {weight_decay} '
-                             f'must be non-negative')
-        if eps < 0:
-            raise ValueError('Eps must be non-negative')
+            raise ValueError(
+                'Invalid weight_decay value: {}'.format(weight_decay)
+            )
+        if eps < 0.0:
+            raise ValueError('Invalid epsilon value: {}'.format(eps))
 
-        defaults = dict(lr=lr, eps=eps, momentum=momentum,
-                        weight_decay=weight_decay, k=0)
+        defaults = dict(
+            lr=lr, eps=eps, momentum=momentum, weight_decay=weight_decay, k=0
+        )
         super().__init__(params, defaults)
 
         for group in self.param_groups:
@@ -73,8 +75,9 @@ class MADGRAD(torch.optim.Optimizer):
                 if momentum != 0:
                     state['x0'] = torch.clone(p.data).detach()
 
-    def step(self, closure: Optional[Callable[[], float]] = None) \
-            -> Optional[float]:
+    def step(
+        self, closure: Optional[Callable[[], float]] = None
+    ) -> Optional[float]:
         r"""Performs a single optimization step.
 
         Arguments:
@@ -101,8 +104,10 @@ class MADGRAD(torch.optim.Optimizer):
                 state = self.state[p]
 
                 if momentum != 0.0 and grad.is_sparse:
-                    raise RuntimeError('momentum != 0 is not compatible with '
-                                       'sparse gradients')
+                    raise RuntimeError(
+                        'momentum != 0 is not compatible with '
+                        'sparse gradients'
+                    )
 
                 grad_sum_sq = state['grad_sum_sq']
                 s = state['s']
@@ -110,8 +115,10 @@ class MADGRAD(torch.optim.Optimizer):
                 # Apply weight decay
                 if decay != 0:
                     if grad.is_sparse:
-                        raise RuntimeError('weight_decay option is not '
-                                           'compatible with sparse gradients')
+                        raise RuntimeError(
+                            'weight_decay option is not '
+                            'compatible with sparse gradients'
+                        )
 
                     grad.add_(p.data, alpha=decay)
 
@@ -124,25 +131,29 @@ class MADGRAD(torch.optim.Optimizer):
                     s_masked = s.sparse_mask(grad)
 
                     # Compute x_0 from other known quantities
-                    rms_masked_vals = grad_sum_sq_masked._values()\
-                        .pow(1 / 3).add_(eps)
-                    x0_masked_vals = p_masked._values()\
-                        .addcdiv(s_masked._values(), rms_masked_vals, value=1)
+                    rms_masked_vals = (
+                        grad_sum_sq_masked._values().pow(1 / 3).add_(eps)
+                    )
+                    x0_masked_vals = p_masked._values().addcdiv(
+                        s_masked._values(), rms_masked_vals, value=1
+                    )
 
                     # Dense + sparse op
                     grad_sq = grad * grad
                     grad_sum_sq.add_(grad_sq, alpha=lamb)
                     grad_sum_sq_masked.add_(grad_sq, alpha=lamb)
 
-                    rms_masked_vals = grad_sum_sq_masked._values()\
-                        .pow_(1 / 3).add_(eps)
+                    rms_masked_vals = (
+                        grad_sum_sq_masked._values().pow_(1 / 3).add_(eps)
+                    )
 
                     s.add_(grad, alpha=lamb)
                     s_masked._values().add_(grad_val, alpha=lamb)
 
                     # update masked copy of p
                     p_kp1_masked_vals = x0_masked_vals.addcdiv(
-                        s_masked._values(), rms_masked_vals, value=-1)
+                        s_masked._values(), rms_masked_vals, value=-1
+                    )
                     # Copy updated masked p to dense p using an add operation
                     p_masked._values().add_(p_kp1_masked_vals, alpha=-1)
                     p.data.add_(p_masked, alpha=-1)
