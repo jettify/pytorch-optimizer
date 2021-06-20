@@ -614,7 +614,7 @@ MADGRAD
 ---------
 
 +-----------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
-| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_MADGRAD.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_MADGRAD.png  |
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_MADGRAD.png        |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_MADGRAD.png        |
 +-----------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
 
 .. code:: python
