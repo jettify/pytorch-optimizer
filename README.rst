@@ -423,7 +423,7 @@ Adahessian
     optimizer = optim.Adahessian(
         m.parameters(),
         lr= 1.0,
-        betas= (0.9, 0.999)
+        betas= (0.9, 0.999),
         eps= 1e-4,
         weight_decay=0.0,
         hessian_power=1.0,
