@@ -52,6 +52,7 @@ keywords = [
     'diffgrad',
     'lamb',
     'lookahead',
+    'madgrad',
     'novograd',
     'pid',
     'qhadam',

@@ -79,6 +79,7 @@ optimizers = [
     optim.Apollo,
     optim.DiffGrad,
     optim.Lamb,
+    optim.MADGRAD,
     optim.NovoGrad,
     optim.PID,
     optim.QHAdam,
