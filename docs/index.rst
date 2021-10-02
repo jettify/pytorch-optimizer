@@ -27,6 +27,22 @@ Installation process is simple, just::
     $ pip install torch_optimizer
 
 
+Citation
+--------
+Please cite original authors of optimization algorithms. If you like this
+package::
+
+    @software{Novik_torchoptimizers,
+    	title        = {{torch-optimizer -- collection of optimization algorithms for PyTorch.}},
+    	author       = {Novik, Mykola},
+    	year         = 2020,
+    	month        = 1,
+    	version      = {1.0.1}
+    }
+
+Or use github feature: "cite this repository" button.
+
+
 Supported Optimizers
 ====================
 
