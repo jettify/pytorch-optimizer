@@ -60,7 +60,7 @@ optimizers = [
     (optim.AdaBound, {'lr': 1.5, 'gamma': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.AdaMod, {'lr': 2.0, 'weight_decay': 1e-3}, 200),
     (optim.Adafactor, {'lr': None, 'weight_decay': 1e-3}, 200),
-    (optim.AdamP, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
+    (optim.AdamP, {'lr': 0.045, 'weight_decay': 1e-3}, 800),
     (optim.AggMo, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.Apollo, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.DiffGrad, {'lr': 0.5, 'weight_decay': 1e-3}, 200),
