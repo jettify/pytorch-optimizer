@@ -9,7 +9,7 @@ isort==4.3.21
 mypy==0.910
 numpy==1.21.2
 pyroma==3.2
-pytest-cov==2.12.1
+pytest-cov==3.0.0
 pytest==6.2.4
 pytorch_ranger==0.1.1
 sphinx-autodoc-typehints==1.12.0
