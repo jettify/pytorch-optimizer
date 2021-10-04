@@ -73,12 +73,15 @@ optimizers = [
     (optim.RAdam, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.Ranger, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.RangerQH, {'lr': 0.0124, 'weight_decay': 1e-3}, 1100),
-    (optim.RangerVA, {'lr':  0.2214, 'weight_decay': 1e-3}, 500),
+    (optim.RangerVA, {'lr': 0.2214, 'weight_decay': 1e-3}, 500),
     (optim.SGDP, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.SGDW, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.SWATS, {'lr': 0.703, 'weight_decay': 1e-3}, 600),
-    (optim.Shampoo, {'lr': 0.279,
-     'weight_decay': 1e-3, 'momentum': 0.05}, 1600),
+    (
+        optim.Shampoo, 
+        {'lr': 0.279, 'weight_decay': 1e-3, 'momentum': 0.05},
+        1600,
+    ),
     (optim.Yogi, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.Adahessian, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
 ]
