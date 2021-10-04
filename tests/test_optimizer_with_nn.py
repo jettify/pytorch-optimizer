@@ -78,7 +78,7 @@ optimizers = [
     (optim.SGDW, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.SWATS, {'lr': 0.703, 'weight_decay': 1e-3}, 600),
     (
-        optim.Shampoo, 
+        optim.Shampoo,
         {'lr': 0.279, 'weight_decay': 1e-3, 'momentum': 0.05},
         1600,
     ),
