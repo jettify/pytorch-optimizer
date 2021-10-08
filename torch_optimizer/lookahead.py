@@ -75,7 +75,8 @@ class Lookahead(Optimizer):
         for group in self.param_groups:
             if group['counter'] == 0:
                 self._update(group)
-            group['counter'] = (group['counter'] + 1) % self.k
+            group['counter'] += 1 
+            group['counter'] %= self.k
         return loss
 
     def state_dict(self) -> State:
@@ -115,9 +116,9 @@ class Lookahead(Optimizer):
         self.optimizer.load_state_dict(fast_state_dict)
         self.fast_state = self.optimizer.state
 
-    def zero_grad(self) -> None:
+    def zero_grad(self, set_to_none: bool = False) -> None:
         r"""Clears the gradients of all optimized :class:`torch.Tensor` s."""
-        self.optimizer.zero_grad()
+        self.optimizer.zero_grad(set_to_none)
 
     def __repr__(self) -> str:
         base_str = self.optimizer.__repr__()
