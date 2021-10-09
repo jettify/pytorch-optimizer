@@ -5,9 +5,15 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+    tags: [ 'v*' ]
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
+  schedule:
+    - cron:  '0 6 * * 1'  # Weekly Mon 6AM UTC build
+
 
 jobs:
   test:

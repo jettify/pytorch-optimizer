@@ -75,7 +75,7 @@ class Lookahead(Optimizer):
         for group in self.param_groups:
             if group['counter'] == 0:
                 self._update(group)
-            group['counter'] += 1 
+            group['counter'] += 1
             group['counter'] %= self.k
         return loss
 
