@@ -64,6 +64,11 @@ optimizers = [
     (optim.AggMo, {'lr': 0.17059, 'weight_decay': 1e-3}, 1000),
     (optim.Apollo, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.DiffGrad, {'lr': 0.5, 'weight_decay': 1e-3}, 200),
+    (
+        optim.LARS,
+        {'lr': 1.0, 'weight_decay': 1e-3, 'trust_coefficient': 0.01},
+        200,
+    ),
     (optim.Lamb, {'lr': 0.0151, 'weight_decay': 1e-3}, 1000),
     (optim.MADGRAD, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.NovoGrad, {'lr': 0.01, 'weight_decay': 1e-3}, 200),

@@ -78,6 +78,7 @@ optimizers = [
     optim.AggMo,
     optim.Apollo,
     optim.DiffGrad,
+    optim.LARS,
     optim.Lamb,
     optim.MADGRAD,
     optim.NovoGrad,
