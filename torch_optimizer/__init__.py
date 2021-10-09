@@ -31,6 +31,7 @@ from .aggmo import AggMo
 from .apollo import Apollo
 from .diffgrad import DiffGrad
 from .lamb import Lamb
+from .lars import LARS
 from .lookahead import Lookahead
 from .madgrad import MADGRAD
 from .novograd import NovoGrad
@@ -58,6 +59,7 @@ __all__ = (
     'AggMo',
     'Apollo',
     'DiffGrad',
+    'LARS',
     'Lamb',
     'Lookahead',
     'MADGRAD',
@@ -88,6 +90,7 @@ _package_opts = [
     AdamP,
     AggMo,
     DiffGrad,
+    LARS,
     Lamb,
     Lookahead,
     MADGRAD,
