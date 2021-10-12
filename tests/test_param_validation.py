@@ -23,7 +23,6 @@ no_sparse_optimizers = [
     optim.DiffGrad,
     optim.Lamb,
     optim.NovoGrad,
-    optim.RAdam,
     optim.Yogi,
 ]
 
@@ -49,7 +48,6 @@ optimizers = [
     optim.PID,
     optim.QHAdam,
     optim.QHM,
-    optim.RAdam,
     optim.SGDP,
     optim.SGDW,
     optim.SWATS,
@@ -79,7 +77,6 @@ eps_optimizers = [
     optim.MADGRAD,
     optim.NovoGrad,
     optim.QHAdam,
-    optim.RAdam,
     optim.SGDP,
     optim.SWATS,
     optim.Yogi,
@@ -112,7 +109,6 @@ weight_decay_optimizers = [
     optim.PID,
     optim.QHAdam,
     optim.QHM,
-    optim.RAdam,
     optim.SGDP,
     optim.SGDW,
     optim.SWATS,
@@ -139,7 +135,6 @@ betas_optimizers = [
     optim.Lamb,
     optim.NovoGrad,
     optim.QHAdam,
-    optim.RAdam,
     optim.Yogi,
 ]
 
