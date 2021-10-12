@@ -173,7 +173,6 @@ if __name__ == '__main__':
         (optim.Lamb, -8, -2.9),
         (optim.MADGRAD, -8, 0.5),
         (optim.NovoGrad, -8, -1.7),
-        (optim.RAdam, -8, 0.5),
         (optim.Yogi, -8, 0.1),
         # SGD/Momentum based
         (optim.AccSGD, -8, -1.4),

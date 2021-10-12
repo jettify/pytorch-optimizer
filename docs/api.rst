@@ -97,14 +97,6 @@ QHM
 .. autoclass:: torch_optimizer.QHM
     :members:
 
-.. _RAdam:
-
-RAdam
------
-
-.. autoclass:: torch_optimizer.RAdam
-    :members:
-
 .. _SGDP:
 
 SGDP
