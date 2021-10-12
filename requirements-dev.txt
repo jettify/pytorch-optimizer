@@ -1,19 +1,19 @@
 -e .
 bandit==1.7.0
 black==21.9b0
-flake8-bugbear==21.4.3
+flake8-bugbear==21.9.2
 flake8-quotes==3.3.0
-flake8==3.9.2
+flake8==4.0.0
 ipdb==0.13.9
 isort==4.3.21
 mypy==0.910
 numpy==1.21.2
 pyroma==3.2
-pytest-cov==2.12.1
-pytest==6.2.4
+pytest-cov==3.0.0
+pytest==6.2.5
 pytorch_ranger==0.1.1
 sphinx-autodoc-typehints==1.12.0
 sphinx==4.2.0
-torch==1.9.0
+torch==1.9.1
 twine==3.4.2
 wheel==0.37.0
