@@ -3,9 +3,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.optim.lr_scheduler import StepLR
 from torch.utils.tensorboard import SummaryWriter
+from torchvision import datasets, transforms, utils
 
 import torch_optimizer as optim
-from torchvision import datasets, transforms, utils
 
 
 class Net(nn.Module):
