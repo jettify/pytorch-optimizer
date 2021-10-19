@@ -1,11 +1,11 @@
 import math
 
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
-
-import matplotlib.pyplot as plt
-import torch_optimizer as optim
 from hyperopt import fmin, hp, tpe
+
+import torch_optimizer as optim
 
 plt.style.use('seaborn-white')
 

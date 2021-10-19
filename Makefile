@@ -34,7 +34,7 @@ cov cover coverage:
 	@echo "open file://`pwd`/htmlcov/index.html"
 
 checkfmt:
-	isort -rc --check-only --diff $(FILES)
+	isort --check-only --diff $(FILES)
 	black -S -l 79 --check $(FILES)
 
 lint: flake checkrst pyroma bandit checkfmt
