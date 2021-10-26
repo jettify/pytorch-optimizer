@@ -82,7 +82,7 @@ setup(
     url='https://github.com/jettify/pytorch-optimizer',
     download_url='https://pypi.org/project/torch-optimizer/',
     license='Apache 2',
-    packages=find_packages(),
+    packages=find_packages(exclude=('tests',)),
     install_requires=install_requires,
     keywords=keywords,
     zip_safe=True,

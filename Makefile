@@ -63,7 +63,7 @@ black:
 	black -S -l 79 setup.py torch_optimizer/ tests/ examples/
 
 fmt:
-	isort -rc ${FILES}
+	isort ${FILES}
 	black -S -l 79 ${FILES}
 
 
