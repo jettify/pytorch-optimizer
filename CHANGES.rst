@@ -1,6 +1,13 @@
 Changes
 -------
 
+0.2.0 (2021-10-25)
+------------------
+* Drop RAdam optimizer since it is included in pytorch.
+* Do not include tests as installable package.
+* Preserver memory layout where possible.
+* Add MADGRAD optimizer.
+
 0.1.0 (2021-01-01)
 ------------------
 * Initial release.
