@@ -27,6 +27,10 @@ class Adahessian(Optimizer):
         weight_decay (float, optional): weight decay (L2 penalty) (default: 0)
         hessian_power (float, optional): Hessian power (default: 0.5)
         seed (int, optional): Random number generator seed (default: None)
+        adamd_bias_correction: When performing bias correction (debias=True),
+            only correct the denominator to avoid inflating step sizes early
+            in training as suggested in `AdamD: Improved bias-correction in
+            Adam`__ (default: False)
 
         Example:
         >>> import torch_optimizer as optim
@@ -36,6 +40,7 @@ class Adahessian(Optimizer):
         >>> optimizer.step()
 
         __ https://arxiv.org/abs/2006.00719
+        __ https://arxiv.org/abs/2110.10828
 
         Note:
             Reference code: https://github.com/amirgholami/adahessian
@@ -50,6 +55,7 @@ class Adahessian(Optimizer):
         weight_decay: float = 0,
         hessian_power: float = 0.5,
         seed: Optional[int] = None,
+        adamd_bias_correction: bool = False,
     ) -> None:
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -75,8 +81,14 @@ class Adahessian(Optimizer):
             eps=eps,
             weight_decay=weight_decay,
             hessian_power=hessian_power,
+            adamd_bias_correction=adamd_bias_correction,
         )
         super(Adahessian, self).__init__(params, defaults)
+
+    def __setstate__(self, state):
+        super(Adahessian, self).__setstate__(state)
+        for group in self.param_groups:
+            group.setdefault('adamd_bias_correction', False)
 
     def get_trace(self, params: Params, grads: Grads) -> List[torch.Tensor]:
         """Get an estimate of Hessian Trace.
@@ -197,9 +209,12 @@ class Adahessian(Optimizer):
             ).add_(group['eps'])
 
             # make update
-            p.data = p.data - group['lr'] * (
-                exp_avg / bias_correction1 / denom
-                + group['weight_decay'] * p.data
+            if group['adamd_bias_correction']:
+                step_size = group['lr']
+            else:
+                step_size = group['lr'] / bias_correction1
+            p.data = p.data - step_size * (
+                exp_avg / denom + group['weight_decay'] * p.data
             )
 
         return loss

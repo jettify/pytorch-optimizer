@@ -28,6 +28,10 @@ class AdamP(Optimizer):
         wd_ratio: relative weight decay applied on scale-invariant parameters
             compared to that applied on scale-variant parameters (default: 0.1)
         nesterov: enables Nesterov momentum (default: False)
+        adamd_bias_correction: When performing bias correction (debias=True),
+            only correct the denominator to avoid inflating step sizes early
+            in training as suggested in `AdamD: Improved bias-correction in
+            Adam`__ (default: False)
 
 
     Example:
@@ -38,6 +42,7 @@ class AdamP(Optimizer):
         >>> optimizer.step()
 
      __ https://arxiv.org/abs/2006.08217
+     __ https://arxiv.org/abs/2110.10828
 
     Note:
         Reference code: https://github.com/clovaai/AdamP
@@ -53,6 +58,7 @@ class AdamP(Optimizer):
         delta: float = 0.1,
         wd_ratio: float = 0.1,
         nesterov: bool = False,
+        adamd_bias_correction: bool = False,
     ) -> None:
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -83,8 +89,15 @@ class AdamP(Optimizer):
             delta=delta,
             wd_ratio=wd_ratio,
             nesterov=nesterov,
+            adamd_bias_correction=adamd_bias_correction,
         )
         super(AdamP, self).__init__(params, defaults)
+
+    def __setstate__(self, state):
+        super(AdamP, self).__setstate__(state)
+        for group in self.param_groups:
+            group.setdefault('nesterov', False)
+            group.setdefault('adamd_bias_correction', False)
 
     @staticmethod
     def _channel_view(x):
@@ -169,7 +182,10 @@ class AdamP(Optimizer):
                 denom = (exp_avg_sq.sqrt() / math.sqrt(bias_correction2)).add_(
                     group['eps']
                 )
-                step_size = group['lr'] / bias_correction1
+                if group['adamd_bias_correction']:
+                    step_size = group['lr']
+                else:
+                    step_size = group['lr'] / bias_correction1
 
                 if nesterov:
                     perturb = (beta1 * exp_avg + (1 - beta1) * grad) / denom

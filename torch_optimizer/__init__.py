@@ -25,6 +25,7 @@ from .adabelief import AdaBelief
 from .adabound import AdaBound
 from .adafactor import Adafactor
 from .adahessian import Adahessian
+from .adam import Adam, AdamW
 from .adamod import AdaMod
 from .adamp import AdamP
 from .aggmo import AggMo
@@ -54,6 +55,8 @@ __all__ = (
     'AdaMod',
     'Adafactor',
     'Adahessian',
+    'Adam',
+    'AdamW',
     'AdamP',
     'AggMo',
     'Apollo',
@@ -85,6 +88,8 @@ _package_opts = [
     AccSGD,
     AdaBound,
     AdaMod,
+    Adam,
+    AdamW,
     AdamP,
     AggMo,
     DiffGrad,

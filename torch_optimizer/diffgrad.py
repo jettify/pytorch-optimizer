@@ -23,7 +23,10 @@ class DiffGrad(Optimizer):
         eps: term added to the denominator to improve
             numerical stability (default: 1e-8)
         weight_decay: weight decay (L2 penalty) (default: 0)
-
+        adamd_bias_correction: When performing bias correction (debias=True),
+            only correct the denominator to avoid inflating step sizes early
+            in training as suggested in `AdamD: Improved bias-correction in
+            Adam`__ (default: False)
     Example:
         >>> import torch_optimizer as optim
         >>> optimizer = optim.DiffGrad(model.parameters(), lr=0.1)
@@ -32,6 +35,7 @@ class DiffGrad(Optimizer):
         >>> optimizer.step()
 
     __ https://arxiv.org/abs/1909.11015
+    __ https://arxiv.org/abs/2110.10828
 
     Note:
         Reference code: https://github.com/shivram1987/diffGrad
@@ -44,6 +48,7 @@ class DiffGrad(Optimizer):
         betas: Betas2 = (0.9, 0.999),
         eps: float = 1e-8,
         weight_decay: float = 0.0,
+        adamd_bias_correction: bool = False,
     ) -> None:
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -62,7 +67,13 @@ class DiffGrad(Optimizer):
                 'Invalid weight_decay value: {}'.format(weight_decay)
             )
 
-        defaults = dict(lr=lr, betas=betas, eps=eps, weight_decay=weight_decay)
+        defaults = dict(
+            lr=lr,
+            betas=betas,
+            eps=eps,
+            weight_decay=weight_decay,
+            adamd_bias_correction=adamd_bias_correction,
+        )
         super(DiffGrad, self).__init__(params, defaults)
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
@@ -133,12 +144,14 @@ class DiffGrad(Optimizer):
 
                 # update momentum with dfc
                 exp_avg1 = exp_avg * dfc
-
-                step_size = (
-                    group['lr']
-                    * math.sqrt(bias_correction2)
-                    / bias_correction1
-                )
+                if group['adamd_bias_correction']:
+                    step_size = group['lr'] * math.sqrt(bias_correction2)
+                else:
+                    step_size = (
+                        group['lr']
+                        * math.sqrt(bias_correction2)
+                        / bias_correction1
+                    )
 
                 p.data.addcdiv_(exp_avg1, denom, value=-step_size)
 

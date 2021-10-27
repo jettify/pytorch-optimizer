@@ -9,6 +9,8 @@ import torch_optimizer as optim
 
 plt.style.use('seaborn-white')
 
+NUM_ITER: int = 500
+
 
 def rosenbrock(tensor):
     # https://en.wikipedia.org/wiki/Test_functions_for_optimization
@@ -29,7 +31,7 @@ def rastrigin(tensor, lib=torch):
 
 
 def execute_steps(
-    func, initial_state, optimizer_class, optimizer_config, num_iter=500
+    func, initial_state, optimizer_class, optimizer_config, num_iter=NUM_ITER
 ):
     x = torch.Tensor(initial_state).requires_grad_(True)
     optimizer = optimizer_class([x], **optimizer_config)
@@ -49,10 +51,11 @@ def execute_steps(
 def objective_rastrigin(params):
     lr = params['lr']
     optimizer_class = params['optimizer_class']
+    kwargs = params['kwargs']
     initial_state = (-2.0, 3.5)
     minimum = (0, 0)
-    optimizer_config = dict(lr=lr)
-    num_iter = 100
+    optimizer_config = dict(lr=lr, **kwargs)
+    num_iter = NUM_ITER
     steps = execute_steps(
         rastrigin, initial_state, optimizer_class, optimizer_config, num_iter
     )
@@ -62,10 +65,11 @@ def objective_rastrigin(params):
 def objective_rosenbrok(params):
     lr = params['lr']
     optimizer_class = params['optimizer_class']
+    kwargs = params['kwargs']
     minimum = (1.0, 1.0)
     initial_state = (-2.0, 2.0)
-    optimizer_config = dict(lr=lr)
-    num_iter = 100
+    optimizer_config = dict(lr=lr, **kwargs)
+    num_iter = NUM_ITER
     steps = execute_steps(
         rosenbrock, initial_state, optimizer_class, optimizer_config, num_iter
     )
@@ -126,10 +130,12 @@ def execute_experiments(
 ):
     seed = seed
     for item in optimizers:
-        optimizer_class, lr_low, lr_hi = item
+        optimizer_class, lr_low, lr_hi, kwargs, extra_desc = item
+        extra_desc_str = '' if not extra_desc else f'_{extra_desc}'
         space = {
             'optimizer_class': hp.choice('optimizer_class', [optimizer_class]),
             'lr': hp.loguniform('lr', lr_low, lr_hi),
+            'kwargs': kwargs,
         }
         best = fmin(
             fn=objective,
@@ -144,10 +150,12 @@ def execute_experiments(
             func,
             initial_state,
             optimizer_class,
-            {'lr': best['lr']},
-            num_iter=500,
+            {'lr': best['lr'], **kwargs},
+            num_iter=NUM_ITER,
         )
-        plot_func(steps, optimizer_class.__name__, best['lr'])
+        plot_func(
+            steps, f'{optimizer_class.__name__}{extra_desc_str}', best['lr']
+        )
 
 
 def LookaheadYogi(*a, **kw):
@@ -162,38 +170,70 @@ if __name__ == '__main__':
     # help to converge on better lr faster.
     optimizers = [
         # baselines
-        (torch.optim.Adam, -8, 0.5),
-        (torch.optim.SGD, -8, -1.0),
+        (torch.optim.Adam, -8, 0.5, {}, None),
+        (torch.optim.SGD, -8, -1.0, {}, None),
         # Adam based
-        (optim.AdaBound, -8, 0.3),
-        (optim.Adahessian, -1, 8),
-        (optim.AdaMod, -8, 0.2),
-        (optim.AdamP, -8, 0.2),
-        (optim.DiffGrad, -8, 0.4),
-        (optim.Lamb, -8, -2.9),
-        (optim.MADGRAD, -8, 0.5),
-        (optim.NovoGrad, -8, -1.7),
-        (optim.Yogi, -8, 0.1),
+        (optim.Adam, -8, 0.5, {}, 'internal'),
+        (
+            optim.Adam,
+            -8,
+            0.5,
+            {'adamd_bias_correction': True},
+            'internal_adamD',
+        ),
+        (optim.AdamW, -8, 0.5, {}, 'internal'),
+        (
+            optim.AdamW,
+            -8,
+            0.5,
+            {'adamd_bias_correction': True},
+            'internal_adamD',
+        ),
+        (optim.AdaBound, -8, 0.3, {}, None),
+        (optim.AdaBound, -8, 0.3, {'adamd_bias_correction': True}, 'adamD'),
+        # TODO
+        (optim.Adahessian, -1, 8, {}, None),
+        (optim.Adahessian, -1, 8, {'adamd_bias_correction': True}, 'adamD'),
+        (optim.AdaMod, -8, 0.2, {}, None),
+        (optim.AdaMod, -8, 0.2, {'adamd_bias_correction': True}, 'adamD'),
+        (optim.AdamP, -8, 0.2, {}, None),
+        (optim.AdamP, -8, 0.2, {'adamd_bias_correction': True}, 'adamD'),
+        (optim.DiffGrad, -8, 0.4, {}, None),
+        (optim.DiffGrad, -8, 0.4, {'adamd_bias_correction': True}, 'adamD'),
+        (optim.Lamb, -8, -2.9, {}, None),
+        (
+            optim.Lamb,
+            -8,
+            -2.9,
+            {'debias': True, 'adamd_bias_correction': True},
+            'adamD',
+        ),
+        (optim.MADGRAD, -8, 0.5, {}, None),
+        (optim.NovoGrad, -8, -1.7, {}, None),
+        (optim.Yogi, -8, 0.1, {}, None),
+        (optim.Yogi, -8, 0.1, {'adamd_bias_correction': True}, 'adamD'),
         # SGD/Momentum based
-        (optim.AccSGD, -8, -1.4),
-        (optim.SGDW, -8, -1.5),
-        (optim.SGDP, -8, -1.5),
-        (optim.PID, -8, -1.0),
-        (optim.QHM, -6, -0.2),
-        (optim.QHAdam, -8, 0.1),
-        (optim.Ranger, -8, 0.1),
-        (optim.RangerQH, -8, 0.1),
-        (optim.RangerVA, -8, 0.1),
-        (optim.Shampoo, -8, 0.1),
-        (LookaheadYogi, -8, 0.1),
-        (optim.AggMo, -8, -1.5),
-        (optim.SWATS, -8, -1.5),
-        (optim.Adafactor, -8, 0.5),
-        (optim.A2GradUni, -8, 0.1),
-        (optim.A2GradInc, -8, 0.1),
-        (optim.A2GradExp, -8, 0.1),
-        (optim.AdaBelief, -8, 0.1),
-        (optim.Apollo, -8, 0.1),
+        (optim.AccSGD, -8, -1.4, {}, None),
+        (optim.SGDW, -8, -1.5, {}, None),
+        (optim.SGDP, -8, -1.5, {}, None),
+        (optim.PID, -8, -1.0, {}, None),
+        (optim.QHM, -6, -0.2, {}, None),
+        (optim.QHAdam, -8, 0.1, {}, None),
+        (optim.Ranger, -8, 0.1, {}, None),
+        (optim.RangerQH, -8, 0.1, {}, None),
+        (optim.RangerVA, -8, 0.1, {}, None),
+        (optim.Shampoo, -8, 0.1, {}, None),
+        (LookaheadYogi, -8, 0.1, {}, None),
+        (optim.AggMo, -8, -1.5, {}, None),
+        (optim.SWATS, -8, -1.5, {}, None),
+        (optim.SWATS, -8, -1.5, {'adamd_bias_correction': True}, 'adamD'),
+        (optim.Adafactor, -8, 0.5, {}, None),
+        (optim.A2GradUni, -8, 0.1, {}, None),
+        (optim.A2GradInc, -8, 0.1, {}, None),
+        (optim.A2GradExp, -8, 0.1, {}, None),
+        (optim.AdaBelief, -8, 0.1, {}, None),
+        (optim.AdaBelief, -8, 0.1, {'adamd_bias_correction': True}, 'adamD'),
+        (optim.Apollo, -8, 0.1, {}, None),
     ]
     execute_experiments(
         optimizers,

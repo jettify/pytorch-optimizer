@@ -74,6 +74,8 @@ optimizers = [
     optim.AdaBound,
     optim.AdaMod,
     optim.Adafactor,
+    optim.Adam,
+    optim.AdamW,
     optim.AdamP,
     optim.AggMo,
     optim.Apollo,

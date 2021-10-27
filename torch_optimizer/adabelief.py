@@ -37,6 +37,10 @@ class AdaBelief(Optimizer):
             rate (lr).  (default: False)
         rectify: (default: False) If set as True, then perform the rectified
             update similar to RAdam
+        adamd_bias_correction: When performing bias correction (debias=True),
+            only correct the denominator to avoid inflating step sizes early
+            in training as suggested in `AdamD: Improved bias-correction in
+            Adam`__ (default: False)
 
     Example:
         >>> import torch_optimizer as optim
@@ -46,6 +50,7 @@ class AdaBelief(Optimizer):
         >>> optimizer.step()
 
     __ https://arxiv.org/abs/2010.07468
+    __ https://arxiv.org/abs/2110.10828
 
     Note:
         Reference code: https://github.com/juntang-zhuang/Adabelief-Optimizer
@@ -62,6 +67,7 @@ class AdaBelief(Optimizer):
         weight_decouple: bool = False,
         fixed_decay: bool = False,
         rectify: bool = False,
+        adamd_bias_correction: bool = False,
     ) -> None:
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -85,6 +91,7 @@ class AdaBelief(Optimizer):
             eps=eps,
             weight_decay=weight_decay,
             amsgrad=amsgrad,
+            adamd_bias_correction=adamd_bias_correction,
         )
         super(AdaBelief, self).__init__(params, defaults)
 
@@ -96,6 +103,7 @@ class AdaBelief(Optimizer):
         super(AdaBelief, self).__setstate__(state)
         for group in self.param_groups:
             group.setdefault('amsgrad', False)
+            group.setdefault('adamd_bias_correction', False)
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
         r"""Performs a single optimization step.
@@ -187,7 +195,10 @@ class AdaBelief(Optimizer):
 
                 if not self._rectify:
                     # Default update
-                    step_size = group['lr'] / bias_correction1
+                    if group['adamd_bias_correction']:
+                        step_size = group['lr']
+                    else:
+                        step_size = group['lr'] / bias_correction1
                     p.data.addcdiv_(exp_avg, denom, value=-step_size)
 
                 else:  # Rectified update
@@ -209,8 +220,10 @@ class AdaBelief(Optimizer):
                             / rho_t
                         )
                         rt = math.sqrt(rt)
-
-                        step_size = rt * group['lr'] / bias_correction1
+                        if group['adamd_bias_correction']:
+                            step_size = rt * group['lr']
+                        else:
+                            step_size = rt * group['lr'] / bias_correction1
 
                         p.data.addcdiv_(-step_size, exp_avg, denom)
 
