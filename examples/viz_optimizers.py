@@ -1,4 +1,5 @@
 import math
+from typing import List, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,6 +11,7 @@ import torch_optimizer as optim
 plt.style.use('seaborn-white')
 
 NUM_ITER: int = 500
+NUM_ITER_HPARAM: int = 200
 
 
 def rosenbrock(tensor):
@@ -35,7 +37,6 @@ def execute_steps(
 ):
     x = torch.Tensor(initial_state).requires_grad_(True)
     optimizer = optimizer_class([x], **optimizer_config)
-    steps = []
     steps = np.zeros((2, num_iter + 1))
     steps[:, 0] = np.array(initial_state)
     for i in range(1, num_iter + 1):
@@ -55,7 +56,7 @@ def objective_rastrigin(params):
     initial_state = (-2.0, 3.5)
     minimum = (0, 0)
     optimizer_config = dict(lr=lr, **kwargs)
-    num_iter = NUM_ITER
+    num_iter = NUM_ITER_HPARAM
     steps = execute_steps(
         rastrigin, initial_state, optimizer_class, optimizer_config, num_iter
     )
@@ -69,64 +70,152 @@ def objective_rosenbrok(params):
     minimum = (1.0, 1.0)
     initial_state = (-2.0, 2.0)
     optimizer_config = dict(lr=lr, **kwargs)
-    num_iter = NUM_ITER
+    num_iter = NUM_ITER_HPARAM
     steps = execute_steps(
         rosenbrock, initial_state, optimizer_class, optimizer_config, num_iter
     )
     return (steps[0][-1] - minimum[0]) ** 2 + (steps[1][-1] - minimum[1]) ** 2
 
 
-def plot_rastrigin(grad_iter, optimizer_name, lr):
+def plot_rastrigin(grad_iters, optimizer_name, lr):
     x = np.linspace(-4.5, 4.5, 250)
     y = np.linspace(-4.5, 4.5, 250)
     minimum = (0, 0)
 
     X, Y = np.meshgrid(x, y)
     Z = rastrigin([X, Y], lib=np)
-
-    iter_x, iter_y = grad_iter[0, :], grad_iter[1, :]
-
+    assert len(grad_iters) <= 3, "Cannot handle more than three states"
+    l = None
     fig = plt.figure(figsize=(8, 8))
 
     ax = fig.add_subplot(1, 1, 1)
-    ax.contour(X, Y, Z, 20, cmap='jet')
-    ax.plot(iter_x, iter_y, color='r', marker='x')
-    ax.set_title(
+    plt.contour(X, Y, Z, 20, cmap='jet', alpha=0.75)
+    for grad_iter, color in zip(grad_iters, ['r', 'm', 'c']):
+        iter_x, iter_y = grad_iter[0, :], grad_iter[1, :]
+        if l is None:
+            l = len(iter_x)
+        ax.plot(iter_x, iter_y, color=color, marker=None, alpha=0.75)
+        for px, py, pdx, pdy in zip(
+            iter_x[:-1],
+            iter_y[:-1],
+            iter_x[1:] - iter_x[:-1],
+            iter_y[1:] - iter_y[:-1],
+        ):
+            ax.arrow(
+                x=px,
+                y=py,
+                dx=pdx,
+                dy=pdy,
+                overhang=0.5,
+                width=0.01,
+                head_width=0.17,
+                length_includes_head=True,
+                color=color,
+                visible=True,
+            )
+        # Starting point
+        ax.plot(
+            iter_x[0],
+            iter_y[0],
+            marker="s",
+            markersize=15,
+            markeredgecolor="black",
+            markerfacecolor=color,
+            markeredgewidth=2,
+        )
+        # Ending point
+        ax.plot(
+            iter_x[-1],
+            iter_y[-1],
+            marker="P",
+            markersize=15,
+            markeredgecolor="black",
+            markerfacecolor=color,
+            markeredgewidth=2,
+        )
+    plt.title(
         'Rastrigin func: {} with '
-        '{} iterations, lr={:.6}'.format(optimizer_name, len(iter_x), lr)
+        '{} iterations, lr={:.6}'.format(optimizer_name, l, lr)
     )
-    plt.plot(*minimum, 'gD')
-    plt.plot(iter_x[-1], iter_y[-1], 'rD')
+    plt.xlim(-4.5, 4.5)
+    plt.ylim(-4.5, 4.5)
+    plt.plot(*minimum, 'X', color="green", markersize=15)
     plt.savefig('docs/rastrigin_{}.png'.format(optimizer_name))
 
 
-def plot_rosenbrok(grad_iter, optimizer_name, lr):
+def plot_rosenbrok(grad_iters, optimizer_name, lr):
     x = np.linspace(-2, 2, 250)
     y = np.linspace(-1, 3, 250)
     minimum = (1.0, 1.0)
+    assert len(grad_iters) <= 3, "Cannot handle more than three states"
 
     X, Y = np.meshgrid(x, y)
     Z = rosenbrock([X, Y])
-
-    iter_x, iter_y = grad_iter[0, :], grad_iter[1, :]
-
+    l = None
     fig = plt.figure(figsize=(8, 8))
-
     ax = fig.add_subplot(1, 1, 1)
-    ax.contour(X, Y, Z, 90, cmap='jet')
-    ax.plot(iter_x, iter_y, color='r', marker='x')
+    ax.contour(X, Y, Z, 90, cmap='jet', alpha=0.75)
+    for grad_iter, color in zip(grad_iters, ['r', 'm', 'c']):
+        iter_x, iter_y = grad_iter[0, :], grad_iter[1, :]
+        if l is None:
+            l = len(iter_x)
+        ax.plot(iter_x, iter_y, color=color, marker=None, alpha=0.75)
 
-    ax.set_title(
+        for px, py, pdx, pdy in zip(
+            iter_x[:-1],
+            iter_y[:-1],
+            iter_x[1:] - iter_x[:-1],
+            iter_y[1:] - iter_y[:-1],
+        ):
+            ax.arrow(
+                x=px,
+                y=py,
+                dx=pdx,
+                dy=pdy,
+                overhang=0.5,
+                width=0.01,
+                head_width=0.17,
+                length_includes_head=True,
+                color=color,
+                visible=True,
+            )
+        # Starting point
+        ax.plot(
+            iter_x[0],
+            iter_y[0],
+            marker="s",
+            markersize=15,
+            markeredgecolor="black",
+            markerfacecolor=color,
+            markeredgewidth=2,
+        )
+        # Ending point
+        ax.plot(
+            iter_x[-1],
+            iter_y[-1],
+            marker="P",
+            markersize=15,
+            markeredgecolor="black",
+            markerfacecolor=color,
+            markeredgewidth=2,
+        )
+    plt.title(
         'Rosenbrock func: {} with {} '
-        'iterations, lr={:.6}'.format(optimizer_name, len(iter_x), lr)
+        'iterations, lr={:.6}'.format(optimizer_name, l, lr)
     )
-    plt.plot(*minimum, 'gD')
-    plt.plot(iter_x[-1], iter_y[-1], 'rD')
+    plt.plot(*minimum, 'X', color="green", markersize=15)
+    plt.xlim(-2, 2)
+    plt.ylim(-1, 3)
     plt.savefig('docs/rosenbrock_{}.png'.format(optimizer_name))
 
 
 def execute_experiments(
-    optimizers, objective, func, plot_func, initial_state, seed=1
+    optimizers,
+    objective,
+    func,
+    plot_func,
+    initial_states: List[Tuple[float, float]],
+    seed=1,
 ):
     seed = seed
     for item in optimizers:
@@ -145,16 +234,20 @@ def execute_experiments(
             rstate=np.random.RandomState(seed),
         )
         print(best['lr'], optimizer_class)
-
-        steps = execute_steps(
-            func,
-            initial_state,
-            optimizer_class,
-            {'lr': best['lr'], **kwargs},
-            num_iter=NUM_ITER,
-        )
+        steps_lst = []
+        for initial_state in initial_states:
+            steps = execute_steps(
+                func,
+                initial_state,
+                optimizer_class,
+                {'lr': best['lr'], **kwargs},
+                num_iter=NUM_ITER,
+            )
+            steps_lst.append(steps)
         plot_func(
-            steps, f'{optimizer_class.__name__}{extra_desc_str}', best['lr']
+            steps_lst,
+            f'{optimizer_class.__name__}{extra_desc_str}',
+            best['lr'],
         )
 
 
@@ -240,7 +333,7 @@ if __name__ == '__main__':
         objective_rastrigin,
         rastrigin,
         plot_rastrigin,
-        (-2.0, 3.5),
+        [(-2.0, 3.5), (1.0, -2.0)],
     )
 
     execute_experiments(
@@ -248,5 +341,5 @@ if __name__ == '__main__':
         objective_rosenbrok,
         rosenbrock,
         plot_rosenbrok,
-        (-2.0, 2.0),
+        [(-2.0, 2.0), (-0.5, 2.75)],
     )
