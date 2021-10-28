@@ -107,8 +107,8 @@ def plot_rastrigin(grad_iters, optimizer_name, lr):
                 dx=pdx,
                 dy=pdy,
                 overhang=0.5,
-                width=0.01,
-                head_width=0.17,
+                width=0.001,
+                head_width=0.08,
                 length_includes_head=True,
                 color=color,
                 visible=True,
@@ -118,7 +118,7 @@ def plot_rastrigin(grad_iters, optimizer_name, lr):
             iter_x[0],
             iter_y[0],
             marker="s",
-            markersize=15,
+            markersize=11,
             markeredgecolor="black",
             markerfacecolor=color,
             markeredgewidth=2,
@@ -128,7 +128,7 @@ def plot_rastrigin(grad_iters, optimizer_name, lr):
             iter_x[-1],
             iter_y[-1],
             marker="P",
-            markersize=15,
+            markersize=11,
             markeredgecolor="black",
             markerfacecolor=color,
             markeredgewidth=2,
@@ -139,8 +139,9 @@ def plot_rastrigin(grad_iters, optimizer_name, lr):
     )
     plt.xlim(-4.5, 4.5)
     plt.ylim(-4.5, 4.5)
-    plt.plot(*minimum, 'X', color="green", markersize=15)
+    plt.plot(*minimum, 'X', color="green", markersize=11)
     plt.savefig('docs/rastrigin_{}.png'.format(optimizer_name))
+    plt.close()
 
 
 def plot_rosenbrok(grad_iters, optimizer_name, lr):
@@ -173,8 +174,8 @@ def plot_rosenbrok(grad_iters, optimizer_name, lr):
                 dx=pdx,
                 dy=pdy,
                 overhang=0.5,
-                width=0.01,
-                head_width=0.17,
+                width=0.001,
+                head_width=0.0375,
                 length_includes_head=True,
                 color=color,
                 visible=True,
@@ -184,7 +185,7 @@ def plot_rosenbrok(grad_iters, optimizer_name, lr):
             iter_x[0],
             iter_y[0],
             marker="s",
-            markersize=15,
+            markersize=11,
             markeredgecolor="black",
             markerfacecolor=color,
             markeredgewidth=2,
@@ -194,7 +195,7 @@ def plot_rosenbrok(grad_iters, optimizer_name, lr):
             iter_x[-1],
             iter_y[-1],
             marker="P",
-            markersize=15,
+            markersize=11,
             markeredgecolor="black",
             markerfacecolor=color,
             markeredgewidth=2,
@@ -203,10 +204,11 @@ def plot_rosenbrok(grad_iters, optimizer_name, lr):
         'Rosenbrock func: {} with {} '
         'iterations, lr={:.6}'.format(optimizer_name, l, lr)
     )
-    plt.plot(*minimum, 'X', color="green", markersize=15)
+    plt.plot(*minimum, 'X', color="green", markersize=11)
     plt.xlim(-2, 2)
     plt.ylim(-1, 3)
     plt.savefig('docs/rosenbrock_{}.png'.format(optimizer_name))
+    plt.close()
 
 
 def execute_experiments(
