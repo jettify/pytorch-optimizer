@@ -57,6 +57,7 @@ keywords = [
     'pid',
     'qhadam',
     'qhm',
+    'radam',
     'sgdw',
     'yogi',
     'ranger',

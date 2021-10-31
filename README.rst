@@ -125,6 +125,9 @@ Supported Optimizers
 | `QHM`_        | https://arxiv.org/abs/1810.06801                                                                                                     |
 +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
 |               |                                                                                                                                      |
+| `RAdam`_      | https://arxiv.org/abs/1908.03265                                                                                                     |
++---------------+--------------------------------------------------------------------------------------------------------------------------------------+
+|               |                                                                                                                                      |
 | `Ranger`_     | https://medium.com/@lessw/new-deep-learning-optimizer-ranger-synergistic-combination-of-radam-lookahead-for-the-best-of-2dc83f79a48d |
 +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
 |               |                                                                                                                                      |
@@ -763,6 +766,33 @@ QHM
 **Paper**: *Quasi-hyperbolic momentum and Adam for deep learning* (2019) [https://arxiv.org/abs/1810.06801]
 
 **Reference Code**: https://github.com/facebookresearch/qhoptim
+
+
+RAdam
+-----
+
++---------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+
+| .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_RAdam.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_RAdam.png  |
++---------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.RAdam(
+        m.parameters(),
+        lr= 1e-3,
+        betas=(0.9, 0.999),
+        eps=1e-8,
+        weight_decay=0,
+    )
+    optimizer.step()
+
+
+**Paper**: *On the Variance of the Adaptive Learning Rate and Beyond* (2019) [https://arxiv.org/abs/1908.03265]
+
+**Reference Code**: https://github.com/LiyuanLucasLiu/RAdam
 
 
 Ranger
