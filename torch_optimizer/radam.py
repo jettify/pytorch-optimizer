@@ -1,4 +1,5 @@
 import math
+import warnings
 
 import torch
 from torch.optim.optimizer import Optimizer
@@ -10,6 +11,9 @@ __all__ = ('RAdam',)
 
 class RAdam(Optimizer):
     r"""Implements RAdam optimization algorithm.
+
+    Note:
+        Deprecated, please use version provided by PyTorch_.
 
     It has been proposed in `On the Variance of the Adaptive Learning
     Rate and Beyond`__.
@@ -45,6 +49,12 @@ class RAdam(Optimizer):
         eps: float = 1e-8,
         weight_decay: float = 0,
     ) -> None:
+        warnings.warn(
+            'RAdam optimizer is deprecated, since it is included '
+            'in pytorch natively.',
+            DeprecationWarning,
+            stacklevel=2,
+        )
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
         if eps < 0.0:

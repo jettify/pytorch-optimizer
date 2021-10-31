@@ -79,7 +79,7 @@ __all__ = (
     # utils
     'get',
 )
-__version__ = '0.3.0'
+__version__ = '0.3.1a0'
 
 
 _package_opts = [
