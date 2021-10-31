@@ -775,6 +775,8 @@ RAdam
 | .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rastrigin_RAdam.png  |  .. image:: https://raw.githubusercontent.com/jettify/pytorch-optimizer/master/docs/rosenbrock_RAdam.png  |
 +---------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+
 
+Deprecated, please use version provided by PyTorch_.
+
 .. code:: python
 
     import torch_optimizer as optim

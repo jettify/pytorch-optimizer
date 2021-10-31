@@ -1,6 +1,10 @@
 Changes
 -------
 
+0.3.1 (YYYY-MM-DD)
+------------------
+* Deprecate RAdam optimizer.
+
 0.3.0 (2021-10-30)
 ------------------
 * Revert for Drop RAdam.
