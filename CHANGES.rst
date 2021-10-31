@@ -1,6 +1,10 @@
 Changes
 -------
 
+0.3.0 (2021-10-30)
+------------------
+* Revert for Drop RAdam.
+
 0.2.0 (2021-10-25)
 ------------------
 * Drop RAdam optimizer since it is included in pytorch.
