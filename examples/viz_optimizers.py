@@ -305,6 +305,7 @@ if __name__ == '__main__':
         ),
         (optim.MADGRAD, -8, 0.5, {}, None),
         (optim.NovoGrad, -8, -1.7, {}, None),
+        (optim.RAdam, -8, 0.5, {}, None),
         (optim.Yogi, -8, 0.1, {}, None),
         (optim.Yogi, -8, 0.1, {'adamd_bias_correction': True}, 'adamD'),
         # SGD/Momentum based

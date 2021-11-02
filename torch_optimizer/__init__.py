@@ -39,6 +39,7 @@ from .novograd import NovoGrad
 from .pid import PID
 from .qhadam import QHAdam
 from .qhm import QHM
+from .radam import RAdam
 from .sgdp import SGDP
 from .sgdw import SGDW
 from .shampoo import Shampoo
@@ -69,6 +70,7 @@ __all__ = (
     'PID',
     'QHAdam',
     'QHM',
+    'RAdam',
     'Ranger',
     'RangerQH',
     'RangerVA',
@@ -80,7 +82,7 @@ __all__ = (
     # utils
     'get',
 )
-__version__ = '0.2.1a0'
+__version__ = '0.3.1a0'
 
 
 _package_opts = [
@@ -101,6 +103,7 @@ _package_opts = [
     PID,
     QHAdam,
     QHM,
+    RAdam,
     Ranger,
     RangerQH,
     RangerVA,

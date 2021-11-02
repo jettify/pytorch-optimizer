@@ -127,6 +127,7 @@ optimizers = [
     (optim.PID, {'lr': 0.01, 'weight_decay': 1e-3, 'momentum': 0.1}, 200),
     (optim.QHAdam, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.QHM, {'lr': 0.1, 'weight_decay': 1e-5, 'momentum': 0.2}, 200),
+    (optim.RAdam, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.Ranger, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.RangerQH, {'lr': 0.0124, 'weight_decay': 1e-3}, 1100),
     (optim.RangerVA, {'lr': 0.2214, 'weight_decay': 1e-3}, 500),

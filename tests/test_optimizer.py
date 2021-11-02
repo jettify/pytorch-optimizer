@@ -87,6 +87,7 @@ optimizers = [
     optim.PID,
     optim.QHAdam,
     optim.QHM,
+    optim.RAdam,
     optim.Ranger,
     optim.RangerQH,
     optim.RangerVA,
