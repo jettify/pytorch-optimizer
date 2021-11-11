@@ -155,7 +155,7 @@ Supported Optimizers
 
 Visualizations
 --------------
-Visualizations help us to see how different algorithms deals with simple
+Visualizations help us to see how different algorithms deal with simple
 situations like: saddle points, local minima, valleys etc, and may provide
 interesting insights into inner workings of algorithm. Rosenbrock_ and Rastrigin_
 benchmark_ functions was selected, because:
