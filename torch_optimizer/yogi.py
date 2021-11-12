@@ -24,6 +24,10 @@ class Yogi(Optimizer):
         initial_accumulator: initial values for first and
             second moments (default: 1e-6)
         weight_decay: weight decay (L2 penalty) (default: 0)
+        adamd_bias_correction: When performing bias correction (debias=True),
+            only correct the denominator to avoid inflating step sizes early
+            in training as suggested in `AdamD: Improved bias-correction in
+            Adam`__ (default: False)
 
     Example:
         >>> import torch_optimizer as optim
@@ -33,6 +37,7 @@ class Yogi(Optimizer):
         >>> optimizer.step()
 
     __ https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization  # noqa
+    __ https://arxiv.org/abs/2110.10828
 
     Note:
         Reference code: https://github.com/4rtemi5/Yogi-Optimizer_Keras
@@ -46,6 +51,7 @@ class Yogi(Optimizer):
         eps: float = 1e-3,
         initial_accumulator: float = 1e-6,
         weight_decay: float = 0,
+        adamd_bias_correction: bool = False,
     ) -> None:
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -70,8 +76,14 @@ class Yogi(Optimizer):
             eps=eps,
             initial_accumulator=initial_accumulator,
             weight_decay=weight_decay,
+            adamd_bias_correction=adamd_bias_correction,
         )
         super(Yogi, self).__init__(params, defaults)
+
+    def __setstate__(self, state):
+        super(Yogi, self).__setstate__(state)
+        for group in self.param_groups:
+            group.setdefault('adamd_bias_correction', False)
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
         r"""Performs a single optimization step.
@@ -142,7 +154,10 @@ class Yogi(Optimizer):
                 denom = (exp_avg_sq.sqrt() / math.sqrt(bias_correction2)).add_(
                     group['eps']
                 )
-                step_size = group['lr'] / bias_correction1
+                if group['adamd_bias_correction']:
+                    step_size = group['lr']
+                else:
+                    step_size = group['lr'] / bias_correction1
                 p.data.addcdiv_(exp_avg, denom, value=-step_size)
 
         return loss

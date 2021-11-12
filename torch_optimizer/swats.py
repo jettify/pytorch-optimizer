@@ -24,7 +24,10 @@ class SWATS(Optimizer):
             algorithm from the paper `On the Convergence of Adam and Beyond`
             (default: False)
         nesterov: enables Nesterov momentum (default: False)
-
+        adamd_bias_correction: When performing bias correction (debias=True),
+            only correct the denominator to avoid inflating step sizes early
+            in training as suggested in `AdamD: Improved bias-correction in
+            Adam`__ (default: False)
 
     Example:
         >>> import torch_optimizer as optim
@@ -34,6 +37,7 @@ class SWATS(Optimizer):
         >>> optimizer.step()
 
     __ https://arxiv.org/pdf/1712.07628.pdf
+    __ https://arxiv.org/abs/2110.10828
 
     Note:
         Reference code: https://github.com/Mrpatekful/swats
@@ -48,6 +52,7 @@ class SWATS(Optimizer):
         weight_decay: float = 0,
         amsgrad: bool = False,
         nesterov: bool = False,
+        adamd_bias_correction: bool = False,
     ):
         if not 0.0 <= lr:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -73,6 +78,7 @@ class SWATS(Optimizer):
             weight_decay=weight_decay,
             amsgrad=amsgrad,
             nesterov=nesterov,
+            adamd_bias_correction=adamd_bias_correction,
         )
 
         super().__init__(params, defaults)
@@ -82,6 +88,7 @@ class SWATS(Optimizer):
         for group in self.param_groups:
             group.setdefault('amsgrad', False)
             group.setdefault('nesterov', False)
+            group.setdefault('adamd_bias_correction', False)
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
         r"""Performs a single optimization step.
@@ -176,9 +183,15 @@ class SWATS(Optimizer):
 
                 bias_correction1 = 1 - beta1 ** state['step']
                 bias_correction2 = 1 - beta2 ** state['step']
-                step_size = (
-                    group['lr'] * (bias_correction2 ** 0.5) / bias_correction1
-                )
+
+                if group['adamd_bias_correction']:
+                    step_size = group['lr'] * (bias_correction2 ** 0.5)
+                else:
+                    step_size = (
+                        group['lr']
+                        * (bias_correction2 ** 0.5)
+                        / bias_correction1
+                    )
 
                 p = -step_size * (exp_avg / denom)
                 w.data.add_(p)

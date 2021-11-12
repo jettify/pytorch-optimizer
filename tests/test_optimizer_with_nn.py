@@ -57,19 +57,71 @@ optimizers = [
     (optim.A2GradUni, {'lips': 5.0, 'beta': 1e-3}, 500),
     (optim.AccSGD, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.AdaBelief, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
+    (
+        optim.AdaBelief,
+        {'lr': 0.1, 'weight_decay': 1e-3, 'adamd_bias_correction': True},
+        200,
+    ),
     (optim.AdaBound, {'lr': 1.5, 'gamma': 0.1, 'weight_decay': 1e-3}, 200),
+    (
+        optim.AdaBound,
+        {
+            'lr': 1.5,
+            'gamma': 0.1,
+            'weight_decay': 1e-3,
+            'adamd_bias_correction': True,
+        },
+        200,
+    ),
     (optim.AdaMod, {'lr': 2.0, 'weight_decay': 1e-3}, 200),
+    (
+        optim.AdaMod,
+        {'lr': 2.0, 'weight_decay': 1e-3, 'adamd_bias_correction': True},
+        200,
+    ),
     (optim.Adafactor, {'lr': 0.004466, 'weight_decay': 1e-3}, 1500),
+    (optim.Adam, {'lr': 0.045, 'weight_decay': 1e-3}, 800),
+    (
+        optim.Adam,
+        {'lr': 0.045, 'weight_decay': 1e-3, 'adamd_bias_correction': True},
+        800,
+    ),
+    (optim.AdamW, {'lr': 0.045, 'weight_decay': 1e-3}, 800),
+    (
+        optim.AdamW,
+        {'lr': 0.045, 'weight_decay': 1e-3, 'adamd_bias_correction': True},
+        800,
+    ),
     (optim.AdamP, {'lr': 0.045, 'weight_decay': 1e-3}, 800),
+    (
+        optim.AdamP,
+        {'lr': 0.045, 'weight_decay': 1e-3, 'adamd_bias_correction': True},
+        800,
+    ),
     (optim.AggMo, {'lr': 0.17059, 'weight_decay': 1e-3}, 1000),
     (optim.Apollo, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
     (optim.DiffGrad, {'lr': 0.5, 'weight_decay': 1e-3}, 200),
+    (
+        optim.DiffGrad,
+        {'lr': 0.5, 'weight_decay': 1e-3, 'adamd_bias_correction': True},
+        200,
+    ),
     (
         optim.LARS,
         {'lr': 1.0, 'weight_decay': 1e-3, 'trust_coefficient': 0.01},
         200,
     ),
     (optim.Lamb, {'lr': 0.0151, 'weight_decay': 1e-3}, 1000),
+    (
+        optim.Lamb,
+        {
+            'lr': 0.0151,
+            'weight_decay': 1e-3,
+            'debias': True,
+            'adamd_bias_correction': True,
+        },
+        1000,
+    ),
     (optim.MADGRAD, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.NovoGrad, {'lr': 0.01, 'weight_decay': 1e-3}, 200),
     (optim.PID, {'lr': 0.01, 'weight_decay': 1e-3, 'momentum': 0.1}, 200),
@@ -83,12 +135,27 @@ optimizers = [
     (optim.SGDW, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
     (optim.SWATS, {'lr': 0.703, 'weight_decay': 1e-3}, 600),
     (
+        optim.SWATS,
+        {'lr': 0.703, 'weight_decay': 1e-3, 'adamd_bias_correction': True},
+        600,
+    ),
+    (
         optim.Shampoo,
         {'lr': 0.279, 'weight_decay': 1e-3, 'momentum': 0.05},
         1600,
     ),
     (optim.Yogi, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
+    (
+        optim.Yogi,
+        {'lr': 0.1, 'weight_decay': 1e-3, 'adamd_bias_correction': True},
+        200,
+    ),
     (optim.Adahessian, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
+    (
+        optim.Adahessian,
+        {'lr': 0.1, 'weight_decay': 1e-3, 'adamd_bias_correction': True},
+        200,
+    ),
 ]
 
 

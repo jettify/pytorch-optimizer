@@ -28,7 +28,10 @@ class Lamb(Optimizer):
         adam: always use trust ratio = 1, which turns this
             into Adam. Useful for comparison purposes. (default: False)
         debias: debias adam by (1 - beta**step) (default: False)
-
+        adamd_bias_correction: When performing bias correction (debias=True),
+            only correct the denominator to avoid inflating step sizes early
+            in training as suggested in `AdamD: Improved bias-correction in
+            Adam`__ (default: False)
     Example:
         >>> import torch_optimizer as optim
         >>> optimizer = optim.Lamb(model.parameters(), lr=0.1)
@@ -37,6 +40,7 @@ class Lamb(Optimizer):
         >>> optimizer.step()
 
     __ https://arxiv.org/abs/1904.00962
+    __ https://arxiv.org/abs/2110.10828
 
     Note:
         Reference code: https://github.com/cybertronai/pytorch-lamb
@@ -52,6 +56,7 @@ class Lamb(Optimizer):
         clamp_value: float = 10,
         adam: bool = False,
         debias: bool = False,
+        adamd_bias_correction: bool = False,
     ) -> None:
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -72,12 +77,23 @@ class Lamb(Optimizer):
         if clamp_value < 0.0:
             raise ValueError('Invalid clamp value: {}'.format(clamp_value))
 
-        defaults = dict(lr=lr, betas=betas, eps=eps, weight_decay=weight_decay)
+        defaults = dict(
+            lr=lr,
+            betas=betas,
+            eps=eps,
+            weight_decay=weight_decay,
+            adamd_bias_correction=adamd_bias_correction,
+        )
         self.clamp_value = clamp_value
         self.adam = adam
         self.debias = debias
 
         super(Lamb, self).__init__(params, defaults)
+
+    def __setstate__(self, state):
+        super(Lamb, self).__setstate__(state)
+        for group in self.param_groups:
+            group.setdefault('adamd_bias_correction', False)
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
         r"""Performs a single optimization step.
@@ -129,7 +145,8 @@ class Lamb(Optimizer):
                 # Paper v3 does not use debiasing.
                 if self.debias:
                     bias_correction = math.sqrt(1 - beta2 ** state['step'])
-                    bias_correction /= 1 - beta1 ** state['step']
+                    if not group['adamd_bias_correction']:
+                        bias_correction /= 1 - beta1 ** state['step']
                 else:
                     bias_correction = 1
 

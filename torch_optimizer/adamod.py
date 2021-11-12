@@ -25,6 +25,10 @@ class AdaMod(Optimizer):
         eps: term added to the denominator to improve numerical stability
             (default: 1e-8)
         weight_decay: weight decay (L2 penalty) (default: 0)
+        adamd_bias_correction: When performing bias correction (debias=True),
+            only correct the denominator to avoid inflating step sizes early
+            in training as suggested in `AdamD: Improved bias-correction in
+            Adam`__ (default: False)
 
     Example:
         >>> import torch_optimizer as optim
@@ -34,6 +38,7 @@ class AdaMod(Optimizer):
         >>> optimizer.step()
 
     __ https://arxiv.org/abs/1910.12249
+    __ https://arxiv.org/abs/2110.10828
 
     Note:
         Reference code: https://github.com/lancopku/AdaMod
@@ -47,6 +52,7 @@ class AdaMod(Optimizer):
         beta3: float = 0.999,
         eps: float = 1e-8,
         weight_decay: float = 0,
+        adamd_bias_correction: bool = False,
     ) -> None:
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -67,9 +73,19 @@ class AdaMod(Optimizer):
                 'Invalid weight_decay value: {}'.format(weight_decay)
             )
         defaults = dict(
-            lr=lr, betas=betas, beta3=beta3, eps=eps, weight_decay=weight_decay
+            lr=lr,
+            betas=betas,
+            beta3=beta3,
+            eps=eps,
+            weight_decay=weight_decay,
+            adamd_bias_correction=adamd_bias_correction,
         )
         super(AdaMod, self).__init__(params, defaults)
+
+    def __setstate__(self, state):
+        super(AdaMod, self).__setstate__(state)
+        for group in self.param_groups:
+            group.setdefault('adamd_bias_correction', False)
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
         """Performs a single optimization step.
@@ -125,11 +141,14 @@ class AdaMod(Optimizer):
 
                 bias_correction1 = 1 - beta1 ** state['step']
                 bias_correction2 = 1 - beta2 ** state['step']
-                step_size = (
-                    group['lr']
-                    * math.sqrt(bias_correction2)
-                    / bias_correction1
-                )
+                if group['adamd_bias_correction']:
+                    step_size = group['lr'] * math.sqrt(bias_correction2)
+                else:
+                    step_size = (
+                        group['lr']
+                        * math.sqrt(bias_correction2)
+                        / bias_correction1
+                    )
 
                 if group['weight_decay'] != 0:
                     p.data.add_(

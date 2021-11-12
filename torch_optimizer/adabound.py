@@ -27,6 +27,10 @@ class AdaBound(Optimizer):
             (default: 1e-8)
         weight_decay: weight decay (L2 penalty) (default: 0)
         amsbound: whether to use the AMSBound variant of this algorithm
+        adamd_bias_correction: When performing bias correction (debias=True),
+            only correct the denominator to avoid inflating step sizes early
+            in training as suggested in `AdamD: Improved bias-correction in
+            Adam`__ (default: False)
 
     Example:
         >>> import torch_optimizer as optim
@@ -36,6 +40,7 @@ class AdaBound(Optimizer):
         >>> optimizer.step()
 
     __ https://arxiv.org/abs/1902.09843
+    __ https://arxiv.org/abs/2110.10828
 
     Note:
         Reference code: https://github.com/Luolc/AdaBound
@@ -51,6 +56,7 @@ class AdaBound(Optimizer):
         eps: float = 1e-8,
         weight_decay: float = 0,
         amsbound: bool = False,
+        adamd_bias_correction: bool = False,
     ) -> None:
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -82,6 +88,7 @@ class AdaBound(Optimizer):
             eps=eps,
             weight_decay=weight_decay,
             amsbound=amsbound,
+            adamd_bias_correction=adamd_bias_correction,
         )
         super(AdaBound, self).__init__(params, defaults)
         self.base_lrs = [group['lr'] for group in self.param_groups]
@@ -90,6 +97,7 @@ class AdaBound(Optimizer):
         super(AdaBound, self).__setstate__(state)
         for group in self.param_groups:
             group.setdefault('amsbound', False)
+            group.setdefault('adamd_bias_correction', False)
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
         r"""Performs a single optimization step.
@@ -158,11 +166,15 @@ class AdaBound(Optimizer):
 
                 bias_correction1 = 1 - beta1 ** state['step']
                 bias_correction2 = 1 - beta2 ** state['step']
-                step_size = (
-                    group['lr']
-                    * math.sqrt(bias_correction2)
-                    / bias_correction1
-                )
+
+                if group['adamd_bias_correction']:
+                    step_size = group['lr'] * math.sqrt(bias_correction2)
+                else:
+                    step_size = (
+                        group['lr']
+                        * math.sqrt(bias_correction2)
+                        / bias_correction1
+                    )
 
                 # Applies bounds on actual learning rate
                 # lr_scheduler cannot affect final_lr, this is a workaround
