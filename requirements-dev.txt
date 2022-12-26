@@ -16,4 +16,4 @@ sphinx-autodoc-typehints==1.12.0
 sphinx==4.2.0
 torch==1.10.0
 twine==3.4.2
-wheel==0.37.0
+wheel==0.38.1
