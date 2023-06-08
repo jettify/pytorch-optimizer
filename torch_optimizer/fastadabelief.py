@@ -2,10 +2,22 @@ import math
 import torch
 from torch.optim.optimizer import Optimizer
 
-
-__all__ = ('FastAdaBelief',)
-
 class FastAdaBelief(Optimizer):
+    """
+    Implements the FastAdaBelief optimization algorithm.
+
+    Args:
+        params (iterable): Iterable of parameters to optimize or dicts defining parameter groups.
+        lr (float, optional): Learning rate (default: 1e-3).
+        betas (Tuple[float, float], optional): Coefficients used for computing running averages of gradient and its square (default: (0.9, 0.999)).
+        eps (float, optional): Term added to the denominator to improve numerical stability (default: 1e-8).
+        weight_decay (float, optional): L2 regularization coefficient (default: 0).
+        amsgrad (bool, optional): Whether to use the AMSGrad variant of AdaBelief (default: False).
+        weight_decouple (bool, optional): Whether to decouple the weight decay from the gradient-based optimization step (default: False).
+        fixed_decay (bool, optional): Whether to use a fixed decay factor for weight decay (default: False).
+        rectify (bool, optional): Whether to use rectification in the optimization step (default: False).
+    """
+
     def __init__(self, params, lr=1e-3, betas=(0.9, 0.999), eps=1e-8, weight_decay=0, amsgrad=False, weight_decouple=False, fixed_decay=False, rectify=False):
         if lr <= 0.0:
             raise ValueError('Invalid learning rate: {}'.format(lr))
@@ -31,6 +43,15 @@ class FastAdaBelief(Optimizer):
             group.setdefault('amsgrad', False)
 
     def step(self, closure=None):
+        """
+        Performs a single optimization step.
+
+        Args:
+            closure (callable, optional): A closure that reevaluates the model and returns the loss.
+
+        Returns:
+            loss: The loss value evaluated by the closure.
+        """
         loss = None
         if closure is not None:
             loss = closure()
