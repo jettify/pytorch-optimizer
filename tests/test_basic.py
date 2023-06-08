@@ -70,6 +70,7 @@ optimizers = [
     (optim.Adahessian, {'lr': 0.15, 'hessian_power': 0.6, 'seed': 0}, 900),
     (optim.MADGRAD, {'lr': 0.02}, 500),
     (optim.LARS, {'lr': 0.002, 'momentum': 0.91}, 900),
+    (optim.FastAdaBelief,{"lr":0.001,'eps':1e-8,'betas':(0.9, 0.999)},900),
 ]
 
 

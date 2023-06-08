@@ -44,6 +44,7 @@ from .sgdw import SGDW
 from .shampoo import Shampoo
 from .swats import SWATS
 from .yogi import Yogi
+from .fastadabelief import FastAdaBelief
 
 __all__ = (
     'A2GradExp',
