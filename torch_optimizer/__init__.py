@@ -44,6 +44,7 @@ from .sgdw import SGDW
 from .shampoo import Shampoo
 from .swats import SWATS
 from .yogi import Yogi
+from .lion import Lion
 
 __all__ = (
     'A2GradExp',
@@ -76,6 +77,7 @@ __all__ = (
     'SWATS',
     'Shampoo',
     'Yogi',
+    'Lion',
     # utils
     'get',
 )
@@ -107,6 +109,7 @@ _package_opts = [
     SWATS,
     Shampoo,
     Yogi,
+    Lion,
 ]  # type: List[Type[Optimizer]]
 
 
