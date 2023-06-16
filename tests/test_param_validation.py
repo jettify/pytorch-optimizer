@@ -55,6 +55,7 @@ optimizers = [
     optim.SWATS,
     optim.Shampoo,
     optim.Yogi,
+    optim.Lion,
 ]
 
 
@@ -118,6 +119,7 @@ weight_decay_optimizers = [
     optim.SWATS,
     optim.Shampoo,
     optim.Yogi,
+    optim.Lion,
 ]
 
 
@@ -141,6 +143,7 @@ betas_optimizers = [
     optim.QHAdam,
     optim.RAdam,
     optim.Yogi,
+    optim.Lion,
 ]
 
 
