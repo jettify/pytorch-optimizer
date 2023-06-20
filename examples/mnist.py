@@ -45,9 +45,9 @@ def train(conf, model, device, train_loader, optimizer, epoch, writer):
         if batch_idx % conf.log_interval == 0:
             loss = loss.item()
             idx = batch_idx + epoch * (len(train_loader))
-            writer.add_scalar('Loss/train', loss, idx)
+            writer.add_scalar("Loss/train", loss, idx)
             print(
-                'Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
+                "Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}".format(
                     epoch,
                     batch_idx * len(data),
                     len(train_loader.dataset),
@@ -66,13 +66,13 @@ def test(conf, model, device, test_loader, epoch, writer):
             data, target = data.to(device), target.to(device)
             output = model(data)
             # sum up batch loss
-            test_loss += F.nll_loss(output, target, reduction='sum').item()
+            test_loss += F.nll_loss(output, target, reduction="sum").item()
             # get the index of the max log-probability
             pred = output.argmax(dim=1, keepdim=True)
             correct += pred.eq(target.view_as(pred)).sum().item()
 
     test_loss /= len(test_loader.dataset)
-    fmt = '\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'
+    fmt = "\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n"
     print(
         fmt.format(
             test_loss,
@@ -82,15 +82,15 @@ def test(conf, model, device, test_loader, epoch, writer):
         )
     )
 
-    writer.add_scalar('Accuracy', correct, epoch)
-    writer.add_scalar('Loss/test', test_loss, epoch)
+    writer.add_scalar("Accuracy", correct, epoch)
+    writer.add_scalar("Loss/test", test_loss, epoch)
 
 
 def prepare_loaders(conf, use_cuda=False):
-    kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
+    kwargs = {"num_workers": 1, "pin_memory": True} if use_cuda else {}
     train_loader = torch.utils.data.DataLoader(
         datasets.MNIST(
-            '../data',
+            "../data",
             train=True,
             download=True,
             transform=transforms.Compose(
@@ -107,7 +107,7 @@ def prepare_loaders(conf, use_cuda=False):
 
     test_loader = torch.utils.data.DataLoader(
         datasets.MNIST(
-            '../data',
+            "../data",
             train=False,
             transform=transforms.Compose(
                 [
@@ -147,13 +147,13 @@ class Config:
 
 def main():
     conf = Config()
-    log_dir = 'runs/mnist_custom_optim'
-    print('Tensorboard: tensorboard --logdir={}'.format(log_dir))
+    log_dir = "runs/mnist_custom_optim"
+    print("Tensorboard: tensorboard --logdir={}".format(log_dir))
 
     with SummaryWriter(log_dir) as writer:
         use_cuda = not conf.no_cuda and torch.cuda.is_available()
         torch.manual_seed(conf.seed)
-        device = torch.device('cuda' if use_cuda else 'cpu')
+        device = torch.device("cuda" if use_cuda else "cpu")
         train_loader, test_loader = prepare_loaders(conf, use_cuda)
 
         model = Net().to(device)
@@ -161,7 +161,7 @@ def main():
         # create grid of images and write to tensorboard
         images, labels = next(iter(train_loader))
         img_grid = utils.make_grid(images)
-        writer.add_image('mnist_images', img_grid)
+        writer.add_image("mnist_images", img_grid)
 
         # custom optimizer from torch_optimizer package
         optimizer = optim.DiffGrad(model.parameters(), lr=conf.lr)
@@ -173,8 +173,8 @@ def main():
             scheduler.step()
             for name, param in model.named_parameters():
                 writer.add_histogram(name, param, epoch)
-                writer.add_histogram('{}.grad'.format(name), param.grad, epoch)
+                writer.add_histogram("{}.grad".format(name), param.grad, epoch)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

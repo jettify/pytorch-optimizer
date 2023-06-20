@@ -6,22 +6,22 @@ import torch_optimizer as optim
 
 def rosenbrock(tensor):
     x, y = tensor
-    return (1 - x) ** 2 + 1 * (y - x ** 2) ** 2
+    return (1 - x) ** 2 + 1 * (y - x**2) ** 2
 
 
 def quadratic(tensor):
     x, y = tensor
     a = 1.0
     b = 1.0
-    return (x ** 2) / a + (y ** 2) / b
+    return (x**2) / a + (y**2) / b
 
 
 def beale(tensor):
     x, y = tensor
     f = (
         (1.5 - x + x * y) ** 2
-        + (2.25 - x + x * y ** 2) ** 2
-        + (2.625 - x + x * y ** 3) ** 2
+        + (2.25 - x + x * y**2) ** 2
+        + (2.625 - x + x * y**3) ** 2
     )
     return f
 
@@ -34,7 +34,7 @@ cases = [
 
 
 def ids(v):
-    n = '{} {}'.format(v[0].__name__, v[1:])
+    n = "{} {}".format(v[0].__name__, v[1:])
     return n
 
 
@@ -44,37 +44,38 @@ def build_lookahead(*a, **kw):
 
 
 optimizers = [
-    (optim.A2GradUni, {'lips': 40, 'beta': 0.0001}, 800),
-    (optim.PID, {'lr': 0.002, 'momentum': 0.8, 'weight_decay': 0.0001}, 900),
-    (optim.QHM, {'lr': 0.02, 'momentum': 0.95, 'nu': 1}, 900),
+    (optim.A2GradUni, {"lips": 40, "beta": 0.0001}, 800),
+    (optim.PID, {"lr": 0.002, "momentum": 0.8, "weight_decay": 0.0001}, 900),
+    (optim.QHM, {"lr": 0.02, "momentum": 0.95, "nu": 1}, 900),
     (
         optim.NovoGrad,
-        {'lr': 2.9, 'betas': (0.9, 0.999), 'grad_averaging': True},
+        {"lr": 2.9, "betas": (0.9, 0.999), "grad_averaging": True},
         900,
     ),
-    (optim.RAdam, {'lr': 0.01, 'betas': (0.9, 0.95), 'eps': 1e-3}, 800),
-    (optim.SGDW, {'lr': 0.002, 'momentum': 0.91}, 900),
-    (optim.DiffGrad, {'lr': 0.5}, 500),
-    (optim.AdaMod, {'lr': 1.0}, 800),
-    (optim.AdaBound, {'lr': 1.0}, 800),
-    (optim.Yogi, {'lr': 1.0}, 500),
-    (optim.AccSGD, {'lr': 0.015}, 800),
-    (build_lookahead, {'lr': 1.0}, 500),
-    (optim.QHAdam, {'lr': 1.0}, 500),
-    (optim.AdamP, {'lr': 0.01, 'betas': (0.9, 0.95), 'eps': 1e-3}, 800),
-    (optim.SGDP, {'lr': 0.002, 'momentum': 0.91}, 900),
-    (optim.AggMo, {'lr': 0.003}, 1800),
-    (optim.SWATS, {'lr': 0.1, 'amsgrad': True, 'nesterov': True}, 900),
-    (optim.Adafactor, {'lr': None, 'decay_rate': -0.3, 'beta1': 0.9}, 800),
-    (optim.AdaBelief, {'lr': 1.0}, 500),
-    (optim.Adahessian, {'lr': 0.15, 'hessian_power': 0.6, 'seed': 0}, 900),
-    (optim.MADGRAD, {'lr': 0.02}, 500),
-    (optim.LARS, {'lr': 0.002, 'momentum': 0.91}, 900),
-    (optim.Lion, {'lr': 0.025}, 3600),
+    (optim.RAdam, {"lr": 0.01, "betas": (0.9, 0.95), "eps": 1e-3}, 800),
+    (optim.SGDW, {"lr": 0.002, "momentum": 0.91}, 900),
+    (optim.DiffGrad, {"lr": 0.5}, 500),
+    (optim.AdaMod, {"lr": 1.0}, 800),
+    (optim.AdaBound, {"lr": 1.0}, 800),
+    (optim.Yogi, {"lr": 1.0}, 500),
+    (optim.AccSGD, {"lr": 0.015}, 800),
+    (build_lookahead, {"lr": 1.0}, 500),
+    (optim.QHAdam, {"lr": 1.0}, 500),
+    (optim.AdamP, {"lr": 0.01, "betas": (0.9, 0.95), "eps": 1e-3}, 800),
+    (optim.SGDP, {"lr": 0.002, "momentum": 0.91}, 900),
+    (optim.AggMo, {"lr": 0.003}, 1800),
+    (optim.SWATS, {"lr": 0.1, "amsgrad": True, "nesterov": True}, 900),
+    (optim.Adafactor, {"lr": None, "decay_rate": -0.3, "beta1": 0.9}, 800),
+    (optim.AdaBelief, {"lr": 1.0}, 500),
+    (optim.Adahessian, {"lr": 0.15, "hessian_power": 0.6, "seed": 0}, 900),
+    (optim.MADGRAD, {"lr": 0.02}, 500),
+    (optim.LARS, {"lr": 0.002, "momentum": 0.91}, 900),
+    (optim.Lion, {"lr": 0.025}, 3600),
 ]
 
-@pytest.mark.parametrize('case', cases, ids=ids)
-@pytest.mark.parametrize('optimizer_config', optimizers, ids=ids)
+
+@pytest.mark.parametrize("case", cases, ids=ids)
+@pytest.mark.parametrize("optimizer_config", optimizers, ids=ids)
 def test_benchmark_function(case, optimizer_config):
     func, initial_state, min_loc = case
     optimizer_class, config, iterations = optimizer_config

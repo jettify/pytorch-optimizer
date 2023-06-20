@@ -7,13 +7,13 @@ from hyperopt import fmin, hp, tpe
 
 import torch_optimizer as optim
 
-plt.style.use('seaborn-white')
+plt.style.use("seaborn-white")
 
 
 def rosenbrock(tensor):
     # https://en.wikipedia.org/wiki/Test_functions_for_optimization
     x, y = tensor
-    return (1 - x) ** 2 + 100 * (y - x ** 2) ** 2
+    return (1 - x) ** 2 + 100 * (y - x**2) ** 2
 
 
 def rastrigin(tensor, lib=torch):
@@ -22,8 +22,8 @@ def rastrigin(tensor, lib=torch):
     A = 10
     f = (
         A * 2
-        + (x ** 2 - A * lib.cos(x * math.pi * 2))
-        + (y ** 2 - A * lib.cos(y * math.pi * 2))
+        + (x**2 - A * lib.cos(x * math.pi * 2))
+        + (y**2 - A * lib.cos(y * math.pi * 2))
     )
     return f
 
@@ -47,8 +47,8 @@ def execute_steps(
 
 
 def objective_rastrigin(params):
-    lr = params['lr']
-    optimizer_class = params['optimizer_class']
+    lr = params["lr"]
+    optimizer_class = params["optimizer_class"]
     initial_state = (-2.0, 3.5)
     minimum = (0, 0)
     optimizer_config = dict(lr=lr)
@@ -60,8 +60,8 @@ def objective_rastrigin(params):
 
 
 def objective_rosenbrok(params):
-    lr = params['lr']
-    optimizer_class = params['optimizer_class']
+    lr = params["lr"]
+    optimizer_class = params["optimizer_class"]
     minimum = (1.0, 1.0)
     initial_state = (-2.0, 2.0)
     optimizer_config = dict(lr=lr)
@@ -85,15 +85,15 @@ def plot_rastrigin(grad_iter, optimizer_name, lr):
     fig = plt.figure(figsize=(8, 8))
 
     ax = fig.add_subplot(1, 1, 1)
-    ax.contour(X, Y, Z, 20, cmap='jet')
-    ax.plot(iter_x, iter_y, color='r', marker='x')
+    ax.contour(X, Y, Z, 20, cmap="jet")
+    ax.plot(iter_x, iter_y, color="r", marker="x")
     ax.set_title(
-        'Rastrigin func: {} with '
-        '{} iterations, lr={:.6}'.format(optimizer_name, len(iter_x), lr)
+        "Rastrigin func: {} with "
+        "{} iterations, lr={:.6}".format(optimizer_name, len(iter_x), lr)
     )
-    plt.plot(*minimum, 'gD')
-    plt.plot(iter_x[-1], iter_y[-1], 'rD')
-    plt.savefig('docs/rastrigin_{}.png'.format(optimizer_name))
+    plt.plot(*minimum, "gD")
+    plt.plot(iter_x[-1], iter_y[-1], "rD")
+    plt.savefig("docs/rastrigin_{}.png".format(optimizer_name))
 
 
 def plot_rosenbrok(grad_iter, optimizer_name, lr):
@@ -109,16 +109,16 @@ def plot_rosenbrok(grad_iter, optimizer_name, lr):
     fig = plt.figure(figsize=(8, 8))
 
     ax = fig.add_subplot(1, 1, 1)
-    ax.contour(X, Y, Z, 90, cmap='jet')
-    ax.plot(iter_x, iter_y, color='r', marker='x')
+    ax.contour(X, Y, Z, 90, cmap="jet")
+    ax.plot(iter_x, iter_y, color="r", marker="x")
 
     ax.set_title(
-        'Rosenbrock func: {} with {} '
-        'iterations, lr={:.6}'.format(optimizer_name, len(iter_x), lr)
+        "Rosenbrock func: {} with {} "
+        "iterations, lr={:.6}".format(optimizer_name, len(iter_x), lr)
     )
-    plt.plot(*minimum, 'gD')
-    plt.plot(iter_x[-1], iter_y[-1], 'rD')
-    plt.savefig('docs/rosenbrock_{}.png'.format(optimizer_name))
+    plt.plot(*minimum, "gD")
+    plt.plot(iter_x[-1], iter_y[-1], "rD")
+    plt.savefig("docs/rosenbrock_{}.png".format(optimizer_name))
 
 
 def execute_experiments(
@@ -128,8 +128,8 @@ def execute_experiments(
     for item in optimizers:
         optimizer_class, lr_low, lr_hi = item
         space = {
-            'optimizer_class': hp.choice('optimizer_class', [optimizer_class]),
-            'lr': hp.loguniform('lr', lr_low, lr_hi),
+            "optimizer_class": hp.choice("optimizer_class", [optimizer_class]),
+            "lr": hp.loguniform("lr", lr_low, lr_hi),
         }
         best = fmin(
             fn=objective,
@@ -138,16 +138,16 @@ def execute_experiments(
             max_evals=200,
             rstate=np.random.RandomState(seed),
         )
-        print(best['lr'], optimizer_class)
+        print(best["lr"], optimizer_class)
 
         steps = execute_steps(
             func,
             initial_state,
             optimizer_class,
-            {'lr': best['lr']},
+            {"lr": best["lr"]},
             num_iter=500,
         )
-        plot_func(steps, optimizer_class.__name__, best['lr'])
+        plot_func(steps, optimizer_class.__name__, best["lr"])
 
 
 def LookaheadYogi(*a, **kw):
@@ -155,7 +155,7 @@ def LookaheadYogi(*a, **kw):
     return optim.Lookahead(base)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # python examples/viz_optimizers.py
 
     # Each optimizer has tweaked search space to produce better plots and

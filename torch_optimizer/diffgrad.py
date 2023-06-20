@@ -5,7 +5,7 @@ from torch.optim.optimizer import Optimizer
 
 from .types import Betas2, OptFloat, OptLossClosure, Params
 
-__all__ = ('DiffGrad',)
+__all__ = ("DiffGrad",)
 
 
 class DiffGrad(Optimizer):
@@ -46,20 +46,20 @@ class DiffGrad(Optimizer):
         weight_decay: float = 0.0,
     ) -> None:
         if lr <= 0.0:
-            raise ValueError('Invalid learning rate: {}'.format(lr))
+            raise ValueError("Invalid learning rate: {}".format(lr))
         if eps < 0.0:
-            raise ValueError('Invalid epsilon value: {}'.format(eps))
+            raise ValueError("Invalid epsilon value: {}".format(eps))
         if not 0.0 <= betas[0] < 1.0:
             raise ValueError(
-                'Invalid beta parameter at index 0: {}'.format(betas[0])
+                "Invalid beta parameter at index 0: {}".format(betas[0])
             )
         if not 0.0 <= betas[1] < 1.0:
             raise ValueError(
-                'Invalid beta parameter at index 1: {}'.format(betas[1])
+                "Invalid beta parameter at index 1: {}".format(betas[1])
             )
         if weight_decay < 0.0:
             raise ValueError(
-                'Invalid weight_decay value: {}'.format(weight_decay)
+                "Invalid weight_decay value: {}".format(weight_decay)
             )
 
         defaults = dict(lr=lr, betas=betas, eps=eps, weight_decay=weight_decay)
@@ -76,16 +76,16 @@ class DiffGrad(Optimizer):
             loss = closure()
 
         for group in self.param_groups:
-            beta1, beta2 = group['betas']
+            beta1, beta2 = group["betas"]
 
-            for p in group['params']:
+            for p in group["params"]:
                 if p.grad is None:
                     continue
                 grad = p.grad.data
                 if grad.is_sparse:
                     msg = (
-                        'DiffGrad does not support sparse gradients, '
-                        'please consider SparseAdam instead'
+                        "DiffGrad does not support sparse gradients, "
+                        "please consider SparseAdam instead"
                     )
                     raise RuntimeError(msg)
 
@@ -93,49 +93,49 @@ class DiffGrad(Optimizer):
 
                 # State initialization
                 if len(state) == 0:
-                    state['step'] = 0
+                    state["step"] = 0
                     # Exponential moving average of gradient values
-                    state['exp_avg'] = torch.zeros_like(
+                    state["exp_avg"] = torch.zeros_like(
                         p, memory_format=torch.preserve_format
                     )
                     # Exponential moving average of squared gradient values
-                    state['exp_avg_sq'] = torch.zeros_like(
+                    state["exp_avg_sq"] = torch.zeros_like(
                         p, memory_format=torch.preserve_format
                     )
                     # Previous gradient
-                    state['previous_grad'] = torch.zeros_like(
+                    state["previous_grad"] = torch.zeros_like(
                         p, memory_format=torch.preserve_format
                     )
 
                 exp_avg, exp_avg_sq, previous_grad = (
-                    state['exp_avg'],
-                    state['exp_avg_sq'],
-                    state['previous_grad'],
+                    state["exp_avg"],
+                    state["exp_avg_sq"],
+                    state["previous_grad"],
                 )
 
-                state['step'] += 1
+                state["step"] += 1
 
-                if group['weight_decay'] != 0:
-                    grad.add_(p.data, alpha=group['weight_decay'])
+                if group["weight_decay"] != 0:
+                    grad.add_(p.data, alpha=group["weight_decay"])
 
                 # Decay the first and second moment running average coefficient
                 exp_avg.mul_(beta1).add_(grad, alpha=1 - beta1)
                 exp_avg_sq.mul_(beta2).addcmul_(grad, grad, value=1 - beta2)
-                denom = exp_avg_sq.sqrt().add_(group['eps'])
+                denom = exp_avg_sq.sqrt().add_(group["eps"])
 
-                bias_correction1 = 1 - beta1 ** state['step']
-                bias_correction2 = 1 - beta2 ** state['step']
+                bias_correction1 = 1 - beta1 ** state["step"]
+                bias_correction2 = 1 - beta2 ** state["step"]
 
                 # compute diffgrad coefficient (dfc)
                 diff = torch.abs(previous_grad - grad)
                 dfc = torch.div(1.0, (1.0 + torch.exp(-diff)))
-                state['previous_grad'] = grad.clone()
+                state["previous_grad"] = grad.clone()
 
                 # update momentum with dfc
                 exp_avg1 = exp_avg * dfc
 
                 step_size = (
-                    group['lr']
+                    group["lr"]
                     * math.sqrt(bias_correction2)
                     / bias_correction1
                 )

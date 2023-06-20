@@ -6,7 +6,7 @@ import torch.optim
 
 from .types import Params
 
-__all__ = ('MADGRAD',)
+__all__ = ("MADGRAD",)
 
 
 class MADGRAD(torch.optim.Optimizer):
@@ -51,15 +51,15 @@ class MADGRAD(torch.optim.Optimizer):
         eps: float = 1e-6,
     ):
         if momentum < 0 or momentum >= 1:
-            raise ValueError('Invalid momentum value: {}'.format(momentum))
+            raise ValueError("Invalid momentum value: {}".format(momentum))
         if lr <= 0.0:
-            raise ValueError('Invalid learning rate: {}'.format(lr))
+            raise ValueError("Invalid learning rate: {}".format(lr))
         if weight_decay < 0:
             raise ValueError(
-                'Invalid weight_decay value: {}'.format(weight_decay)
+                "Invalid weight_decay value: {}".format(weight_decay)
             )
         if eps < 0.0:
-            raise ValueError('Invalid epsilon value: {}'.format(eps))
+            raise ValueError("Invalid epsilon value: {}".format(eps))
 
         defaults = dict(
             lr=lr, eps=eps, momentum=momentum, weight_decay=weight_decay, k=0
@@ -67,13 +67,13 @@ class MADGRAD(torch.optim.Optimizer):
         super().__init__(params, defaults)
 
         for group in self.param_groups:
-            for p in group['params']:
+            for p in group["params"]:
                 state = self.state[p]
 
-                state['grad_sum_sq'] = torch.zeros_like(p.data).detach()
-                state['s'] = torch.zeros_like(p.data).detach()
+                state["grad_sum_sq"] = torch.zeros_like(p.data).detach()
+                state["s"] = torch.zeros_like(p.data).detach()
                 if momentum != 0:
-                    state['x0'] = torch.clone(p.data).detach()
+                    state["x0"] = torch.clone(p.data).detach()
 
     def step(
         self, closure: Optional[Callable[[], float]] = None
@@ -88,16 +88,16 @@ class MADGRAD(torch.optim.Optimizer):
             loss = closure()
 
         for group in self.param_groups:
-            eps = group['eps']
-            k = group['k']
-            lr = group['lr'] + eps
-            decay = group['weight_decay']
-            momentum = group['momentum']
+            eps = group["eps"]
+            k = group["k"]
+            lr = group["lr"] + eps
+            decay = group["weight_decay"]
+            momentum = group["momentum"]
 
             ck = 1 - momentum
             lamb = lr * math.pow(k + 1, 0.5)
 
-            for p in group['params']:
+            for p in group["params"]:
                 if p.grad is None:
                     continue
                 grad = p.grad.data
@@ -105,19 +105,19 @@ class MADGRAD(torch.optim.Optimizer):
 
                 if momentum != 0.0 and grad.is_sparse:
                     raise RuntimeError(
-                        'momentum != 0 is not compatible with '
-                        'sparse gradients'
+                        "momentum != 0 is not compatible with "
+                        "sparse gradients"
                     )
 
-                grad_sum_sq = state['grad_sum_sq']
-                s = state['s']
+                grad_sum_sq = state["grad_sum_sq"]
+                s = state["s"]
 
                 # Apply weight decay
                 if decay != 0:
                     if grad.is_sparse:
                         raise RuntimeError(
-                            'weight_decay option is not '
-                            'compatible with sparse gradients'
+                            "weight_decay option is not "
+                            "compatible with sparse gradients"
                         )
 
                     grad.add_(p.data, alpha=decay)
@@ -163,7 +163,7 @@ class MADGRAD(torch.optim.Optimizer):
                         rms = grad_sum_sq.pow(1 / 3).add_(eps)
                         x0 = p.data.addcdiv(s, rms, value=1)
                     else:
-                        x0 = state['x0']
+                        x0 = state["x0"]
 
                     # Accumulate second moments
                     grad_sum_sq.addcmul_(grad, grad, value=lamb)
@@ -181,5 +181,5 @@ class MADGRAD(torch.optim.Optimizer):
                         # p is a moving average of z
                         p.data.mul_(1 - ck).add_(z, alpha=ck)
 
-            group['k'] = group['k'] + 1
+            group["k"] = group["k"] + 1
         return loss

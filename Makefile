@@ -34,8 +34,8 @@ cov cover coverage:
 	@echo "open file://`pwd`/htmlcov/index.html"
 
 checkfmt:
-	isort --check-only --diff $(FILES)
-	black -S -l 79 --check $(FILES)
+	isort --profile black  --check-only --diff $(FILES)
+	black -l 79 --check $(FILES)
 
 lint: flake checkrst pyroma bandit checkfmt
 
@@ -60,11 +60,11 @@ doc:
 	@echo "open file://`pwd`/docs/_build/html/index.html"
 
 black:
-	black -S -l 79 setup.py torch_optimizer/ tests/ examples/
+	black -l 79 setup.py torch_optimizer/ tests/ examples/
 
 fmt:
-	isort ${FILES}
-	black -S -l 79 ${FILES}
+	isort --profile black ${FILES}
+	black -l 79 ${FILES}
 
 
 .PHONY: all flake test vtest cov clean doc

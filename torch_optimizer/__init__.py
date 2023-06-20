@@ -32,6 +32,7 @@ from .apollo import Apollo
 from .diffgrad import DiffGrad
 from .lamb import Lamb
 from .lars import LARS
+from .lion import Lion
 from .lookahead import Lookahead
 from .madgrad import MADGRAD
 from .novograd import NovoGrad
@@ -44,44 +45,43 @@ from .sgdw import SGDW
 from .shampoo import Shampoo
 from .swats import SWATS
 from .yogi import Yogi
-from .lion import Lion
 
 __all__ = (
-    'A2GradExp',
-    'A2GradInc',
-    'A2GradUni',
-    'AccSGD',
-    'AdaBelief',
-    'AdaBound',
-    'AdaMod',
-    'Adafactor',
-    'Adahessian',
-    'AdamP',
-    'AggMo',
-    'Apollo',
-    'DiffGrad',
-    'LARS',
-    'Lamb',
-    'Lookahead',
-    'MADGRAD',
-    'NovoGrad',
-    'PID',
-    'QHAdam',
-    'QHM',
-    'RAdam',
-    'Ranger',
-    'RangerQH',
-    'RangerVA',
-    'SGDP',
-    'SGDW',
-    'SWATS',
-    'Shampoo',
-    'Yogi',
-    'Lion',
+    "A2GradExp",
+    "A2GradInc",
+    "A2GradUni",
+    "AccSGD",
+    "AdaBelief",
+    "AdaBound",
+    "AdaMod",
+    "Adafactor",
+    "Adahessian",
+    "AdamP",
+    "AggMo",
+    "Apollo",
+    "DiffGrad",
+    "LARS",
+    "Lamb",
+    "Lookahead",
+    "MADGRAD",
+    "NovoGrad",
+    "PID",
+    "QHAdam",
+    "QHM",
+    "RAdam",
+    "Ranger",
+    "RangerQH",
+    "RangerVA",
+    "SGDP",
+    "SGDW",
+    "SWATS",
+    "Shampoo",
+    "Yogi",
+    "Lion",
     # utils
-    'get',
+    "get",
 )
-__version__ = '0.3.1a0'
+__version__ = "0.3.1a0"
 
 
 _package_opts = [
@@ -126,5 +126,5 @@ def get(name: str) -> Type[Optimizer]:
     """
     optimizer_class = _NAME_OPTIM_MAP.get(name.lower())
     if optimizer_class is None:
-        raise ValueError('Optimizer {} not found'.format(name))
+        raise ValueError("Optimizer {} not found".format(name))
     return optimizer_class

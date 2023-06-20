@@ -3,7 +3,7 @@ from torch.optim.optimizer import Optimizer
 
 from .types import OptFloat, OptLossClosure, Params, State
 
-__all__ = ('LARS',)
+__all__ = ("LARS",)
 
 
 class LARS(Optimizer):
@@ -71,20 +71,20 @@ class LARS(Optimizer):
         eps: float = 1e-8,
     ):
         if lr <= 0.0:
-            raise ValueError('Invalid learning rate: {}'.format(lr))
+            raise ValueError("Invalid learning rate: {}".format(lr))
         if eps < 0.0:
-            raise ValueError('Invalid epsilon value: {}'.format(eps))
+            raise ValueError("Invalid epsilon value: {}".format(eps))
         if momentum < 0.0:
-            raise ValueError('Invalid momentum value: {}'.format(momentum))
+            raise ValueError("Invalid momentum value: {}".format(momentum))
         if dampening < 0.0:
-            raise ValueError('Invalid dampening value: {}'.format(dampening))
+            raise ValueError("Invalid dampening value: {}".format(dampening))
         if weight_decay < 0.0:
             raise ValueError(
-                'Invalid weight_decay value: {}'.format(weight_decay)
+                "Invalid weight_decay value: {}".format(weight_decay)
             )
         if trust_coefficient < 0.0:
             raise ValueError(
-                'Invalid trust_coefficient value: {}'.format(trust_coefficient)
+                "Invalid trust_coefficient value: {}".format(trust_coefficient)
             )
 
         defaults = dict(
@@ -98,7 +98,7 @@ class LARS(Optimizer):
         )
         if nesterov and (momentum <= 0 or dampening != 0):
             raise ValueError(
-                'Nesterov momentum requires a momentum and zero dampening'
+                "Nesterov momentum requires a momentum and zero dampening"
             )
 
         super().__init__(params, defaults)
@@ -107,7 +107,7 @@ class LARS(Optimizer):
         super().__setstate__(state)
 
         for group in self.param_groups:
-            group.setdefault('nesterov', False)
+            group.setdefault("nesterov", False)
 
     @torch.no_grad()
     def step(self, closure: OptLossClosure = None) -> OptFloat:
@@ -123,12 +123,12 @@ class LARS(Optimizer):
 
         # exclude scaling for params with 0 weight decay
         for group in self.param_groups:
-            weight_decay = group['weight_decay']
-            momentum = group['momentum']
-            dampening = group['dampening']
-            nesterov = group['nesterov']
+            weight_decay = group["weight_decay"]
+            momentum = group["momentum"]
+            dampening = group["dampening"]
+            nesterov = group["nesterov"]
 
-            for p in group['params']:
+            for p in group["params"]:
                 if p.grad is None:
                     continue
 
@@ -140,27 +140,27 @@ class LARS(Optimizer):
                 if weight_decay != 0:
                     if p_norm != 0 and g_norm != 0:
                         lars_lr = p_norm / (
-                            g_norm + p_norm * weight_decay + group['eps']
+                            g_norm + p_norm * weight_decay + group["eps"]
                         )
-                        lars_lr *= group['trust_coefficient']
+                        lars_lr *= group["trust_coefficient"]
 
                         d_p = d_p.add(p, alpha=weight_decay)
                         d_p *= lars_lr
 
                 if momentum != 0:
                     param_state = self.state[p]
-                    if 'momentum_buffer' not in param_state:
-                        buf = param_state['momentum_buffer'] = torch.clone(
+                    if "momentum_buffer" not in param_state:
+                        buf = param_state["momentum_buffer"] = torch.clone(
                             d_p
                         ).detach()
                     else:
-                        buf = param_state['momentum_buffer']
+                        buf = param_state["momentum_buffer"]
                         buf.mul_(momentum).add_(d_p, alpha=1 - dampening)
                     if nesterov:
                         d_p = d_p.add(buf, alpha=momentum)
                     else:
                         d_p = buf
 
-                p.add_(d_p, alpha=-group['lr'])
+                p.add_(d_p, alpha=-group["lr"])
 
         return loss

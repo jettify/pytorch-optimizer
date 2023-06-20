@@ -5,7 +5,7 @@ from torch.optim.optimizer import Optimizer
 
 from .types import Betas2, OptFloat, OptLossClosure, Params
 
-__all__ = ('AdamP',)
+__all__ = ("AdamP",)
 
 
 class AdamP(Optimizer):
@@ -55,25 +55,25 @@ class AdamP(Optimizer):
         nesterov: bool = False,
     ) -> None:
         if lr <= 0.0:
-            raise ValueError('Invalid learning rate: {}'.format(lr))
+            raise ValueError("Invalid learning rate: {}".format(lr))
         if eps < 0.0:
-            raise ValueError('Invalid epsilon value: {}'.format(eps))
+            raise ValueError("Invalid epsilon value: {}".format(eps))
         if not 0.0 <= betas[0] < 1.0:
             raise ValueError(
-                'Invalid beta parameter at index 0: {}'.format(betas[0])
+                "Invalid beta parameter at index 0: {}".format(betas[0])
             )
         if not 0.0 <= betas[1] < 1.0:
             raise ValueError(
-                'Invalid beta parameter at index 1: {}'.format(betas[1])
+                "Invalid beta parameter at index 1: {}".format(betas[1])
             )
         if weight_decay < 0:
             raise ValueError(
-                'Invalid weight_decay value: {}'.format(weight_decay)
+                "Invalid weight_decay value: {}".format(weight_decay)
             )
         if delta < 0:
-            raise ValueError('Invalid delta value: {}'.format(delta))
+            raise ValueError("Invalid delta value: {}".format(delta))
         if wd_ratio < 0:
-            raise ValueError('Invalid wd_ratio value: {}'.format(wd_ratio))
+            raise ValueError("Invalid wd_ratio value: {}".format(wd_ratio))
 
         defaults = dict(
             lr=lr,
@@ -109,7 +109,6 @@ class AdamP(Optimizer):
         wd = 1
         expand_size = [-1] + [1] * (len(p.shape) - 1)
         for view_func in [self._channel_view, self._layer_view]:
-
             cosine_sim = self._cosine_similarity(grad, p.data, eps, view_func)
 
             if cosine_sim.max() < delta / math.sqrt(view_func(p.data).size(1)):
@@ -136,40 +135,40 @@ class AdamP(Optimizer):
             loss = closure()
 
         for group in self.param_groups:
-            for p in group['params']:
+            for p in group["params"]:
                 if p.grad is None:
                     continue
 
                 grad = p.grad.data
-                beta1, beta2 = group['betas']
-                nesterov = group['nesterov']
+                beta1, beta2 = group["betas"]
+                nesterov = group["nesterov"]
 
                 state = self.state[p]
 
                 # State initialization
                 if len(state) == 0:
-                    state['step'] = 0
-                    state['exp_avg'] = torch.zeros_like(
+                    state["step"] = 0
+                    state["exp_avg"] = torch.zeros_like(
                         p.data, memory_format=torch.preserve_format
                     )
-                    state['exp_avg_sq'] = torch.zeros_like(
+                    state["exp_avg_sq"] = torch.zeros_like(
                         p.data, memory_format=torch.preserve_format
                     )
 
                 # Adam
-                exp_avg, exp_avg_sq = state['exp_avg'], state['exp_avg_sq']
+                exp_avg, exp_avg_sq = state["exp_avg"], state["exp_avg_sq"]
 
-                state['step'] += 1
-                bias_correction1 = 1 - beta1 ** state['step']
-                bias_correction2 = 1 - beta2 ** state['step']
+                state["step"] += 1
+                bias_correction1 = 1 - beta1 ** state["step"]
+                bias_correction2 = 1 - beta2 ** state["step"]
 
                 exp_avg.mul_(beta1).add_(grad, alpha=1 - beta1)
                 exp_avg_sq.mul_(beta2).addcmul_(grad, grad, value=1 - beta2)
 
                 denom = (exp_avg_sq.sqrt() / math.sqrt(bias_correction2)).add_(
-                    group['eps']
+                    group["eps"]
                 )
-                step_size = group['lr'] / bias_correction1
+                step_size = group["lr"] / bias_correction1
 
                 if nesterov:
                     perturb = (beta1 * exp_avg + (1 - beta1) * grad) / denom
@@ -183,15 +182,15 @@ class AdamP(Optimizer):
                         p,
                         grad,
                         perturb,
-                        group['delta'],
-                        group['wd_ratio'],
-                        group['eps'],
+                        group["delta"],
+                        group["wd_ratio"],
+                        group["eps"],
                     )
 
                 # Weight decay
-                if group['weight_decay'] > 0:
+                if group["weight_decay"] > 0:
                     p.data.mul_(
-                        1 - group['lr'] * group['weight_decay'] * wd_ratio
+                        1 - group["lr"] * group["weight_decay"] * wd_ratio
                     )
 
                 # Step

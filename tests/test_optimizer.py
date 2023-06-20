@@ -6,11 +6,26 @@ from torch.autograd import Variable
 from torch.optim.lr_scheduler import ExponentialLR, ReduceLROnPlateau, StepLR
 
 import torch_optimizer as optim
-from tests.utils import assert_dict_equal
+
+
+def assert_dict_equal(a, b, precision=0.000001):
+    if isinstance(a, dict) and isinstance(b, dict):
+        assert set(a.keys()) == set(b.keys())
+        for k in a.keys():
+            assert_dict_equal(a[k], b[k], precision)
+    elif isinstance(a, list) and isinstance(b, list):
+        assert len(a) == len(b)
+        for v1, v2 in zip(a, b):
+            assert_dict_equal(v1, v2, precision)
+    elif isinstance(a, torch.Tensor) and isinstance(b, torch.Tensor):
+        assert torch.allclose(a, b, atol=precision)
+    else:
+        assert a == b
+    return True
 
 
 def _build_params_dict(weight, bias, **kwargs):
-    return [{'params': [weight]}, dict(params=[bias], **kwargs)]
+    return [{"params": [weight]}, dict(params=[bias], **kwargs)]
 
 
 def _build_params_dict_single(weight, bias, **kwargs):
@@ -55,7 +70,7 @@ def make_test_params(optimizer_class):
             ],
         ),
     ]
-    ids = ['%s_%s' % (optimizer_class.__name__, i) for i in range(len(cases))]
+    ids = ["%s_%s" % (optimizer_class.__name__, i) for i in range(len(cases))]
     return cases, ids
 
 
@@ -99,14 +114,14 @@ optimizers = [
 
 
 def pytest_generate_tests(metafunc):
-    if 'optimizer_constructor' in metafunc.fixturenames:
+    if "optimizer_constructor" in metafunc.fixturenames:
         cases = []
         ids = []
         for o in optimizers:
             c, i = make_test_params(o)
             cases = cases + c
             ids = ids + i
-        metafunc.parametrize('optimizer_constructor', cases, ids=ids)
+        metafunc.parametrize("optimizer_constructor", cases, ids=ids)
 
 
 class TestOptim:
@@ -217,7 +232,7 @@ class TestOptim:
 
         # validate deepcopy() copies all public attributes
         def getPublicAttr(obj):
-            return set(k for k in obj.__dict__ if not k.startswith('_'))
+            return set(k for k in obj.__dict__ if not k.startswith("_"))
 
         assert getPublicAttr(optimizer) == getPublicAttr(deepcopy(optimizer))
 

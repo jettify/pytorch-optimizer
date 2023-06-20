@@ -3,7 +3,7 @@ from torch.optim.optimizer import Optimizer
 
 from .types import Betas2, Nus2, OptFloat, OptLossClosure, Params
 
-__all__ = ('QHAdam',)
+__all__ = ("QHAdam",)
 
 
 class QHAdam(Optimizer):
@@ -49,29 +49,29 @@ class QHAdam(Optimizer):
         eps: float = 1e-8,
     ):
         if lr <= 0.0:
-            raise ValueError('Invalid learning rate: {}'.format(lr))
+            raise ValueError("Invalid learning rate: {}".format(lr))
         if eps < 0.0:
-            raise ValueError('Invalid epsilon value: {}'.format(eps))
+            raise ValueError("Invalid epsilon value: {}".format(eps))
         if not 0.0 <= betas[0] < 1.0:
             raise ValueError(
-                'Invalid beta parameter at index 0: {}'.format(betas[0])
+                "Invalid beta parameter at index 0: {}".format(betas[0])
             )
         if not 0.0 <= betas[1] < 1.0:
             raise ValueError(
-                'Invalid beta parameter at index 1: {}'.format(betas[1])
+                "Invalid beta parameter at index 1: {}".format(betas[1])
             )
         if weight_decay < 0:
             raise ValueError(
-                'Invalid weight_decay value: {}'.format(weight_decay)
+                "Invalid weight_decay value: {}".format(weight_decay)
             )
 
         defaults = {
-            'lr': lr,
-            'betas': betas,
-            'nus': nus,
-            'weight_decay': weight_decay,
-            'decouple_weight_decay': decouple_weight_decay,
-            'eps': eps,
+            "lr": lr,
+            "betas": betas,
+            "nus": nus,
+            "weight_decay": weight_decay,
+            "decouple_weight_decay": decouple_weight_decay,
+            "eps": eps,
         }
         super(QHAdam, self).__init__(params, defaults)
 
@@ -86,22 +86,22 @@ class QHAdam(Optimizer):
             loss = closure()
 
         for group in self.param_groups:
-            lr = group['lr']
-            beta1, beta2 = group['betas']
-            nu1, nu2 = group['nus']
-            weight_decay = group['weight_decay']
-            decouple_weight_decay = group['decouple_weight_decay']
-            eps = group['eps']
+            lr = group["lr"]
+            beta1, beta2 = group["betas"]
+            nu1, nu2 = group["nus"]
+            weight_decay = group["weight_decay"]
+            decouple_weight_decay = group["decouple_weight_decay"]
+            eps = group["eps"]
 
-            for p in group['params']:
+            for p in group["params"]:
                 if p.grad is None:
                     continue
 
                 d_p = p.grad.data
                 if d_p.is_sparse:
                     raise RuntimeError(
-                        'QHAdam does not support sparse gradients, '
-                        'please consider SparseAdam instead'
+                        "QHAdam does not support sparse gradients, "
+                        "please consider SparseAdam instead"
                     )
 
                 state = self.state[p]
@@ -115,22 +115,22 @@ class QHAdam(Optimizer):
                 d_p_sq = d_p.mul(d_p)
 
                 if len(state) == 0:
-                    state['beta1_weight'] = 0.0
-                    state['beta2_weight'] = 0.0
-                    state['exp_avg'] = torch.zeros_like(
+                    state["beta1_weight"] = 0.0
+                    state["beta2_weight"] = 0.0
+                    state["exp_avg"] = torch.zeros_like(
                         p.data, memory_format=torch.preserve_format
                     )
-                    state['exp_avg_sq'] = torch.zeros_like(
+                    state["exp_avg_sq"] = torch.zeros_like(
                         p.data, memory_format=torch.preserve_format
                     )
 
-                state['beta1_weight'] = 1.0 + beta1 * state['beta1_weight']
-                state['beta2_weight'] = 1.0 + beta2 * state['beta2_weight']
+                state["beta1_weight"] = 1.0 + beta1 * state["beta1_weight"]
+                state["beta2_weight"] = 1.0 + beta2 * state["beta2_weight"]
 
-                beta1_weight = state['beta1_weight']
-                beta2_weight = state['beta2_weight']
-                exp_avg = state['exp_avg']
-                exp_avg_sq = state['exp_avg_sq']
+                beta1_weight = state["beta1_weight"]
+                beta2_weight = state["beta2_weight"]
+                exp_avg = state["exp_avg"]
+                exp_avg_sq = state["exp_avg_sq"]
 
                 beta1_adj = 1.0 - (1.0 / beta1_weight)
                 beta2_adj = 1.0 - (1.0 / beta2_weight)

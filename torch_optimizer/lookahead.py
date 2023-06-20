@@ -6,7 +6,7 @@ from torch.optim.optimizer import Optimizer
 
 from .types import OptFloat, OptLossClosure, State
 
-__all__ = ('Lookahead',)
+__all__ = ("Lookahead",)
 
 
 class Lookahead(Optimizer):
@@ -39,10 +39,10 @@ class Lookahead(Optimizer):
         self, optimizer: Optimizer, k: int = 5, alpha: float = 0.5
     ) -> None:
         if k < 0.0:
-            raise ValueError('Invalid number of lookahead steps: {}'.format(k))
+            raise ValueError("Invalid number of lookahead steps: {}".format(k))
         if alpha < 0:
             raise ValueError(
-                'Invalid linear interpolation factor: {}'.format(alpha)
+                "Invalid linear interpolation factor: {}".format(alpha)
             )
 
         self.optimizer = optimizer
@@ -52,16 +52,16 @@ class Lookahead(Optimizer):
         self.state = defaultdict(dict)
         self.fast_state = self.optimizer.state
         for group in self.param_groups:
-            group['counter'] = 0
-        self.defaults = {'k': k, 'alpha': alpha, **optimizer.defaults}
+            group["counter"] = 0
+        self.defaults = {"k": k, "alpha": alpha, **optimizer.defaults}
 
     def _update(self, group: Dict[str, Any]) -> None:
-        for fast in group['params']:
+        for fast in group["params"]:
             param_state = self.state[fast]
-            if 'slow_param' not in param_state:
-                param_state['slow_param'] = torch.clone(fast.data).detach()
+            if "slow_param" not in param_state:
+                param_state["slow_param"] = torch.clone(fast.data).detach()
 
-            slow = param_state['slow_param']
+            slow = param_state["slow_param"]
             fast.data.mul_(self.alpha).add_(slow, alpha=1.0 - self.alpha)
             slow.data.copy_(fast)
 
@@ -73,10 +73,10 @@ class Lookahead(Optimizer):
         """
         loss = self.optimizer.step(closure=closure)
         for group in self.param_groups:
-            if group['counter'] == 0:
+            if group["counter"] == 0:
                 self._update(group)
-            group['counter'] += 1
-            group['counter'] %= self.k
+            group["counter"] += 1
+            group["counter"] %= self.k
         return loss
 
     def state_dict(self) -> State:
@@ -89,12 +89,12 @@ class Lookahead(Optimizer):
         """
         slow_state_dict = super(Lookahead, self).state_dict()
         fast_state_dict = self.optimizer.state_dict()
-        fast_state = fast_state_dict['state']
-        param_groups = fast_state_dict['param_groups']
+        fast_state = fast_state_dict["state"]
+        param_groups = fast_state_dict["param_groups"]
         return {
-            'fast_state': fast_state,
-            'slow_state': slow_state_dict['state'],
-            'param_groups': param_groups,
+            "fast_state": fast_state,
+            "slow_state": slow_state_dict["state"],
+            "param_groups": param_groups,
         }
 
     def load_state_dict(self, state_dict: State) -> None:
@@ -105,12 +105,12 @@ class Lookahead(Optimizer):
                 from a call to :meth:`state_dict`.
         """
         slow_state_dict = {
-            'state': state_dict['slow_state'],
-            'param_groups': state_dict['param_groups'],
+            "state": state_dict["slow_state"],
+            "param_groups": state_dict["param_groups"],
         }
         fast_state_dict = {
-            'state': state_dict['fast_state'],
-            'param_groups': state_dict['param_groups'],
+            "state": state_dict["fast_state"],
+            "param_groups": state_dict["param_groups"],
         }
         super(Lookahead, self).load_state_dict(slow_state_dict)
         self.optimizer.load_state_dict(fast_state_dict)
@@ -122,11 +122,11 @@ class Lookahead(Optimizer):
 
     def __repr__(self) -> str:
         base_str = self.optimizer.__repr__()
-        format_string = self.__class__.__name__ + ' ('
-        format_string += '\n'
-        format_string += 'k: {}\n'.format(self.k)
-        format_string += 'alpha: {}\n'.format(self.alpha)
+        format_string = self.__class__.__name__ + " ("
+        format_string += "\n"
+        format_string += "k: {}\n".format(self.k)
+        format_string += "alpha: {}\n".format(self.alpha)
         format_string += base_str
-        format_string += '\n'
-        format_string += ')'
+        format_string += "\n"
+        format_string += ")"
         return format_string
