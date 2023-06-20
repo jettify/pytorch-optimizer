@@ -46,7 +46,7 @@ https://pytorch-optimizer.rtfd.io
 
 Citation
 --------
-Please cite original authors of optimization algorithms. If you like this
+Please cite the original authors of the optimization algorithms. If you like this
 package::
 
     @software{Novik_torchoptimizers,
@@ -57,7 +57,7 @@ package::
     	version      = {1.0.1}
     }
 
-Or use github feature: "cite this repository" button.
+Or use the github feature: "cite this repository" button.
 
 
 Supported Optimizers
@@ -155,29 +155,29 @@ Supported Optimizers
 
 Visualizations
 --------------
-Visualizations help us to see how different algorithms deal with simple
+Visualizations help us see how different algorithms deal with simple
 situations like: saddle points, local minima, valleys etc, and may provide
-interesting insights into inner workings of algorithm. Rosenbrock_ and Rastrigin_
-benchmark_ functions was selected, because:
+interesting insights into the inner workings of an algorithm. Rosenbrock_ and Rastrigin_
+benchmark_ functions were selected because:
 
 * Rosenbrock_ (also known as banana function), is non-convex function that has
-  one global minima  `(1.0. 1.0)`. The global minimum is inside a long,
-  narrow, parabolic shaped flat valley. To find the valley is trivial. To
-  converge to the global minima, however, is difficult. Optimization
-  algorithms might pay a lot of attention to one coordinate, and have
-  problems to follow valley which is relatively flat.
+  one global minimum  `(1.0. 1.0)`. The global minimum is inside a long,
+  narrow, parabolic shaped flat valley. Finding the valley is trivial. 
+  Converging to the global minimum, however, is difficult. Optimization
+  algorithms might pay a lot of attention to one coordinate, and struggle
+  following the valley which is relatively flat.
 
  .. image::  https://upload.wikimedia.org/wikipedia/commons/3/32/Rosenbrock_function.svg
 
-* Rastrigin_ function is a non-convex and has one global minima in `(0.0, 0.0)`.
+* Rastrigin_ is a non-convex function  and has one global minimum in `(0.0, 0.0)`.
   Finding the minimum of this function is a fairly difficult problem due to
   its large search space and its large number of local minima.
 
   .. image::  https://upload.wikimedia.org/wikipedia/commons/8/8b/Rastrigin_function.png
 
-Each optimizer performs `501` optimization steps. Learning rate is best one found
-by hyper parameter search algorithm, rest of tuning parameters are default. It
-is very easy to extend script and tune other optimizer parameters.
+Each optimizer performs `501` optimization steps. Learning rate is the best one found
+by a hyper parameter search algorithm, the rest of the tuning parameters are default. It
+is very easy to extend the script and tune other optimizer parameters.
 
 
 .. code::
@@ -187,14 +187,14 @@ is very easy to extend script and tune other optimizer parameters.
 
 Warning
 -------
-Do not pick optimizer based on visualizations, optimization approaches
+Do not pick an optimizer based on visualizations, optimization approaches
 have unique properties and may be tailored for different purposes or may
-require explicit learning rate schedule etc. Best way to find out, is to try one
-on your particular problem and see if it improves scores.
+require explicit learning rate schedule etc. The best way to find out is to try 
+one on your particular problem and see if it improves scores.
 
-If you do not know which optimizer to use start with built in SGD/Adam, once
-training logic is ready and baseline scores are established, swap optimizer and
-see if there is any improvement.
+If you do not know which optimizer to use, start with the built in SGD/Adam. Once
+the training logic is ready and baseline scores are established, swap the optimizer 
+and see if there is any improvement.
 
 
 A2GradExp
@@ -366,7 +366,7 @@ AdaBound
 
 AdaMod
 ------
-AdaMod method restricts the adaptive learning rates with adaptive and momental
+The AdaMod method restricts the adaptive learning rates with adaptive and momental
 upper bounds. The dynamic learning rate bounds are based on the exponential
 moving averages of the adaptive learning rates themselves, which smooth out
 unexpected large learning rates and stabilize the training of deep neural networks.
@@ -455,9 +455,9 @@ Adahessian
 
 AdamP
 ------
-AdamP propose a simple and effective solution: at each iteration of Adam optimizer
+AdamP propose a simple and effective solution: at each iteration of the Adam optimizer
 applied on scale-invariant weights (e.g., Conv weights preceding a BN layer), AdamP
-remove the radial component (i.e., parallel to the weight vector) from the update vector.
+removes the radial component (i.e., parallel to the weight vector) from the update vector.
 Intuitively, this operation prevents the unnecessary update along the radial direction
 that only increases the weight norm without contributing to the loss minimization.
 
