@@ -8,7 +8,7 @@ from .types import Betas2, OptFloat, OptLossClosure, Params
 
 Grads = Params
 
-__all__ = ('Adahessian',)
+__all__ = ("Adahessian",)
 
 
 class Adahessian(Optimizer):
@@ -52,20 +52,20 @@ class Adahessian(Optimizer):
         seed: Optional[int] = None,
     ) -> None:
         if lr <= 0.0:
-            raise ValueError('Invalid learning rate: {}'.format(lr))
+            raise ValueError("Invalid learning rate: {}".format(lr))
         if eps <= 0.0:
-            raise ValueError('Invalid epsilon value: {}'.format(eps))
+            raise ValueError("Invalid epsilon value: {}".format(eps))
         if not 0.0 <= betas[0] < 1.0:
             raise ValueError(
-                'Invalid beta parameter at index 0: {}'.format(betas[0])
+                "Invalid beta parameter at index 0: {}".format(betas[0])
             )
         if not 0.0 <= betas[1] < 1.0:
             raise ValueError(
-                'Invalid beta parameter at index 1: {}'.format(betas[1])
+                "Invalid beta parameter at index 1: {}".format(betas[1])
             )
         if not 0.0 <= hessian_power <= 1.0:
             raise ValueError(
-                'Invalid Hessian power value: {}'.format(hessian_power)
+                "Invalid Hessian power value: {}".format(hessian_power)
             )
         if seed is not None:
             torch.manual_seed(seed)
@@ -91,9 +91,9 @@ class Adahessian(Optimizer):
         for i, grad in enumerate(grads):
             if grad.grad_fn is None:
                 msg = (
-                    'Gradient tensor {:} does not have grad_fn. When '
-                    'calling loss.backward(), make sure the option '
-                    'create_graph is set to True.'
+                    "Gradient tensor {:} does not have grad_fn. When "
+                    "calling loss.backward(), make sure the option "
+                    "create_graph is set to True."
                 )
                 raise RuntimeError(msg.format(i))
 
@@ -147,7 +147,7 @@ class Adahessian(Optimizer):
         #  hut_traces can be called with lists of parameters
         #  and grads
         for group in self.param_groups:
-            for p in group['params']:
+            for p in group["params"]:
                 if p.grad is not None:
                     params.append(p)
                     groups.append(group)
@@ -157,28 +157,27 @@ class Adahessian(Optimizer):
 
         hut_traces = self.get_trace(params, grads)
 
-        for (p, group, grad, hut_trace) in zip(
+        for p, group, grad, hut_trace in zip(
             params, groups, grads, hut_traces
         ):
-
             state = self.state[p]
 
             # State initialization
             if len(state) == 0:
-                state['step'] = 0
+                state["step"] = 0
                 # Exponential moving average of gradient values
-                state['exp_avg'] = torch.zeros_like(p.data)
+                state["exp_avg"] = torch.zeros_like(p.data)
                 # Exponential moving average of Hessian diagonal square values
-                state['exp_hessian_diag_sq'] = torch.zeros_like(p.data)
+                state["exp_hessian_diag_sq"] = torch.zeros_like(p.data)
 
             exp_avg, exp_hessian_diag_sq = (
-                state['exp_avg'],
-                state['exp_hessian_diag_sq'],
+                state["exp_avg"],
+                state["exp_hessian_diag_sq"],
             )
 
-            beta1, beta2 = group['betas']
+            beta1, beta2 = group["betas"]
 
-            state['step'] += 1
+            state["step"] += 1
 
             # Decay the first and second moment running average coefficient
             exp_avg.mul_(beta1).add_(grad.detach_(), alpha=1 - beta1)
@@ -186,20 +185,20 @@ class Adahessian(Optimizer):
                 hut_trace, hut_trace, value=1 - beta2
             )
 
-            bias_correction1 = 1 - beta1 ** state['step']
-            bias_correction2 = 1 - beta2 ** state['step']
+            bias_correction1 = 1 - beta1 ** state["step"]
+            bias_correction2 = 1 - beta2 ** state["step"]
 
             # make the square root, and the Hessian power
-            k = group['hessian_power']
+            k = group["hessian_power"]
             denom = (
                 (exp_hessian_diag_sq.sqrt() ** k)
                 / math.sqrt(bias_correction2) ** k
-            ).add_(group['eps'])
+            ).add_(group["eps"])
 
             # make update
-            p.data = p.data - group['lr'] * (
+            p.data = p.data - group["lr"] * (
                 exp_avg / bias_correction1 / denom
-                + group['weight_decay'] * p.data
+                + group["weight_decay"] * p.data
             )
 
         return loss

@@ -5,7 +5,7 @@ from torch.optim.optimizer import Optimizer
 
 from .types import OptFloat, OptLossClosure, Params
 
-__all__ = ('SGDP',)
+__all__ = ("SGDP",)
 
 
 class SGDP(Optimizer):
@@ -56,21 +56,21 @@ class SGDP(Optimizer):
         nesterov: bool = False,
     ) -> None:
         if lr <= 0.0:
-            raise ValueError('Invalid learning rate: {}'.format(lr))
+            raise ValueError("Invalid learning rate: {}".format(lr))
         if eps < 0.0:
-            raise ValueError('Invalid epsilon value: {}'.format(eps))
+            raise ValueError("Invalid epsilon value: {}".format(eps))
         if momentum < 0.0:
-            raise ValueError('Invalid momentum value: {}'.format(momentum))
+            raise ValueError("Invalid momentum value: {}".format(momentum))
         if dampening < 0.0:
-            raise ValueError('Invalid dampening value: {}'.format(dampening))
+            raise ValueError("Invalid dampening value: {}".format(dampening))
         if weight_decay < 0:
             raise ValueError(
-                'Invalid weight_decay value: {}'.format(weight_decay)
+                "Invalid weight_decay value: {}".format(weight_decay)
             )
         if delta < 0:
-            raise ValueError('Invalid delta value: {}'.format(delta))
+            raise ValueError("Invalid delta value: {}".format(delta))
         if wd_ratio < 0:
-            raise ValueError('Invalid wd_ratio value: {}'.format(wd_ratio))
+            raise ValueError("Invalid wd_ratio value: {}".format(wd_ratio))
 
         defaults = dict(
             lr=lr,
@@ -107,7 +107,6 @@ class SGDP(Optimizer):
         wd = 1
         expand_size = [-1] + [1] * (len(p.shape) - 1)
         for view_func in [self._channel_view, self._layer_view]:
-
             cosine_sim = self._cosine_similarity(grad, p.data, eps, view_func)
 
             if cosine_sim.max() < delta / math.sqrt(view_func(p.data).size(1)):
@@ -134,12 +133,12 @@ class SGDP(Optimizer):
             loss = closure()
 
         for group in self.param_groups:
-            weight_decay = group['weight_decay']
-            momentum = group['momentum']
-            dampening = group['dampening']
-            nesterov = group['nesterov']
+            weight_decay = group["weight_decay"]
+            momentum = group["momentum"]
+            dampening = group["dampening"]
+            nesterov = group["nesterov"]
 
-            for p in group['params']:
+            for p in group["params"]:
                 if p.grad is None:
                     continue
 
@@ -148,12 +147,12 @@ class SGDP(Optimizer):
 
                 # State initialization
                 if len(state) == 0:
-                    state['momentum'] = torch.zeros_like(
+                    state["momentum"] = torch.zeros_like(
                         p.data, memory_format=torch.preserve_format
                     )
 
                 # SGD
-                buf = state['momentum']
+                buf = state["momentum"]
                 buf.mul_(momentum).add_(grad, alpha=1 - dampening)
                 if nesterov:
                     d_p = grad + momentum * buf
@@ -167,22 +166,22 @@ class SGDP(Optimizer):
                         p,
                         grad,
                         d_p,
-                        group['delta'],
-                        group['wd_ratio'],
-                        group['eps'],
+                        group["delta"],
+                        group["wd_ratio"],
+                        group["eps"],
                     )
 
                 # Weight decay
                 if weight_decay != 0:
                     p.data.mul_(
                         1
-                        - group['lr']
-                        * group['weight_decay']
+                        - group["lr"]
+                        * group["weight_decay"]
                         * wd_ratio
                         / (1 - momentum)
                     )
 
                 # Step
-                p.data.add_(d_p, alpha=-group['lr'])
+                p.data.add_(d_p, alpha=-group["lr"])
 
         return loss

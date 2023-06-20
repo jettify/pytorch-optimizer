@@ -52,18 +52,18 @@ class PID(Optimizer):
             derivative=derivative,
         )
         if lr <= 0.0:
-            raise ValueError('Invalid learning rate: {}'.format(lr))
+            raise ValueError("Invalid learning rate: {}".format(lr))
         if momentum < 0.0:
-            raise ValueError('Invalid momentum value: {}'.format(momentum))
+            raise ValueError("Invalid momentum value: {}".format(momentum))
         if weight_decay < 0.0:
             raise ValueError(
-                'Invalid weight_decay value: {}'.format(weight_decay)
+                "Invalid weight_decay value: {}".format(weight_decay)
             )
         if integral < 0.0:
-            raise ValueError('Invalid PID integral value: {}'.format(integral))
+            raise ValueError("Invalid PID integral value: {}".format(integral))
         if derivative < 0.0:
             raise ValueError(
-                'Invalid PID derivative value: {}'.format(derivative)
+                "Invalid PID derivative value: {}".format(derivative)
             )
 
         super(PID, self).__init__(params, defaults)
@@ -79,12 +79,12 @@ class PID(Optimizer):
             loss = closure()
 
         for group in self.param_groups:
-            weight_decay = group['weight_decay']
-            momentum = group['momentum']
-            dampening = group['dampening']
-            integral = group['integral']
-            derivative = group['derivative']
-            for p in group['params']:
+            weight_decay = group["weight_decay"]
+            momentum = group["momentum"]
+            dampening = group["dampening"]
+            integral = group["integral"]
+            derivative = group["derivative"]
+            for p in group["params"]:
                 if p.grad is None:
                     continue
                 d_p = p.grad.data
@@ -92,34 +92,34 @@ class PID(Optimizer):
                     d_p.add_(p.data, alpha=weight_decay)
                 if momentum != 0:
                     param_state = self.state[p]
-                    if 'i_buffer' not in param_state:
-                        i_buf = param_state['i_buffer'] = torch.zeros_like(
+                    if "i_buffer" not in param_state:
+                        i_buf = param_state["i_buffer"] = torch.zeros_like(
                             p, memory_format=torch.preserve_format
                         )
                         i_buf.mul_(momentum).add_(d_p)
                     else:
-                        i_buf = param_state['i_buffer']
+                        i_buf = param_state["i_buffer"]
                         i_buf.mul_(momentum).add_(d_p, alpha=1 - dampening)
-                    if 'grad_buffer' not in param_state:
-                        g_buf = param_state['grad_buffer'] = torch.zeros_like(
+                    if "grad_buffer" not in param_state:
+                        g_buf = param_state["grad_buffer"] = torch.zeros_like(
                             p, memory_format=torch.preserve_format
                         )
                         g_buf = d_p
 
-                        d_buf = param_state['d_buffer'] = torch.zeros_like(
+                        d_buf = param_state["d_buffer"] = torch.zeros_like(
                             p, memory_format=torch.preserve_format
                         )
                         d_buf.mul_(momentum).add_(d_p - g_buf)
                     else:
-                        d_buf = param_state['d_buffer']
-                        g_buf = param_state['grad_buffer']
+                        d_buf = param_state["d_buffer"]
+                        g_buf = param_state["grad_buffer"]
                         d_buf.mul_(momentum).add_(
                             d_p - g_buf, alpha=1 - momentum
                         )
-                        self.state[p]['grad_buffer'] = d_p.clone()
+                        self.state[p]["grad_buffer"] = d_p.clone()
 
                     d_p = d_p.add_(i_buf, alpha=integral).add_(
                         d_buf, alpha=derivative
                     )
-                p.data.add_(d_p, alpha=-group['lr'])
+                p.data.add_(d_p, alpha=-group["lr"])
         return loss

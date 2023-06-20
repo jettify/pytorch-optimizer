@@ -63,10 +63,10 @@ class Adafactor(Optimizer):
         warmup_init: bool = False,
     ):
         if lr is not None and lr <= 0.0:
-            raise ValueError('Invalid learning rate: {}'.format(lr))
+            raise ValueError("Invalid learning rate: {}".format(lr))
         if weight_decay < 0.0:
             raise ValueError(
-                'Invalid weight_decay value: {}'.format(weight_decay)
+                "Invalid weight_decay value: {}".format(weight_decay)
             )
 
         defaults = dict(
@@ -83,24 +83,24 @@ class Adafactor(Optimizer):
         super(Adafactor, self).__init__(params, defaults)
 
     def _get_lr(self, param_group: ParamGroup, param_state: State) -> float:
-        rel_step_sz = param_group['lr']
-        if param_group['relative_step']:
+        rel_step_sz = param_group["lr"]
+        if param_group["relative_step"]:
             min_step = (
-                1e-6 * param_state['step']
-                if param_group['warmup_init']
+                1e-6 * param_state["step"]
+                if param_group["warmup_init"]
                 else 1e-2
             )
-            rel_step_sz = min(min_step, 1.0 / math.sqrt(param_state['step']))
+            rel_step_sz = min(min_step, 1.0 / math.sqrt(param_state["step"]))
         param_scale = 1.0
-        if param_group['scale_parameter']:
-            param_scale = max(param_group['eps2'][1], param_state['RMS'])
+        if param_group["scale_parameter"]:
+            param_scale = max(param_group["eps2"][1], param_state["RMS"])
         return param_scale * rel_step_sz
 
     def _get_options(
         self, param_group: ParamGroup, param_shape: Tuple[int, ...]
     ) -> Tuple[bool, bool]:
         factored = len(param_shape) >= 2
-        use_first_moment = param_group['beta1'] is not None
+        use_first_moment = param_group["beta1"] is not None
         return factored, use_first_moment
 
     def _rms(self, tensor: torch.Tensor) -> float:
@@ -131,13 +131,13 @@ class Adafactor(Optimizer):
             loss = closure()
 
         for group in self.param_groups:
-            for p in group['params']:
+            for p in group["params"]:
                 if p.grad is None:
                     continue
                 grad = p.grad.data
                 if grad.is_sparse:
                     raise RuntimeError(
-                        'Adafactor does not support sparse gradients.'
+                        "Adafactor does not support sparse gradients."
                     )
 
                 state = self.state[p]
@@ -148,36 +148,36 @@ class Adafactor(Optimizer):
                 )
                 # State Initialization
                 if len(state) == 0:
-                    state['step'] = 0
+                    state["step"] = 0
 
                     if use_first_moment:
                         # Exponential moving average of gradient values
-                        state['exp_avg'] = torch.zeros_like(
+                        state["exp_avg"] = torch.zeros_like(
                             grad, memory_format=torch.preserve_format
                         )
                     if factored:
-                        state['exp_avg_sq_row'] = torch.zeros(
+                        state["exp_avg_sq_row"] = torch.zeros(
                             grad_shape[:-1]
                         ).type_as(grad)
-                        state['exp_avg_sq_col'] = torch.zeros(
+                        state["exp_avg_sq_col"] = torch.zeros(
                             grad_shape[:-2] + grad_shape[-1:]
                         ).type_as(grad)
                     else:
-                        state['exp_avg_sq'] = torch.zeros_like(
+                        state["exp_avg_sq"] = torch.zeros_like(
                             grad, memory_format=torch.preserve_format
                         )
 
-                    state['RMS'] = 0
+                    state["RMS"] = 0
 
-                state['step'] += 1
-                state['RMS'] = self._rms(p.data)
+                state["step"] += 1
+                state["RMS"] = self._rms(p.data)
                 lr = self._get_lr(group, state)
 
-                beta2t = 1.0 - math.pow(state['step'], group['decay_rate'])
-                update = (grad ** 2) + group['eps2'][0]
+                beta2t = 1.0 - math.pow(state["step"], group["decay_rate"])
+                update = (grad**2) + group["eps2"][0]
                 if factored:
-                    exp_avg_sq_row = state['exp_avg_sq_row']
-                    exp_avg_sq_col = state['exp_avg_sq_col']
+                    exp_avg_sq_row = state["exp_avg_sq_row"]
+                    exp_avg_sq_col = state["exp_avg_sq_col"]
 
                     exp_avg_sq_row.mul_(beta2t).add_(
                         update.mean(dim=-1), alpha=1.0 - beta2t
@@ -193,25 +193,25 @@ class Adafactor(Optimizer):
                     )
                     update.mul_(grad)
                 else:
-                    exp_avg_sq = state['exp_avg_sq']
+                    exp_avg_sq = state["exp_avg_sq"]
 
                     exp_avg_sq.mul_(beta2t).add_(update, alpha=1.0 - beta2t)
                     torch.rsqrt(exp_avg_sq, out=update).mul_(grad)
 
                 update.div_(
-                    max(1.0, self._rms(update) / group['clip_threshold'])
+                    max(1.0, self._rms(update) / group["clip_threshold"])
                 )
                 update.mul_(lr)
 
                 if use_first_moment:
-                    exp_avg = state['exp_avg']
-                    exp_avg.mul_(group['beta1']).add_(
-                        update, alpha=1 - group['beta1']
+                    exp_avg = state["exp_avg"]
+                    exp_avg.mul_(group["beta1"]).add_(
+                        update, alpha=1 - group["beta1"]
                     )
                     update = exp_avg
 
-                if group['weight_decay'] != 0:
-                    p.data.add_(p.data, alpha=-group['weight_decay'] * lr)
+                if group["weight_decay"] != 0:
+                    p.data.add_(p.data, alpha=-group["weight_decay"] * lr)
 
                 p.data.add_(-update)
 

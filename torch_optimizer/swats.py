@@ -3,7 +3,7 @@ from torch.optim.optimizer import Optimizer
 
 from .types import Betas2, OptFloat, OptLossClosure, Params, State
 
-__all__ = ('SWATS',)
+__all__ = ("SWATS",)
 
 
 class SWATS(Optimizer):
@@ -50,26 +50,26 @@ class SWATS(Optimizer):
         nesterov: bool = False,
     ):
         if not 0.0 <= lr:
-            raise ValueError('Invalid learning rate: {}'.format(lr))
+            raise ValueError("Invalid learning rate: {}".format(lr))
         if not 0.0 <= eps:
-            raise ValueError('Invalid epsilon value: {}'.format(eps))
+            raise ValueError("Invalid epsilon value: {}".format(eps))
         if not 0.0 <= betas[0] < 1.0:
             raise ValueError(
-                'Invalid beta parameter at index 0: {}'.format(betas[0])
+                "Invalid beta parameter at index 0: {}".format(betas[0])
             )
         if not 0.0 <= betas[1] < 1.0:
             raise ValueError(
-                'Invalid beta parameter at index 1: {}'.format(betas[1])
+                "Invalid beta parameter at index 1: {}".format(betas[1])
             )
         if weight_decay < 0:
             raise ValueError(
-                'Invalid weight_decay value: {}'.format(weight_decay)
+                "Invalid weight_decay value: {}".format(weight_decay)
             )
         defaults = dict(
             lr=lr,
             betas=betas,
             eps=eps,
-            phase='ADAM',
+            phase="ADAM",
             weight_decay=weight_decay,
             amsgrad=amsgrad,
             nesterov=nesterov,
@@ -80,8 +80,8 @@ class SWATS(Optimizer):
     def __setstate__(self, state: State) -> None:
         super().__setstate__(state)
         for group in self.param_groups:
-            group.setdefault('amsgrad', False)
-            group.setdefault('nesterov', False)
+            group.setdefault("amsgrad", False)
+            group.setdefault("nesterov", False)
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
         r"""Performs a single optimization step.
@@ -94,72 +94,72 @@ class SWATS(Optimizer):
             loss = closure()
 
         for group in self.param_groups:
-            for w in group['params']:
+            for w in group["params"]:
                 if w.grad is None:
                     continue
                 grad = w.grad.data
 
                 if grad.is_sparse:
                     raise RuntimeError(
-                        'Adam does not support sparse gradients, '
-                        'please consider SparseAdam instead'
+                        "Adam does not support sparse gradients, "
+                        "please consider SparseAdam instead"
                     )
 
-                amsgrad = group['amsgrad']
+                amsgrad = group["amsgrad"]
 
                 state = self.state[w]
 
                 # state initialization
                 if len(state) == 0:
-                    state['step'] = 0
+                    state["step"] = 0
                     # exponential moving average of gradient values
-                    state['exp_avg'] = torch.zeros_like(
+                    state["exp_avg"] = torch.zeros_like(
                         w.data, memory_format=torch.preserve_format
                     )
                     # exponential moving average of squared gradient values
-                    state['exp_avg_sq'] = torch.zeros_like(
+                    state["exp_avg_sq"] = torch.zeros_like(
                         w.data, memory_format=torch.preserve_format
                     )
                     # moving average for the non-orthogonal projection scaling
-                    state['exp_avg2'] = w.new(1).fill_(0)
+                    state["exp_avg2"] = w.new(1).fill_(0)
                     if amsgrad:
                         # maintains max of all exp. moving avg.
                         # of sq. grad. values
-                        state['max_exp_avg_sq'] = torch.zeros_like(
+                        state["max_exp_avg_sq"] = torch.zeros_like(
                             w.data, memory_format=torch.preserve_format
                         )
 
                 exp_avg, exp_avg2, exp_avg_sq = (
-                    state['exp_avg'],
-                    state['exp_avg2'],
-                    state['exp_avg_sq'],
+                    state["exp_avg"],
+                    state["exp_avg2"],
+                    state["exp_avg_sq"],
                 )
 
                 if amsgrad:
-                    max_exp_avg_sq = state['max_exp_avg_sq']
-                beta1, beta2 = group['betas']
+                    max_exp_avg_sq = state["max_exp_avg_sq"]
+                beta1, beta2 = group["betas"]
 
-                state['step'] += 1
+                state["step"] += 1
 
-                if group['weight_decay'] != 0:
-                    grad.add_(w.data, alpha=group['weight_decay'])
+                if group["weight_decay"] != 0:
+                    grad.add_(w.data, alpha=group["weight_decay"])
 
                 # if its SGD phase, take an SGD update and continue
-                if group['phase'] == 'SGD':
-                    if 'momentum_buffer' not in state:
-                        buf = state['momentum_buffer'] = torch.clone(
+                if group["phase"] == "SGD":
+                    if "momentum_buffer" not in state:
+                        buf = state["momentum_buffer"] = torch.clone(
                             grad
                         ).detach()
                     else:
-                        buf = state['momentum_buffer']
+                        buf = state["momentum_buffer"]
                         buf.mul_(beta1).add_(grad)
                         grad = buf
 
                     grad.mul_(1 - beta1)
-                    if group['nesterov']:
+                    if group["nesterov"]:
                         grad.add_(buf, alpha=beta1)
 
-                    w.data.add_(grad, alpha=-group['lr'])
+                    w.data.add_(grad, alpha=-group["lr"])
                     continue
 
                 # decay the first and second moment running average coefficient
@@ -170,14 +170,14 @@ class SWATS(Optimizer):
                     # moment running avg. till now
                     torch.max(max_exp_avg_sq, exp_avg_sq, out=max_exp_avg_sq)
                     # use the max. for normalizing running avg. of gradient
-                    denom = max_exp_avg_sq.sqrt().add_(group['eps'])
+                    denom = max_exp_avg_sq.sqrt().add_(group["eps"])
                 else:
-                    denom = exp_avg_sq.sqrt().add_(group['eps'])
+                    denom = exp_avg_sq.sqrt().add_(group["eps"])
 
-                bias_correction1 = 1 - beta1 ** state['step']
-                bias_correction2 = 1 - beta2 ** state['step']
+                bias_correction1 = 1 - beta1 ** state["step"]
+                bias_correction2 = 1 - beta2 ** state["step"]
                 step_size = (
-                    group['lr'] * (bias_correction2 ** 0.5) / bias_correction1
+                    group["lr"] * (bias_correction2**0.5) / bias_correction1
                 )
 
                 p = -step_size * (exp_avg / denom)
@@ -196,10 +196,10 @@ class SWATS(Optimizer):
 
                     # checking criteria of switching to SGD training
                     if (
-                        state['step'] > 1
+                        state["step"] > 1
                         and corrected_exp_avg.allclose(scaling, rtol=1e-6)
                         and corrected_exp_avg > 0
                     ):
-                        group['phase'] = 'SGD'
-                        group['lr'] = corrected_exp_avg.item()
+                        group["phase"] = "SGD"
+                        group["lr"] = corrected_exp_avg.item()
         return loss

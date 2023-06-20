@@ -42,7 +42,7 @@ class LogisticRegression(nn.Module):
 
 
 def ids(v):
-    return '{} {}'.format(v[0].__name__, v[1:])
+    return "{} {}".format(v[0].__name__, v[1:])
 
 
 def build_lookahead(*a, **kw):
@@ -51,49 +51,49 @@ def build_lookahead(*a, **kw):
 
 
 optimizers = [
-    (build_lookahead, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
-    (optim.A2GradExp, {'lips': 2.0, 'beta': 1e-3}, 500),
-    (optim.A2GradInc, {'lips': 5.0, 'beta': 1e-3}, 200),
-    (optim.A2GradUni, {'lips': 5.0, 'beta': 1e-3}, 500),
-    (optim.AccSGD, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
-    (optim.AdaBelief, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
-    (optim.AdaBound, {'lr': 1.5, 'gamma': 0.1, 'weight_decay': 1e-3}, 200),
-    (optim.AdaMod, {'lr': 2.0, 'weight_decay': 1e-3}, 200),
-    (optim.Adafactor, {'lr': 0.004466, 'weight_decay': 1e-3}, 1500),
-    (optim.AdamP, {'lr': 0.045, 'weight_decay': 1e-3}, 800),
-    (optim.AggMo, {'lr': 0.17059, 'weight_decay': 1e-3}, 1000),
-    (optim.Apollo, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
-    (optim.DiffGrad, {'lr': 0.5, 'weight_decay': 1e-3}, 200),
+    (build_lookahead, {"lr": 0.1, "weight_decay": 1e-3}, 200),
+    (optim.A2GradExp, {"lips": 2.0, "beta": 1e-3}, 500),
+    (optim.A2GradInc, {"lips": 5.0, "beta": 1e-3}, 200),
+    (optim.A2GradUni, {"lips": 5.0, "beta": 1e-3}, 500),
+    (optim.AccSGD, {"lr": 1.0, "weight_decay": 1e-3}, 200),
+    (optim.AdaBelief, {"lr": 0.1, "weight_decay": 1e-3}, 200),
+    (optim.AdaBound, {"lr": 1.5, "gamma": 0.1, "weight_decay": 1e-3}, 200),
+    (optim.AdaMod, {"lr": 2.0, "weight_decay": 1e-3}, 200),
+    (optim.Adafactor, {"lr": 0.004466, "weight_decay": 1e-3}, 1500),
+    (optim.AdamP, {"lr": 0.045, "weight_decay": 1e-3}, 800),
+    (optim.AggMo, {"lr": 0.17059, "weight_decay": 1e-3}, 1000),
+    (optim.Apollo, {"lr": 0.1, "weight_decay": 1e-3}, 200),
+    (optim.DiffGrad, {"lr": 0.5, "weight_decay": 1e-3}, 200),
     (
         optim.LARS,
-        {'lr': 1.0, 'weight_decay': 1e-3, 'trust_coefficient': 0.01},
+        {"lr": 1.0, "weight_decay": 1e-3, "trust_coefficient": 0.01},
         200,
     ),
-    (optim.Lamb, {'lr': 0.0151, 'weight_decay': 1e-3}, 1000),
-    (optim.MADGRAD, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
-    (optim.NovoGrad, {'lr': 0.01, 'weight_decay': 1e-3}, 200),
-    (optim.PID, {'lr': 0.01, 'weight_decay': 1e-3, 'momentum': 0.1}, 200),
-    (optim.QHAdam, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
-    (optim.QHM, {'lr': 0.1, 'weight_decay': 1e-5, 'momentum': 0.2}, 200),
-    (optim.RAdam, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
-    (optim.Ranger, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
-    (optim.RangerQH, {'lr': 0.0124, 'weight_decay': 1e-3}, 1100),
-    (optim.RangerVA, {'lr': 0.2214, 'weight_decay': 1e-3}, 500),
-    (optim.SGDP, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
-    (optim.SGDW, {'lr': 1.0, 'weight_decay': 1e-3}, 200),
-    (optim.SWATS, {'lr': 0.703, 'weight_decay': 1e-3}, 600),
+    (optim.Lamb, {"lr": 0.0151, "weight_decay": 1e-3}, 1000),
+    (optim.MADGRAD, {"lr": 1.0, "weight_decay": 1e-3}, 200),
+    (optim.NovoGrad, {"lr": 0.01, "weight_decay": 1e-3}, 200),
+    (optim.PID, {"lr": 0.01, "weight_decay": 1e-3, "momentum": 0.1}, 200),
+    (optim.QHAdam, {"lr": 0.1, "weight_decay": 1e-3}, 200),
+    (optim.QHM, {"lr": 0.1, "weight_decay": 1e-5, "momentum": 0.2}, 200),
+    (optim.RAdam, {"lr": 1.0, "weight_decay": 1e-3}, 200),
+    (optim.Ranger, {"lr": 0.1, "weight_decay": 1e-3}, 200),
+    (optim.RangerQH, {"lr": 0.0124, "weight_decay": 1e-3}, 1100),
+    (optim.RangerVA, {"lr": 0.2214, "weight_decay": 1e-3}, 500),
+    (optim.SGDP, {"lr": 1.0, "weight_decay": 1e-3}, 200),
+    (optim.SGDW, {"lr": 1.0, "weight_decay": 1e-3}, 200),
+    (optim.SWATS, {"lr": 0.703, "weight_decay": 1e-3}, 600),
     (
         optim.Shampoo,
-        {'lr': 0.279, 'weight_decay': 1e-3, 'momentum': 0.05},
+        {"lr": 0.279, "weight_decay": 1e-3, "momentum": 0.05},
         1600,
     ),
-    (optim.Yogi, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
-    (optim.Adahessian, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
-    (optim.Lion, {'lr': 0.1, 'weight_decay': 1e-3}, 200),
+    (optim.Yogi, {"lr": 0.1, "weight_decay": 1e-3}, 200),
+    (optim.Adahessian, {"lr": 0.1, "weight_decay": 1e-3}, 200),
+    (optim.Lion, {"lr": 0.1, "weight_decay": 1e-3}, 200),
 ]
 
 
-@pytest.mark.parametrize('optimizer_config', optimizers, ids=ids)
+@pytest.mark.parametrize("optimizer_config", optimizers, ids=ids)
 def test_basic_nn_modeloptimizer_config(optimizer_config):
     torch.manual_seed(42)
     x_data, y_data = make_dataset()

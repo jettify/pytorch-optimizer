@@ -3,7 +3,7 @@ from torch.optim.optimizer import Optimizer
 
 from .types import Betas2, OptFloat, OptLossClosure, Params
 
-__all__ = ('NovoGrad',)
+__all__ = ("NovoGrad",)
 
 
 class NovoGrad(Optimizer):
@@ -52,20 +52,20 @@ class NovoGrad(Optimizer):
         amsgrad: bool = False,
     ):
         if lr <= 0.0:
-            raise ValueError('Invalid learning rate: {}'.format(lr))
+            raise ValueError("Invalid learning rate: {}".format(lr))
         if eps < 0.0:
-            raise ValueError('Invalid epsilon value: {}'.format(eps))
+            raise ValueError("Invalid epsilon value: {}".format(eps))
         if not 0.0 <= betas[0] < 1.0:
             raise ValueError(
-                'Invalid beta parameter at index 0: {}'.format(betas[0])
+                "Invalid beta parameter at index 0: {}".format(betas[0])
             )
         if not 0.0 <= betas[1] < 1.0:
             raise ValueError(
-                'Invalid beta parameter at index 1: {}'.format(betas[1])
+                "Invalid beta parameter at index 1: {}".format(betas[1])
             )
         if weight_decay < 0:
             raise ValueError(
-                'Invalid weight_decay value: {}'.format(weight_decay)
+                "Invalid weight_decay value: {}".format(weight_decay)
             )
         defaults = dict(
             lr=lr,
@@ -81,7 +81,7 @@ class NovoGrad(Optimizer):
     def __setstate__(self, state: dict) -> None:
         super(NovoGrad, self).__setstate__(state)
         for group in self.param_groups:
-            group.setdefault('amsgrad', False)
+            group.setdefault("amsgrad", False)
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
         r"""Performs a single optimization step.
@@ -94,44 +94,44 @@ class NovoGrad(Optimizer):
             loss = closure()
 
         for group in self.param_groups:
-            for p in group['params']:
+            for p in group["params"]:
                 if p.grad is None:
                     continue
                 grad = p.grad.data
                 if grad.is_sparse:
                     msg = (
-                        'NovoGrad does not support sparse gradients, '
-                        'please consider SparseAdam instead'
+                        "NovoGrad does not support sparse gradients, "
+                        "please consider SparseAdam instead"
                     )
                     raise RuntimeError(msg)
-                amsgrad = group['amsgrad']
+                amsgrad = group["amsgrad"]
 
                 state = self.state[p]
 
                 # State initialization
                 if len(state) == 0:
-                    state['step'] = 0
+                    state["step"] = 0
                     # Exponential moving average of gradient values
-                    state['exp_avg'] = torch.zeros_like(
+                    state["exp_avg"] = torch.zeros_like(
                         p.data, memory_format=torch.preserve_format
                     )
                     # Exponential moving average of squared gradient values
-                    state['exp_avg_sq'] = torch.zeros([]).to(
-                        state['exp_avg'].device
+                    state["exp_avg_sq"] = torch.zeros([]).to(
+                        state["exp_avg"].device
                     )
                     if amsgrad:
                         # Maintains max of all exp. moving avg. of sq.
                         # grad. values
-                        state['max_exp_avg_sq'] = torch.zeros([]).to(
-                            state['exp_avg'].device
+                        state["max_exp_avg_sq"] = torch.zeros([]).to(
+                            state["exp_avg"].device
                         )
 
-                exp_avg, exp_avg_sq = state['exp_avg'], state['exp_avg_sq']
+                exp_avg, exp_avg_sq = state["exp_avg"], state["exp_avg_sq"]
                 if amsgrad:
-                    max_exp_avg_sq = state['max_exp_avg_sq']
-                beta1, beta2 = group['betas']
+                    max_exp_avg_sq = state["max_exp_avg_sq"]
+                beta1, beta2 = group["betas"]
 
-                state['step'] += 1
+                state["step"] += 1
 
                 norm = torch.sum(torch.pow(grad, 2))
 
@@ -145,17 +145,17 @@ class NovoGrad(Optimizer):
                     # till now
                     torch.max(max_exp_avg_sq, exp_avg_sq, out=max_exp_avg_sq)
                     # Use the max. for normalizing running avg. of gradient
-                    denom = max_exp_avg_sq.sqrt().add_(group['eps'])
+                    denom = max_exp_avg_sq.sqrt().add_(group["eps"])
                 else:
-                    denom = exp_avg_sq.sqrt().add_(group['eps'])
+                    denom = exp_avg_sq.sqrt().add_(group["eps"])
 
                 grad.div_(denom)
-                if group['weight_decay'] != 0:
-                    grad.add_(p.data, alpha=group['weight_decay'])
-                if group['grad_averaging']:
+                if group["weight_decay"] != 0:
+                    grad.add_(p.data, alpha=group["weight_decay"])
+                if group["grad_averaging"]:
                     grad.mul_(1 - beta1)
                 exp_avg.mul_(beta1).add_(grad)
 
-                p.data.add_(exp_avg, alpha=-group['lr'])
+                p.data.add_(exp_avg, alpha=-group["lr"])
 
         return loss

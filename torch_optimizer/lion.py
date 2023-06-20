@@ -1,7 +1,7 @@
 import torch
 from torch.optim.optimizer import Optimizer
 
-from .types import OptFloat, OptLossClosure, Params, Betas2
+from .types import Betas2, OptFloat, OptLossClosure, Params
 
 __all__ = ("Lion",)
 
@@ -15,9 +15,9 @@ class Lion(Optimizer):
     https://arxiv.org/pdf/2302.06675.pdf.
     Lion aims to be more memory efficient than Adam by only tracking momentum.
 
-    Caveats: As detailed in the paper, Lion requires a smaller learning rate lr,
-    and larger decoupled weight decay to maintain effective weight decay strength.
-    Also, the gain of Lion increases with the batch size.
+    Caveats: As detailed in the paper, Lion requires a smaller learning rate
+    lr, and larger decoupled weight decay to maintain effective weight decay
+    strength. Also, the gain of Lion increases with the batch size.
     Furthermore, Lion was not found to outperform AdamW on some large language
     and text/image datasets.
 
@@ -44,15 +44,20 @@ class Lion(Optimizer):
         betas: Betas2 = (0.9, 0.99),
         weight_decay: float = 0.0,
     ):
-
         if lr <= 0.0:
             raise ValueError("Invalid learning rate: {}".format(lr))
         if not 0.0 <= betas[0] < 1.0:
-            raise ValueError("Invalid beta parameter at index 0: {}".format(betas[0]))
+            raise ValueError(
+                "Invalid beta parameter at index 0: {}".format(betas[0])
+            )
         if not 0.0 <= betas[1] < 1.0:
-            raise ValueError("Invalid beta parameter at index 1: {}".format(betas[1]))
+            raise ValueError(
+                "Invalid beta parameter at index 1: {}".format(betas[1])
+            )
         if weight_decay < 0:
-            raise ValueError("Invalid weight_decay value: {}".format(weight_decay))
+            raise ValueError(
+                "Invalid weight_decay value: {}".format(weight_decay)
+            )
         defaults = dict(lr=lr, betas=betas, weight_decay=weight_decay)
         super().__init__(params, defaults)
 
