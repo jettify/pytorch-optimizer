@@ -6,13 +6,13 @@ flake8==4.0.1
 ipdb==0.13.9
 isort==5.9.3
 mypy==0.910
-numpy==1.21.3
+numpy==1.23.2
 pyroma==3.2
 pytest-cov==3.0.0
 pytest==6.2.5
 pytorch_ranger==0.1.1
 sphinx-autodoc-typehints==1.12.0
 sphinx==4.2.0
-torch==1.10.0
+torch==1.13.1
 twine==3.4.2
-wheel==0.37.0
+wheel==0.38.1
