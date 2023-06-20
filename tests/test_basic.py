@@ -70,8 +70,8 @@ optimizers = [
     (optim.Adahessian, {'lr': 0.15, 'hessian_power': 0.6, 'seed': 0}, 900),
     (optim.MADGRAD, {'lr': 0.02}, 500),
     (optim.LARS, {'lr': 0.002, 'momentum': 0.91}, 900),
+    (optim.Lion, {'lr': 0.025}, 3600),
 ]
-
 
 @pytest.mark.parametrize('case', cases, ids=ids)
 @pytest.mark.parametrize('optimizer_config', optimizers, ids=ids)
