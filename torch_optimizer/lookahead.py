@@ -57,6 +57,9 @@ class Lookahead(Optimizer):
 
     def _update(self, group: Dict[str, Any]) -> None:
         for fast in group["params"]:
+            if not fast.requires_grad:
+                continue
+                
             param_state = self.state[fast]
             if "slow_param" not in param_state:
                 param_state["slow_param"] = torch.clone(fast.data).detach()
