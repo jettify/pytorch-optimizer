@@ -1,6 +1,6 @@
 -e .
 bandit==1.7.0
-black==23.3.0
+black==23.7.0
 flake8-bugbear==21.9.2
 flake8==4.0.1
 ipdb==0.13.9
