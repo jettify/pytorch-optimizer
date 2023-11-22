@@ -18,7 +18,7 @@ Create virtualenv with python3.5 (older version are not supported). For example
 using *virtualenvwrapper* commands could look like::
 
    $ cd pytorch-optimizer
-   $ mkvirtualenv --python=`which python3.7` pytorch-optimizer
+   $ mkvirtualenv --python=`which python3.8` pytorch-optimizer
 
 
 After that please install libraries required for development::
