@@ -136,7 +136,7 @@ def execute_experiments(
             space=space,
             algo=tpe.suggest,
             max_evals=200,
-            rstate=np.random.RandomState(seed),
+            rstate=np.random.default_rng(seed),
         )
         print(best["lr"], optimizer_class)
 
