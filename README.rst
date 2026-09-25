@@ -211,7 +211,6 @@ A2GradExp
     # model = ...
     optimizer = optim.A2GradExp(
         model.parameters(),
-        kappa=1000.0,
         beta=10.0,
         lips=10.0,
         rho=0.5,
@@ -238,7 +237,6 @@ A2GradInc
     # model = ...
     optimizer = optim.A2GradInc(
         model.parameters(),
-        kappa=1000.0,
         beta=10.0,
         lips=10.0,
     )
@@ -264,7 +262,6 @@ A2GradUni
     # model = ...
     optimizer = optim.A2GradUni(
         model.parameters(),
-        kappa=1000.0,
         beta=10.0,
         lips=10.0,
     )
