@@ -120,11 +120,14 @@ class Adahessian(Optimizer):
                 # We use that torch.abs(hv * vi) = hv.abs()
                 tmp_output = hv.abs()
 
-            elif len(param_size) == 4:  # Conv kernel
-                # Hessian diagonal block size is 9 here: torch.sum() reduces
-                # the dim 2/3.
+            else:  # Conv kernel (Conv1d/Conv2d/Conv3d weights are 3/4/5D)
+                # Hessian diagonal block sizes are k / k*k / k*k*k here:
+                # average over the spatial dims, keeping the
+                # (out_channels, in_channels) block structure.
                 # We use that torch.abs(hv * vi) = hv.abs()
-                tmp_output = torch.mean(hv.abs(), dim=[2, 3], keepdim=True)
+                tmp_output = torch.mean(
+                    hv.abs(), dim=list(range(2, len(param_size))), keepdim=True
+                )
             hutchinson_trace.append(tmp_output)
 
         return hutchinson_trace
