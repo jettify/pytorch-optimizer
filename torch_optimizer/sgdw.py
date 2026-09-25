@@ -113,10 +113,11 @@ class SGDW(Optimizer):
                     else:
                         d_p = buf
 
-                # Apply momentum
-                p.data.add_(d_p, alpha=-group["lr"])
-
-                # Apply weight decay
+                # Decoupled weight decay scales the parameter. The paper
+                # (Loshchilov and Hutter, arXiv 1711.05101) writes
+                # θ ← (1 − λ μ) θ, then subtracts the step. Adding −λ μ to
+                # every coordinate subtracts a constant instead.
                 if weight_decay != 0:
-                    p.data.add_(weight_decay, alpha=-group["lr"])
+                    p.data.mul_(1 - group["lr"] * weight_decay)
+                p.data.add_(d_p, alpha=-group["lr"])
         return loss
