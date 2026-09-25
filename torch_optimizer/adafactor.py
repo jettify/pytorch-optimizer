@@ -35,6 +35,11 @@ class Adafactor(Optimizer):
             instead of external learning rate (default: True)
         warmup_init: time-dependent learning rate computation depends on
             whether warm-up initialization is being used (default: False)
+        warmup_rate: slope of the warm-up ramp, used as
+            ``warmup_rate * step`` when ``warmup_init`` is true
+            (default: 1e-6)
+        min_step_size: floor of the relative step size when ``warmup_init``
+            is false (default: 1e-2)
 
     Example:
         >>> import torch_optimizer as optim
@@ -61,12 +66,22 @@ class Adafactor(Optimizer):
         scale_parameter: bool = True,
         relative_step: bool = True,
         warmup_init: bool = False,
+        warmup_rate: float = 1e-6,
+        min_step_size: float = 1e-2,
     ):
         if lr is not None and lr <= 0.0:
             raise ValueError("Invalid learning rate: {}".format(lr))
         if weight_decay < 0.0:
             raise ValueError(
                 "Invalid weight_decay value: {}".format(weight_decay)
+            )
+        if warmup_rate < 0.0:
+            raise ValueError(
+                "Invalid warmup_rate value: {}".format(warmup_rate)
+            )
+        if min_step_size < 0.0:
+            raise ValueError(
+                "Invalid min_step_size value: {}".format(min_step_size)
             )
 
         defaults = dict(
@@ -79,16 +94,21 @@ class Adafactor(Optimizer):
             scale_parameter=scale_parameter,
             relative_step=relative_step,
             warmup_init=warmup_init,
+            warmup_rate=warmup_rate,
+            min_step_size=min_step_size,
         )
         super(Adafactor, self).__init__(params, defaults)
 
     def _get_lr(self, param_group: ParamGroup, param_state: State) -> float:
+        # Groups saved before warmup_rate/min_step_size existed lack them.
+        param_group.setdefault("warmup_rate", 1e-6)
+        param_group.setdefault("min_step_size", 1e-2)
         rel_step_sz = param_group["lr"]
         if param_group["relative_step"]:
             min_step = (
-                1e-6 * param_state["step"]
+                param_group["warmup_rate"] * param_state["step"]
                 if param_group["warmup_init"]
-                else 1e-2
+                else param_group["min_step_size"]
             )
             rel_step_sz = min(min_step, 1.0 / math.sqrt(param_state["step"]))
         param_scale = 1.0

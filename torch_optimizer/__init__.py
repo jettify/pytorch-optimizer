@@ -43,6 +43,7 @@ from .radam import RAdam
 from .sgdp import SGDP
 from .sgdw import SGDW
 from .shampoo import Shampoo
+from .sophia import Sophia
 from .swats import SWATS
 from .yogi import Yogi
 
@@ -76,6 +77,7 @@ __all__ = (
     "SGDW",
     "SWATS",
     "Shampoo",
+    "Sophia",
     "Yogi",
     "Lion",
     # utils

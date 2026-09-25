@@ -56,6 +56,7 @@ optimizers = [
     optim.Shampoo,
     optim.Yogi,
     optim.Lion,
+    optim.Sophia,
 ]
 
 
@@ -120,6 +121,7 @@ weight_decay_optimizers = [
     optim.Shampoo,
     optim.Yogi,
     optim.Lion,
+    optim.Sophia,
 ]
 
 

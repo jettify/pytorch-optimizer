@@ -149,6 +149,9 @@ Supported Optimizers
 | `Shampoo`_    | https://arxiv.org/abs/1802.09568                                                                                                     |
 +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
 |               |                                                                                                                                      |
+| `Sophia`_     | https://arxiv.org/abs/2305.14342                                                                                                     |
++---------------+--------------------------------------------------------------------------------------------------------------------------------------+
+|               |                                                                                                                                      |
 | `Yogi`_       | https://papers.nips.cc/paper/8186-adaptive-methods-for-nonconvex-optimization                                                        |
 +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
 
@@ -1005,6 +1008,33 @@ Shampoo
 **Paper**: *Shampoo: Preconditioned Stochastic Tensor Optimization* (2018) [https://arxiv.org/abs/1802.09568]
 
 **Reference Code**: https://github.com/moskomule/shampoo.pytorch
+
+
+Sophia
+------
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.Sophia(
+        m.parameters(),
+        lr=1e-4,
+        betas=(0.965, 0.99),
+        rho=0.04,
+        weight_decay=1e-1,
+    )
+    optimizer.zero_grad()
+    loss_fn(model(input), target).backward()
+    optimizer.update_hessian()
+    optimizer.zero_grad()
+    loss_fn(model(input), target).backward()
+    optimizer.step()
+
+**Paper**: *Sophia: A Scalable Stochastic Second-order Optimizer for Language Model Pre-training* (2023) [https://arxiv.org/abs/2305.14342]
+
+**Reference Code**: https://github.com/Liuhong99/Sophia
 
 
 Yogi
