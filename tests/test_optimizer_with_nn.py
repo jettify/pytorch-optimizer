@@ -90,6 +90,7 @@ optimizers = [
     (optim.Yogi, {"lr": 0.1, "weight_decay": 1e-3}, 200),
     (optim.Adahessian, {"lr": 0.1, "weight_decay": 1e-3}, 200),
     (optim.Lion, {"lr": 0.1, "weight_decay": 1e-3}, 200),
+    (optim.Sophia, {"lr": 0.1, "weight_decay": 1e-3}, 200),
 ]
 
 

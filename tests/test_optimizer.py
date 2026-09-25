@@ -110,6 +110,7 @@ optimizers = [
     optim.Shampoo,
     optim.Yogi,
     optim.Lion,
+    optim.Sophia,
 ]
 
 
