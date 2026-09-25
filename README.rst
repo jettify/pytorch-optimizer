@@ -119,6 +119,9 @@ Supported Optimizers
 | `MADGRAD`_    | https://arxiv.org/abs/2101.11075                                                                                                     |
 +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
 |               |                                                                                                                                      |
+| `Muon`_       | https://kellerjordan.github.io/posts/muon/                                                                                           |
++---------------+--------------------------------------------------------------------------------------------------------------------------------------+
+|               |                                                                                                                                      |
 | `NovoGrad`_   | https://arxiv.org/abs/1905.11286                                                                                                     |
 +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
 |               |                                                                                                                                      |
@@ -710,6 +713,28 @@ MADGRAD
 **Paper**: *Adaptivity without Compromise: A Momentumized, Adaptive, Dual Averaged Gradient Method for Stochastic Optimization* (2021) [https://arxiv.org/abs/2101.11075]
 
 **Reference Code**: https://github.com/facebookresearch/madgrad
+
+
+Muon
+----
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    # use Muon for hidden matrices, another optimizer for biases/gains
+    optimizer = optim.Muon(
+        m.parameters(),
+        lr=0.02,
+        momentum=0.95,
+        weight_decay=0,
+    )
+    optimizer.step()
+
+**Write-up**: *Muon: MomentUm Orthogonalized by Newton-schulz* [https://kellerjordan.github.io/posts/muon/]
+
+**Reference Code**: https://github.com/KellerJordan/Muon
 
 
 NovoGrad

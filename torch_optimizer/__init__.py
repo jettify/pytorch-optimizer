@@ -37,6 +37,7 @@ from .lars import LARS
 from .lion import Lion
 from .lookahead import Lookahead
 from .madgrad import MADGRAD
+from .muon import Muon
 from .novograd import NovoGrad
 from .pid import PID
 from .qhadam import QHAdam
@@ -69,6 +70,7 @@ __all__ = (
     "Lamb",
     "Lookahead",
     "MADGRAD",
+    "Muon",
     "NovoGrad",
     "PID",
     "QHAdam",

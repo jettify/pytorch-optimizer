@@ -59,6 +59,7 @@ optimizers = [
     optim.Sophia,
     optim.Aida,
     optim.AdaNorm,
+    optim.Muon,
 ]
 
 
@@ -103,6 +104,7 @@ weight_decay_optimizers = [
     optim.AccSGD,
     optim.Aida,
     optim.AdaNorm,
+    optim.Muon,
     optim.AdaBelief,
     optim.AdaBound,
     optim.AdaMod,
