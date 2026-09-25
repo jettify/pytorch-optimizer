@@ -27,6 +27,7 @@ from .adabound import AdaBound
 from .adafactor import Adafactor
 from .adahessian import Adahessian
 from .adamod import AdaMod
+from .adanorm import AdaNorm
 from .adamp import AdamP
 from .aggmo import AggMo
 from .apollo import Apollo
@@ -59,6 +60,7 @@ __all__ = (
     "AdaMod",
     "Adafactor",
     "Adahessian",
+    "AdaNorm",
     "AdamP",
     "AggMo",
     "Apollo",

@@ -80,6 +80,9 @@ Supported Optimizers
 | `Aida`_       | https://arxiv.org/abs/2203.13273                                                                                                     |
 +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
 |               |                                                                                                                                      |
+| `AdaNorm`_    | https://arxiv.org/abs/2210.06364                                                                                                     |
++---------------+--------------------------------------------------------------------------------------------------------------------------------------+
+|               |                                                                                                                                      |
 | `AdaBelief`_  | https://arxiv.org/abs/2010.07468                                                                                                     |
 +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
 |               |                                                                                                                                      |
@@ -332,6 +335,32 @@ Aida
 **Paper**: *On Exploiting Layerwise Gradient Statistics for Effective Training of Deep Neural Networks* (2022) [https://arxiv.org/abs/2203.13273]
 
 **Reference Code**: https://github.com/guoqiang-zhang-x/Aida-Optimizer
+
+
+AdaNorm
+-------
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.AdaNorm(
+        m.parameters(),
+        lr=1e-3,
+        betas=(0.9, 0.999),
+        eps=1e-8,
+        weight_decay=0,
+        amsgrad=False,
+        weight_decouple=False,
+        fixed_decay=False,
+        rectify=False,
+    )
+    optimizer.step()
+
+**Paper**: *AdaNorm: Adaptive Gradient Norm Correction based Optimizer for CNNs* (WACV 2023) [https://arxiv.org/abs/2210.06364]
+
+**Reference Code**: https://github.com/shivram1987/AdaNorm
 
 
 AdaBelief

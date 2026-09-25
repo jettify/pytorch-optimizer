@@ -58,6 +58,7 @@ optimizers = [
     optim.Lion,
     optim.Sophia,
     optim.Aida,
+    optim.AdaNorm,
 ]
 
 
@@ -101,6 +102,7 @@ def test_eps_validation(optimizer_class):
 weight_decay_optimizers = [
     optim.AccSGD,
     optim.Aida,
+    optim.AdaNorm,
     optim.AdaBelief,
     optim.AdaBound,
     optim.AdaMod,
