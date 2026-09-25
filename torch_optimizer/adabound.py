@@ -112,6 +112,13 @@ class AdaBound(Optimizer):
                         "please consider SparseAdam instead"
                     )
                     raise RuntimeError(msg)
+                # The bound clamp is a real op. A complex parameter is the
+                # same algorithm on its real and imaginary parts, which is
+                # how Adam treats complex weights. Real parameters stay on
+                # the path below.
+                complex_param = torch.is_complex(p)
+                if complex_param:
+                    grad = torch.view_as_real(grad)
                 amsbound = group["amsbound"]
 
                 state = self.state[p]
@@ -137,12 +144,20 @@ class AdaBound(Optimizer):
                 exp_avg, exp_avg_sq = state["exp_avg"], state["exp_avg_sq"]
                 if amsbound:
                     max_exp_avg_sq = state["max_exp_avg_sq"]
+                if complex_param:
+                    exp_avg = torch.view_as_real(exp_avg)
+                    exp_avg_sq = torch.view_as_real(exp_avg_sq)
+                    if amsbound:
+                        max_exp_avg_sq = torch.view_as_real(max_exp_avg_sq)
                 beta1, beta2 = group["betas"]
 
                 state["step"] += 1
 
                 if group["weight_decay"] != 0:
-                    grad = grad.add(p.data, alpha=group["weight_decay"])
+                    decay_base = (
+                        torch.view_as_real(p.data) if complex_param else p.data
+                    )
+                    grad = grad.add(decay_base, alpha=group["weight_decay"])
 
                 # Decay the first and second moment running average coefficient
                 exp_avg.mul_(beta1).add_(grad, alpha=1 - beta1)
@@ -179,5 +194,8 @@ class AdaBound(Optimizer):
                     exp_avg
                 )
 
-                p.data.add_(-step_size)
+                if complex_param:
+                    torch.view_as_real(p.data).add_(-step_size)
+                else:
+                    p.data.add_(-step_size)
         return loss
