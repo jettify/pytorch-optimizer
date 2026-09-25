@@ -21,6 +21,7 @@ from torch.optim.optimizer import Optimizer
 
 from .a2grad import A2GradExp, A2GradInc, A2GradUni
 from .accsgd import AccSGD
+from .aida import Aida
 from .adabelief import AdaBelief
 from .adabound import AdaBound
 from .adafactor import Adafactor
@@ -43,6 +44,7 @@ from .radam import RAdam
 from .sgdp import SGDP
 from .sgdw import SGDW
 from .shampoo import Shampoo
+from .sophia import Sophia
 from .swats import SWATS
 from .yogi import Yogi
 
@@ -51,6 +53,7 @@ __all__ = (
     "A2GradInc",
     "A2GradUni",
     "AccSGD",
+    "Aida",
     "AdaBelief",
     "AdaBound",
     "AdaMod",
@@ -76,6 +79,7 @@ __all__ = (
     "SGDW",
     "SWATS",
     "Shampoo",
+    "Sophia",
     "Yogi",
     "Lion",
     # utils
