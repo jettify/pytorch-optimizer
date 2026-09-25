@@ -104,7 +104,10 @@ class PID(Optimizer):
                         g_buf = param_state["grad_buffer"] = torch.zeros_like(
                             p, memory_format=torch.preserve_format
                         )
-                        g_buf = d_p
+                        # copy into the buffer. Rebinding g_buf = d_p left
+                        # the stored gradient at 0, so the next step's
+                        # derivative was taken against a zero previous grad.
+                        g_buf.copy_(d_p)
 
                         d_buf = param_state["d_buffer"] = torch.zeros_like(
                             p, memory_format=torch.preserve_format
