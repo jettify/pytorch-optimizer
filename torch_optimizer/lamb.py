@@ -1,5 +1,3 @@
-import math
-
 import torch
 from torch.optim.optimizer import Optimizer
 
@@ -126,19 +124,23 @@ class Lamb(Optimizer):
                 # v_t
                 exp_avg_sq.mul_(beta2).addcmul_(grad, grad, value=1 - beta2)
 
-                # Paper v3 does not use debiasing.
+                # Paper v3 does not use debiasing. When it is requested, Adam's
+                # correction is applied to the moments that enter the trust
+                # ratio. Scaling the learning rate instead leaves adam_norm
+                # uncorrected and also scales the weight-decay term (issue 443).
+                # The stored moments are not divided in place.
                 if self.debias:
-                    bias_correction = math.sqrt(1 - beta2 ** state["step"])
-                    bias_correction /= 1 - beta1 ** state["step"]
+                    exp_avg_hat = exp_avg / (1 - beta1 ** state["step"])
+                    exp_avg_sq_hat = exp_avg_sq / (1 - beta2 ** state["step"])
                 else:
-                    bias_correction = 1
+                    exp_avg_hat = exp_avg
+                    exp_avg_sq_hat = exp_avg_sq
 
-                # Apply bias to lr to avoid broadcast.
-                step_size = group["lr"] * bias_correction
+                step_size = group["lr"]
 
                 weight_norm = torch.norm(p.data).clamp(0, self.clamp_value)
 
-                adam_step = exp_avg / exp_avg_sq.sqrt().add(group["eps"])
+                adam_step = exp_avg_hat / exp_avg_sq_hat.sqrt().add(group["eps"])
                 if group["weight_decay"] != 0:
                     adam_step.add_(p.data, alpha=group["weight_decay"])
 
