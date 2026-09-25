@@ -21,6 +21,7 @@ from torch.optim.optimizer import Optimizer
 
 from .a2grad import A2GradExp, A2GradInc, A2GradUni
 from .accsgd import AccSGD
+from .aida import Aida
 from .adabelief import AdaBelief
 from .adabound import AdaBound
 from .adafactor import Adafactor
@@ -52,6 +53,7 @@ __all__ = (
     "A2GradInc",
     "A2GradUni",
     "AccSGD",
+    "Aida",
     "AdaBelief",
     "AdaBound",
     "AdaMod",

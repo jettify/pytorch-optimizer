@@ -77,6 +77,9 @@ Supported Optimizers
 | `AccSGD`_     | https://arxiv.org/abs/1803.05591                                                                                                     |
 +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
 |               |                                                                                                                                      |
+| `Aida`_       | https://arxiv.org/abs/2203.13273                                                                                                     |
++---------------+--------------------------------------------------------------------------------------------------------------------------------------+
+|               |                                                                                                                                      |
 | `AdaBelief`_  | https://arxiv.org/abs/2010.07468                                                                                                     |
 +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
 |               |                                                                                                                                      |
@@ -305,6 +308,30 @@ AccSGD
 **Paper**: *On the insufficiency of existing momentum schemes for Stochastic Optimization* (2019) [https://arxiv.org/abs/1803.05591]
 
 **Reference Code**: https://github.com/rahulkidambi/AccSGD
+
+
+Aida
+----
+
+.. code:: python
+
+    import torch_optimizer as optim
+
+    # model = ...
+    optimizer = optim.Aida(
+        m.parameters(),
+        lr=1e-3,
+        betas=(0.9, 0.999),
+        eps=1e-8,
+        weight_decay=0,
+        k=2,
+        xi=1e-20,
+    )
+    optimizer.step()
+
+**Paper**: *On Exploiting Layerwise Gradient Statistics for Effective Training of Deep Neural Networks* (2022) [https://arxiv.org/abs/2203.13273]
+
+**Reference Code**: https://github.com/guoqiang-zhang-x/Aida-Optimizer
 
 
 AdaBelief
