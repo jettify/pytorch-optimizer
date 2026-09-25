@@ -126,7 +126,12 @@ class Shampoo(Optimizer):
                     grad_t = grad.t()
                     precond.add_(grad @ grad_t)
                     if state["step"] % group["update_freq"] == 0:
-                        inv_precond.copy_(_matrix_power(precond, -1 / order))
+                        # Gupta, Koren, Singer 2018: each mode-i
+                        # preconditioner enters to the power -1/(2k) for an
+                        # order-k tensor (-1/4 per side for matrices).
+                        inv_precond.copy_(
+                            _matrix_power(precond, -1 / (2 * order))
+                        )
 
                     if dim_id == order - 1:
                         # finally
