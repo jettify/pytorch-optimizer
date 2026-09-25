@@ -52,6 +52,9 @@ def build_lookahead(*a, **kw):
 
 optimizers = [
     (build_lookahead, {"lr": 0.1, "weight_decay": 1e-3}, 200),
+    (optim.Aida, {"lr": 0.1, "weight_decay": 1e-3}, 200),
+    (optim.AdaNorm, {"lr": 0.1, "weight_decay": 1e-3}, 200),
+    (optim.Muon, {"lr": 0.02}, 200),
     (optim.A2GradExp, {"lips": 2.0, "beta": 1e-3}, 500),
     (optim.A2GradInc, {"lips": 5.0, "beta": 1e-3}, 200),
     (optim.A2GradUni, {"lips": 5.0, "beta": 1e-3}, 500),
@@ -90,6 +93,7 @@ optimizers = [
     (optim.Yogi, {"lr": 0.1, "weight_decay": 1e-3}, 200),
     (optim.Adahessian, {"lr": 0.1, "weight_decay": 1e-3}, 200),
     (optim.Lion, {"lr": 0.1, "weight_decay": 1e-3}, 200),
+    (optim.Sophia, {"lr": 0.1, "weight_decay": 1e-3}, 200),
 ]
 
 

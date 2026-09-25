@@ -21,11 +21,13 @@ from torch.optim.optimizer import Optimizer
 
 from .a2grad import A2GradExp, A2GradInc, A2GradUni
 from .accsgd import AccSGD
+from .aida import Aida
 from .adabelief import AdaBelief
 from .adabound import AdaBound
 from .adafactor import Adafactor
 from .adahessian import Adahessian
 from .adamod import AdaMod
+from .adanorm import AdaNorm
 from .adamp import AdamP
 from .aggmo import AggMo
 from .apollo import Apollo
@@ -35,6 +37,7 @@ from .lars import LARS
 from .lion import Lion
 from .lookahead import Lookahead
 from .madgrad import MADGRAD
+from .muon import Muon
 from .novograd import NovoGrad
 from .pid import PID
 from .qhadam import QHAdam
@@ -43,6 +46,7 @@ from .radam import RAdam
 from .sgdp import SGDP
 from .sgdw import SGDW
 from .shampoo import Shampoo
+from .sophia import Sophia
 from .swats import SWATS
 from .yogi import Yogi
 
@@ -51,11 +55,13 @@ __all__ = (
     "A2GradInc",
     "A2GradUni",
     "AccSGD",
+    "Aida",
     "AdaBelief",
     "AdaBound",
     "AdaMod",
     "Adafactor",
     "Adahessian",
+    "AdaNorm",
     "AdamP",
     "AggMo",
     "Apollo",
@@ -64,6 +70,7 @@ __all__ = (
     "Lamb",
     "Lookahead",
     "MADGRAD",
+    "Muon",
     "NovoGrad",
     "PID",
     "QHAdam",
@@ -76,6 +83,7 @@ __all__ = (
     "SGDW",
     "SWATS",
     "Shampoo",
+    "Sophia",
     "Yogi",
     "Lion",
     # utils
