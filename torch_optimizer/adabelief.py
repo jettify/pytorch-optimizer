@@ -161,7 +161,15 @@ class AdaBelief(Optimizer):
 
                 # Update first and second moment running average
                 exp_avg.mul_(beta1).add_(grad, alpha=1 - beta1)
-                grad_residual = grad - exp_avg
+                # beta1 == 0 sets m_t = g_t, so (g_t - m_t) is 0 and the
+                # second moment stays at eps. The step is lr * g / sqrt(eps),
+                # which overflows when eps is the paper's 1e-16. Adam with
+                # beta1 = 0 still tracks g^2. Keep (g - m) for every
+                # positive beta1.
+                if beta1 == 0:
+                    grad_residual = grad
+                else:
+                    grad_residual = grad - exp_avg
                 exp_avg_var.mul_(beta2).addcmul_(
                     grad_residual, grad_residual, value=1 - beta2
                 )
