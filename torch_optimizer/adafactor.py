@@ -113,7 +113,7 @@ class Adafactor(Optimizer):
         output: torch.Tensor,
     ) -> None:
         r_factor = (
-            (exp_avg_sq_row / exp_avg_sq_row.mean(dim=-1))
+            (exp_avg_sq_row / exp_avg_sq_row.mean(dim=-1, keepdim=True))
             .rsqrt_()
             .unsqueeze(-1)
         )
