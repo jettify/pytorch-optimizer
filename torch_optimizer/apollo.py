@@ -1,7 +1,7 @@
 import torch
 from torch.optim.optimizer import Optimizer
 
-from .types import OptFloat, OptLossClosure, Params
+from .types import OptFloat, OptLossClosure, Params, State
 
 
 class Apollo(Optimizer):
@@ -68,10 +68,14 @@ class Apollo(Optimizer):
             eps=eps,
             warmup=warmup,
             init_lr=init_lr,
-            base_lr=lr,
             weight_decay=weight_decay,
         )
         super(Apollo, self).__init__(params, defaults)
+
+    def add_param_group(self, param_group: State) -> None:
+        super(Apollo, self).add_param_group(param_group)
+        group = self.param_groups[-1]
+        group.setdefault("base_lr", group["lr"])
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
         r"""Performs a single optimization step.
