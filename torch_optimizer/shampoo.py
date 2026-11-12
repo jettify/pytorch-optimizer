@@ -114,19 +114,23 @@ class Shampoo(Optimizer):
                     grad.add_(p.data, alpha=group["weight_decay"])
 
                 # See Algorithm 2 for detail
-                for dim_id, dim in enumerate(grad.size()):
+                # Accumulate all mode statistics before preconditioning grad.
+                for dim_id, dim in enumerate(original_size):
                     precond = state["precond_{}".format(dim_id)]
                     inv_precond = state["inv_precond_{}".format(dim_id)]
+                    unfolded = grad.transpose(0, dim_id).reshape(dim, -1)
+                    precond.add_(unfolded @ unfolded.t())
+                    if state["step"] % group["update_freq"] == 0:
+                        inv_precond.copy_(_matrix_power(precond, -1 / order))
 
+                for dim_id, dim in enumerate(original_size):
+                    inv_precond = state["inv_precond_{}".format(dim_id)]
                     # mat_{dim_id}(grad)
                     grad = grad.transpose_(0, dim_id).contiguous()
                     transposed_size = grad.size()
                     grad = grad.view(dim, -1)
 
                     grad_t = grad.t()
-                    precond.add_(grad @ grad_t)
-                    if state["step"] % group["update_freq"] == 0:
-                        inv_precond.copy_(_matrix_power(precond, -1 / order))
 
                     if dim_id == order - 1:
                         # finally
