@@ -84,12 +84,27 @@ class AdaBound(Optimizer):
             amsbound=amsbound,
         )
         super(AdaBound, self).__init__(params, defaults)
-        self.base_lrs = [group["lr"] for group in self.param_groups]
+        self.base_lrs = [group["base_lr"] for group in self.param_groups]
+
+    def add_param_group(self, param_group: State) -> None:
+        super(AdaBound, self).add_param_group(param_group)
+        group = self.param_groups[-1]
+        group.setdefault("base_lr", group["lr"])
+        if hasattr(self, "base_lrs"):
+            self.base_lrs.append(group["base_lr"])
 
     def __setstate__(self, state: State) -> None:
+        base_lrs = getattr(self, "base_lrs", [])
         super(AdaBound, self).__setstate__(state)
-        for group in self.param_groups:
+        for index, group in enumerate(self.param_groups):
             group.setdefault("amsbound", False)
+            # Older checkpoints did not store the initial learning rate.
+            # Keep the constructor's value when it is available.
+            group.setdefault(
+                "base_lr",
+                base_lrs[index] if index < len(base_lrs) else group["lr"],
+            )
+        self.base_lrs = [group["base_lr"] for group in self.param_groups]
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
         r"""Performs a single optimization step.
