@@ -3,7 +3,7 @@ import math
 import torch
 from torch.optim.optimizer import Optimizer
 
-from .types import Betas2, OptFloat, OptLossClosure, Params
+from .types import Betas2, OptFloat, OptLossClosure, Params, State
 
 __all__ = ("Lamb",)
 
@@ -78,6 +78,22 @@ class Lamb(Optimizer):
         self.debias = debias
 
         super(Lamb, self).__init__(params, defaults)
+
+    def state_dict(self) -> State:
+        state = super(Lamb, self).state_dict()
+        state["lamb_options"] = dict(
+            clamp_value=self.clamp_value,
+            adam=self.adam,
+            debias=self.debias,
+        )
+        return state
+
+    def load_state_dict(self, state_dict: State) -> None:
+        super(Lamb, self).load_state_dict(state_dict)
+        # Legacy checkpoints rely on the constructor for these options.
+        options = state_dict.get("lamb_options", {})
+        for name in ("clamp_value", "adam", "debias"):
+            setattr(self, name, options.get(name, getattr(self, name)))
 
     def step(self, closure: OptLossClosure = None) -> OptFloat:
         r"""Performs a single optimization step.
