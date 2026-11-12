@@ -116,14 +116,19 @@ class NovoGrad(Optimizer):
                         p.data, memory_format=torch.preserve_format
                     )
                     # Exponential moving average of squared gradient values
-                    state["exp_avg_sq"] = torch.zeros([]).to(
-                        state["exp_avg"].device
+                    norm_dtype = (
+                        torch.float64
+                        if p.dtype == torch.float64
+                        else torch.float32
+                    )
+                    state["exp_avg_sq"] = torch.zeros(
+                        [], device=p.device, dtype=norm_dtype
                     )
                     if amsgrad:
                         # Maintains max of all exp. moving avg. of sq.
                         # grad. values
-                        state["max_exp_avg_sq"] = torch.zeros([]).to(
-                            state["exp_avg"].device
+                        state["max_exp_avg_sq"] = torch.zeros_like(
+                            state["exp_avg_sq"]
                         )
 
                 exp_avg, exp_avg_sq = state["exp_avg"], state["exp_avg_sq"]
@@ -133,7 +138,8 @@ class NovoGrad(Optimizer):
 
                 state["step"] += 1
 
-                norm = torch.sum(torch.pow(grad, 2))
+                norm_grad = grad.to(dtype=exp_avg_sq.dtype)
+                norm = torch.sum(torch.pow(norm_grad, 2))
 
                 if exp_avg_sq == 0:
                     exp_avg_sq.copy_(norm)
