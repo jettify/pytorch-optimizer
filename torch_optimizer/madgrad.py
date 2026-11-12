@@ -66,15 +66,6 @@ class MADGRAD(torch.optim.Optimizer):
         )
         super().__init__(params, defaults)
 
-        for group in self.param_groups:
-            for p in group["params"]:
-                state = self.state[p]
-
-                state["grad_sum_sq"] = torch.zeros_like(p.data).detach()
-                state["s"] = torch.zeros_like(p.data).detach()
-                if momentum != 0:
-                    state["x0"] = torch.clone(p.data).detach()
-
     def step(
         self, closure: Optional[Callable[[], float]] = None
     ) -> Optional[float]:
@@ -108,6 +99,12 @@ class MADGRAD(torch.optim.Optimizer):
                         "momentum != 0 is not compatible with "
                         "sparse gradients"
                     )
+
+                if len(state) == 0:
+                    state["grad_sum_sq"] = torch.zeros_like(p.data).detach()
+                    state["s"] = torch.zeros_like(p.data).detach()
+                    if momentum != 0:
+                        state["x0"] = torch.clone(p.data).detach()
 
                 grad_sum_sq = state["grad_sum_sq"]
                 s = state["s"]
