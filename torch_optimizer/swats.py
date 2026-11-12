@@ -153,13 +153,13 @@ class SWATS(Optimizer):
                     else:
                         buf = state["momentum_buffer"]
                         buf.mul_(beta1).add_(grad)
-                        grad = buf
 
-                    grad.mul_(1 - beta1)
                     if group["nesterov"]:
-                        grad.add_(buf, alpha=beta1)
+                        update = grad.add(buf, alpha=beta1)
+                    else:
+                        update = buf
 
-                    w.data.add_(grad, alpha=-group["lr"])
+                    w.data.add_(update, alpha=-group["lr"] * (1 - beta1))
                     continue
 
                 # decay the first and second moment running average coefficient
