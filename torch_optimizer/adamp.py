@@ -88,11 +88,11 @@ class AdamP(Optimizer):
 
     @staticmethod
     def _channel_view(x):
-        return x.view(x.size(0), -1)
+        return x.reshape(x.size(0), -1)
 
     @staticmethod
     def _layer_view(x):
-        return x.view(1, -1)
+        return x.reshape(1, -1)
 
     @staticmethod
     def _cosine_similarity(x, y, eps, view_func):
