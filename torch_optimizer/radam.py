@@ -149,10 +149,11 @@ class RAdam(Optimizer):
 
                 state["step"] += 1
                 buffered = group["buffer"][int(state["step"] % 10)]
-                if state["step"] == buffered[0]:
+                cache_key = (state["step"], beta1, beta2, lr)
+                if cache_key == buffered[0]:
                     N_sma, step_size = buffered[1], buffered[2]
                 else:
-                    buffered[0] = state["step"]
+                    buffered[0] = cache_key
                     beta2_t = beta2 ** state["step"]
                     N_sma_max = 2 / (1 - beta2) - 1
                     N_sma = N_sma_max - 2 * state["step"] * beta2_t / (
