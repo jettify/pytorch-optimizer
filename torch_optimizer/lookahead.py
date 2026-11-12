@@ -71,12 +71,18 @@ class Lookahead(Optimizer):
         Arguments:
             closure: A closure that reevaluates the model and returns the loss.
         """
+        for group in self.param_groups:
+            for fast in group["params"]:
+                param_state = self.state[fast]
+                if "slow_param" not in param_state:
+                    param_state["slow_param"] = torch.clone(fast.data).detach()
+
         loss = self.optimizer.step(closure=closure)
         for group in self.param_groups:
-            if group["counter"] == 0:
-                self._update(group)
             group["counter"] += 1
             group["counter"] %= self.k
+            if group["counter"] == 0:
+                self._update(group)
         return loss
 
     def state_dict(self) -> State:
